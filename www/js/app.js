@@ -21,7 +21,7 @@ angular.module('open_schedule', ['ionic'])
 
 
 .controller('teamCtrl', function($scope, $http, $window) {
-  $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
+  $http.get("http://google.com")
     .success(function(response) {
       $scope.categories = getArray(response);
       var b =1;
