@@ -11,10 +11,6 @@
   <access origin="*" />
   <allow-navigation href="http://*/*" />
   <allow-intent href="http://*/*"/>
-  <gap:config-file platform="android" parent="/manifest">
-    <uses-sdk tools:overrideLibrary="org.apache.cordova,com.library.plugin" />
-  </gap:config-file>
-
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
