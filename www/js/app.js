@@ -21,13 +21,13 @@ angular.module('open_schedule', ['ionic'])
 
 
 .controller('teamCtrl', function($scope, $http, $window) {
-  $http.get("http://google.com")
+  $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .success(function(response) {
       $scope.categories = getArray(response);
       var b =1;
     })
     .error(function(response) {
-      $window.alert("shit!"); 
+      $window.alert("d'oh!"); 
     });
 })
 
