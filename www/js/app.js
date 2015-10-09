@@ -21,7 +21,29 @@ angular.module('open_schedule', ['ionic'])
 
 
 .controller('teamCtrl', function($scope, $http, $window) {
-  $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
+  /*$http.get("http://lcrse.qc.ca/cedules.saison.aspx")
+    .success(function(response) {
+      $scope.categories = getArray(response);
+      var b =1;
+    })
+    .error(function(response) {
+      $window.alert("d'oh!"); 
+    }); */
+    
+    $http.post('http://lcrse.qc.ca/cedules.saison.aspx',
+    {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        },
+        data: {
+            __EVENTTARGET: "m$pc$cbCategories",
+            m$pc$cbYear:"2015",
+            m$pc$cbCategories: "4",
+            m$pc$cbEquipes: "0",	
+            m$pc$cbSemaine: "2015-10-5",
+            m$pc$cbArenaFilter: "-1"
+        }
+    })
     .success(function(response) {
       $scope.categories = getArray(response);
       var b =1;
@@ -29,6 +51,7 @@ angular.module('open_schedule', ['ionic'])
     .error(function(response) {
       $window.alert("d'oh!"); 
     });
+    
 })
 
 .run(function($ionicPlatform) {
