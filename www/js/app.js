@@ -36,31 +36,8 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
     
     $http.post('http://lcrse.qc.ca/cedules.saison.aspx',
     {
-        headers: {
-          'Content-type': 'multipart/form-data;boundary=---------------------------455803651565016223847951505',
-          
-        },
-        data: {
-            '__EVENTTARGET': 'm$pc$cbCategories',
-            '__EVENTARGUMENT':'',	
-            '__LASTFOCUS':'',
-            '__VIEWSTATEGENERATOR': 'FEF83A11',
-            '__VIEWSTATE' : '/wEPDwUKMTcwOTc0MjgyNQ8WCB4RQ2hhbmdlc1NvcnRDb2x1bW4FBlAuZGF0ZR4UQ2hhbmdlc1NvcnREaXJlY3Rpb24FA0FTQx4TQ2VkdWxlU29ydERpcmVjdGlvbgUDQVNDHhBDZWR1bGVTb3J0Q29sdW1uBQZQLmRhdGUWAmYPZBYCAgEPZBYIZg8PFgIeBFRleHQFB0hvcmFpcmVkZAIFDxYCHgVjbGFzcwUGYWN0aXZlZAIKD2QWBgIBDw8WBB4IQ3NzQ2xhc3MFBmhpZGRlbh4EXyFTQgICZBYEAgEPD2QWAh4LcGxhY2Vob2xkZXIFDzwgSWRlbnRpZmlhbnQgPmQCAw8PZBYCHwgFEDwgTW90IGRlIHBhc3NlID5kAgMPDxYEHwZlHwcCAmQWAgIBDw8WAh8EBRFBY2PDqHMgc8OpY3VyaXPDqWRkAgUPDxYEHwYFBmhpZGRlbh8HAgJkZAILDxYCHwUFB2NvbnRlbnQWAgIBD2QWCmYPFgIeB1Zpc2libGVnFgICAQ8PFgIfBAUkMjggc2VwdGVtYnJlIDIwMTUgYXUgOCBub3ZlbWJyZSAyMDE1ZGQCAQ8WAh4JaW5uZXJodG1sBQZTYWlzb25kAgIPFgIfCWhkAgMPZBYEAgEPEA8WAh4MQXV0b1Bvc3RCYWNrZ2QPFgVmAgECAgIDAgQWBRAFCTIwMTEtMjAxMgUEMjAxMWcQBQkyMDEyLTIwMTMFBDIwMTJnEAUJMjAxMy0yMDE0BQQyMDEzZxAFCTIwMTQtMjAxNQUEMjAxNGcQBQkyMDE1LTIwMTYFBDIwMTVnFgECBGQCAw8QDxYCHgdDaGVja2VkaGRkZGQCBA9kFgRmD2QWCAIBDxYCHwoFkwU8ZGl2PjxzcGFuPkFOPC9zcGFuPjogUGFydGllIGFubnVsw6llPC9kaXY+PGRpdj48c3Bhbj5DQTwvc3Bhbj46IENoYW5nZW1lbnQgZCdhcsOpbmE8L2Rpdj48ZGl2PjxzcGFuPkNDPC9zcGFuPjogQ2hhbmdlbWVudCBkZSBjw6lkdWxlPC9kaXY+PGRpdj48c3Bhbj5DRDwvc3Bhbj46IENoYW5nZW1lbnQgZGUgZGF0ZTwvZGl2PjxkaXY+PHNwYW4+Q0U8L3NwYW4+OiBDaGFuZ2VtZW50IGQnw6lxdWlwZTwvZGl2PjxkaXY+PHNwYW4+Q0c8L3NwYW4+OiBDaGFuZ2VtZW50IGRlbWFuZMOpIHBhciB1biBnb3V2ZXJuZXVyPC9kaXY+PGR…me',
-            'm$pc$cbYear':'2015',
-            'm$pc$cbCategories': '4',
-            'm$pc$cbEquipes': '0',	
-            'm$pc$cbSemaine': '2015-10-5',
-            'm$pc$cbArenaFilter': '-1',
-            'm$pc$gvCedule$ctl02$hdnID' : '3778',
-            'm$pc$gvCedule$ctl03$hdnID' : '3779',
-            'm$pc$gvCedule$ctl04$hdnID' : '3780',
-            'm$pc$gvCedule$ctl05$hdnID' : '3781',
-            'm$pc$gvCedule$ctl06$hdnID' : '3782',
-            'm$pc$gvCedule$ctl07$hdnID' : '3783',
-            'm$pc$gvCedule$ctl08$hdnID' : '3784',
-            'm$pc$gvCedule$ctl09$hdnID' : '3785'
-
-        }
+        data: '-----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="__EVENTTARGET" m$pc$cbCategories -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="__EVENTARGUMENT" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="__LASTFOCUS" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="__VIEWSTATE"——————————————1559931541846889938950554228 Content-Disposition: form-data; name="__VIEWSTATEGENERATOR" FEF83A11 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$txtLogin" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$txtPassword" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$pc$cbYear" 2015 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$pc$cbCategories" 4 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$pc$cbSemaine" 2015-10-5 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$pc$cbArenaFilter" -1 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$hdnOnLoadMessage" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$hdnOnLoadMessageOptions" -----------------------------1559931541846889938950554228-- '
+            
     })
     .success(function(response) {
       $scope.categories = getArray(response);
