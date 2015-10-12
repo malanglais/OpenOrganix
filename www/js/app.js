@@ -23,7 +23,7 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
 
 .controller('teamCtrl', function($scope, $http, $cookies, $window) {
     
-  $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
+  /*$http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .success(function(response) {
       $scope.categories = getArray(response);
       
@@ -32,20 +32,16 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
     })
     .error(function(response) {
       $window.alert("d'oh!"); 
-    });
-    
-    $http.post('http://lcrse.qc.ca/cedules.saison.aspx',
-    {
-        data: '-----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="__EVENTTARGET" m$pc$cbCategories -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="__EVENTARGUMENT" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="__LASTFOCUS" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="__VIEWSTATE"——————————————1559931541846889938950554228 Content-Disposition: form-data; name="__VIEWSTATEGENERATOR" FEF83A11 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$txtLogin" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$txtPassword" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$pc$cbYear" 2015 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$pc$cbCategories" 4 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$pc$cbSemaine" 2015-10-5 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$pc$cbArenaFilter" -1 -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$hdnOnLoadMessage" -----------------------------1559931541846889938950554228 Content-Disposition: form-data; name="m$hdnOnLoadMessageOptions" -----------------------------1559931541846889938950554228-- '
-            
-    })
-    .success(function(response) {
-      $scope.categories = getArray(response);
-      var b =1;
-    })
-    .error(function(response) {
-      $window.alert("d'oh!"); 
-    });
+    }); */
+  
+  $scope.pDetails = { __EVENTTARGET: 'm$pc$cbCategories', __EVENTARGUMENT: '', __EVENTARGUMENT: '', __LASTFOCUS: '', __VIEWSTATE: '', __VIEWSTATEGENERATOR: 'FEF83A11', m$txtLogin: '', m$txtPassword: '', m$pc$cbYear: 2015, m$pc$cbCategories: 4, m$pc$cbSemaine: '', m$pc$cbArenaFilter: -1, m$hdnOnLoadMessage: '', m$hdnOnLoadMessageOptions: '' };  
+  $http({
+    url: "http://lcrse.qc.ca/cedules.saison.aspx",
+    method: 'Post',
+    data: $scope.pDetails
+  }).then(function (result) {
+          var p=1;
+  });
     
 })
 
