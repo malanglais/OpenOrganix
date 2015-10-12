@@ -8,7 +8,7 @@
       Ionic Framework Team
     </author>
   <content src="index.html"/>
-  <access origin="*"/>
+  <access origin="http://lcrse.qc.ca/cedules.saison.aspx"/>
   <allow-navigation href="http://*/*" />
   <allow-intent href="http://*/*"/>
   <gap:plugin name="cordova-plugin-whitelist" source="npm" />
