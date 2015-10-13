@@ -34,7 +34,7 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
       $window.alert("d'oh!"); 
     }); */
   
-  var dataDetails = { __EVENTTARGET: 'm$pc$cbCategories', __EVENTARGUMENT: 4};  
+  var dataDetails = { m$pc$cbCategories : 4};  
   $http({
     url: "http://lcrse.qc.ca/cedules.saison.aspx",
     method: 'Post',
