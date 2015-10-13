@@ -144,6 +144,6 @@ function getVIEWSTATE(htmlstr) {
   var index;
   var wholeTxt = htmlstr.split('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="');
   var halfTxt = wholeTxt[1].split('/>');
-  var result = halfTxt[0];
+  var result = halfTxt[0].slice(halfTxt[0].indexOf('"'), halfTxt[0].lastIndexOf('"'));
   return result;
 }
