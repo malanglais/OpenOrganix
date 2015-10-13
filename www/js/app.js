@@ -23,7 +23,7 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
 
 .controller('teamCtrl', function($scope, $http, $cookies, $window) {
     
-  /*$http.get("http://lcrse.qc.ca/cedules.saison.aspx")
+  $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .success(function(response) {
       $scope.categories = getArray(response);
       
@@ -32,16 +32,16 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
     })
     .error(function(response) {
       $window.alert("d'oh!"); 
-    }); */
+    }); 
   
-  var dataDetails = { m$pc$cbCategories : 4};  
+  /*var dataDetails = { m$pc$cbCategories : 4};  
   $http({
     url: "http://lcrse.qc.ca/cedules.saison.aspx",
     method: 'Post',
     data: dataDetails
   }).then(function (result) {
           var p=1;
-  });
+  });*/
     
 })
 
