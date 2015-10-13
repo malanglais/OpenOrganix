@@ -142,7 +142,7 @@ function getArray(htmlStr) {
 
 function getVIEWSTATE(htmlstr) {
   var index;
-  var wholeTxt = htmlStr.split('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="');
+  var wholeTxt = htmlstr.split('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="');
   var halfTxt = wholeTxt.split('</div>');
   return halfTxt;
 }
