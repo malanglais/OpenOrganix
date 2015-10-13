@@ -36,14 +36,14 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
       $window.alert("d'oh!"); 
     }); 
   
-  /*var dataDetails = { m$pc$cbCategories : 4};  
+  var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
   $http({
     url: "http://lcrse.qc.ca/cedules.saison.aspx",
     method: 'Post',
     data: dataDetails
   }).then(function (result) {
           var p=1;
-  });*/
+  });
     
 })
 
@@ -144,6 +144,6 @@ function getVIEWSTATE(htmlstr) {
   var index;
   var wholeTxt = htmlstr.split('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="');
   var halfTxt = wholeTxt[1].split('/>');
-  var result = halfTxt[0].slice(halfTxt[0].indexOf('"'), halfTxt[0].lastIndexOf('"'));
+  var result = halfTxt[0];
   return result;
 }
