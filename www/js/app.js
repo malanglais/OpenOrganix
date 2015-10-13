@@ -27,8 +27,8 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
     
   $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .then(function(response) {
-      $scope.categories = getArray(response);
-      viewSt = getVIEWSTATE(response);
+      $scope.categories = getArray(response.data);
+      viewSt = getVIEWSTATE(response.data);
     });
   
   var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
