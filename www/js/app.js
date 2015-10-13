@@ -22,12 +22,14 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
 
 
 .controller('teamCtrl', function($scope, $http, $cookies, $window) {
+  
+  var viewSt= '';
     
   $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .success(function(response) {
       $scope.categories = getArray(response);
+      viewSt = getVIEWSTATE(response);
       
-      cookie = $cookies.session;
       var b =1;
     })
     .error(function(response) {
@@ -137,3 +139,10 @@ function getArray(htmlStr) {
   return cleanList;
   
 };
+
+function getVIEWSTATE(htmlstr) {
+  var index;
+  var wholeTxt = htmlStr.split('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="');
+  var halfTxt = wholeTxt.split('</div>');
+  return halfTxt;
+}
