@@ -34,11 +34,11 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
       $window.alert("d'oh!"); 
     }); */
   
-  $scope.pDetails = { __EVENTTARGET: 'm$pc$cbCategories', __EVENTARGUMENT: '', __EVENTARGUMENT: '', __LASTFOCUS: '', __VIEWSTATE: '', __VIEWSTATEGENERATOR: 'FEF83A11', m$txtLogin: '', m$txtPassword: '', m$pc$cbYear: 2015, m$pc$cbCategories: 4, m$pc$cbSemaine: '', m$pc$cbArenaFilter: -1, m$hdnOnLoadMessage: '', m$hdnOnLoadMessageOptions: '' };  
+  var dataDetails = { __EVENTTARGET: 'm$pc$cbCategories', __EVENTARGUMENT: '', __LASTFOCUS: '', __VIEWSTATE: '', __VIEWSTATEGENERATOR: 'FEF83A11', m$txtLogin: '', m$txtPassword: '', m$pc$cbYear: 2015, m$pc$cbCategories: 4, m$pc$cbSemaine: '', m$pc$cbArenaFilter: -1, m$hdnOnLoadMessage: '', m$hdnOnLoadMessageOptions: '' };  
   $http({
     url: "http://lcrse.qc.ca/cedules.saison.aspx",
     method: 'Post',
-    data: $scope.pDetails
+    data: dataDetails
   }).then(function (result) {
           var p=1;
   });
