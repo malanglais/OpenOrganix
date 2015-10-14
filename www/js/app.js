@@ -8,8 +8,9 @@
 
 var cats;
 var cookie;
+var viewSt= '';
 
-angular.module('open_schedule', ['ionic', 'ngCookies']) 
+angular.module('open_schedule', ['ionic']) 
 
 /*app.controller('TodoCtrl', function($scope) {
   $scope.tasks = [
@@ -21,24 +22,22 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
 });*/
 
 
-.controller('teamCtrl', function($scope, $http, $cookies, $window) {
+.controller('catCtrl', function($scope, $http, $cookies, $window, viewSt) {
   
-  var viewSt= '';
-    
   $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .then(function(response) {
       $scope.categories = getArray(response.data);
       viewSt = getVIEWSTATE(response.data);
     });
   
-  var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
+  /*var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
   $http({
     url: "http://lcrse.qc.ca/cedules.saison.aspx",
     method: 'Post',
     data: dataDetails
   }).then(function (result) {
           var p=1;
-  });
+  });*/
     
 })
 
@@ -71,55 +70,16 @@ angular.module('open_schedule', ['ionic', 'ngCookies'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
+    .state('home', {
+    url: '/home',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/home.html'
   })
 
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
-
+  
+  
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/home');
 }); 
 
 function getArray(htmlStr) {

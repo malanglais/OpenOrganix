@@ -1,0 +1,12 @@
+<!-- The title of the ion-view will be shown on the navbar -->
+  <ion-view view-title="Home">
+    <ion-content ng-controller="HomeCtrl">
+      <!-- The content of the page -->
+        <ion-list>
+          <ion-item ng-repeat="category in categories" ng-controller="teamCtrl">
+            {{category}}
+          </ion-item>
+        </ion-list>
+      <ion-content>
+    </ion-content>
+  </ion-view>
