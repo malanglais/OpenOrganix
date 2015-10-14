@@ -29,16 +29,18 @@ angular.module('open_schedule', ['ionic'])
       $scope.categories = getArray(response.data);
       viewSt = getVIEWSTATE(response.data);
     });
+})
+
+.controller('teamCtrl', function($scope, $http, $cookies, $window, viewSt) {
   
-  /*var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
+  var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
   $http({
     url: "http://lcrse.qc.ca/cedules.saison.aspx",
     method: 'Post',
     data: dataDetails
   }).then(function (result) {
           var p=1;
-  });*/
-    
+  });
 })
 
 .run(function($ionicPlatform) {
@@ -71,12 +73,22 @@ angular.module('open_schedule', ['ionic'])
 
   // setup an abstract state for the tabs directive
     .state('home', {
-    url: '/home',
-    abstract: true,
-    templateUrl: 'templates/home.html'
-  })
-
-  
+      url: '/home',
+      views: {
+        home: {
+          templateUrl: 'home.html'
+        }
+      }
+    })
+    
+    .state('help', {
+      url: '/help',
+      views: {
+        help: {
+          templateUrl: 'help.html'
+        }
+      }
+    })
   
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/home');
