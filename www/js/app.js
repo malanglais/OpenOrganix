@@ -6,23 +6,12 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var cats;
-var cookie;
+
 var viewSt= '';
 
 angular.module('open_schedule', ['ionic']) 
 
-/*app.controller('TodoCtrl', function($scope) {
-  $scope.tasks = [
-    { title: 'Collect coins' },
-    { title: 'Eat mushrooms' },
-    { title: 'Get high enough to grab the flag' },
-    { title: 'Find the Princess' }
-  ];
-});*/
-
-
-.controller('catCtrl', function($scope, $http, $cookies, $window, viewSt) {
+.controller('catCtrl', function($scope, $http, $window, viewSt) {
   
   $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .then(function(response) {
@@ -31,7 +20,7 @@ angular.module('open_schedule', ['ionic'])
     });
 })
 
-.controller('teamCtrl', function($scope, $http, $cookies, $window, viewSt) {
+.controller('teamCtrl', function($scope, $http, $window, viewSt) {
   
   var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
   $http({
