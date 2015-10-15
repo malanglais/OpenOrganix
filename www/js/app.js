@@ -21,7 +21,7 @@ angular.module('open_schedule', ['ionic'])
       viewSt = getVIEWSTATE(response.data);
       
     });
-    $scope.getTeams=function($event, team) {
+    $scope.getTeams=function($event, category) {
       var el = (function(){
         var t=1;
         /*if ($event.target.nodeName === 'IMG') {
