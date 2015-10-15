@@ -2,7 +2,7 @@
   <ion-view view-title="Home" ng-controller="catCtrl">
     <ion-content>
       <!-- The content of the page -->
-      <ion-list>
+      <ion-list name="ionCatList">
         <ion-item ng-repeat="category in categories" ng-click="getTeams($event, category)">
            <div class="item tabs tabs-secondary">
             <a class="button icon-right ion-chevron-right button-calm">
