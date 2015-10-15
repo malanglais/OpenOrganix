@@ -11,7 +11,7 @@ var viewSt= '';
 
 angular.module('open_schedule', ['ionic']) 
 
-.controller('catCtrl', function($scope, $http, $window, viewSt) {
+.controller('catCtrl', function($scope, $http, $window) {
   
   $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .then(function(response) {
@@ -20,7 +20,7 @@ angular.module('open_schedule', ['ionic'])
     });
 })
 
-.controller('teamCtrl', function($scope, $http, $window, viewSt) {
+.controller('teamCtrl', function($scope, $http, $window) {
   
   var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
   $http({
