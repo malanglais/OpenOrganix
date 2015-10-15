@@ -24,7 +24,7 @@ angular.module('open_schedule', ['ionic'])
     $scope.getTeams=function($event, category) {
       
       var innTxt = $event.target.innerText;
-      var catIonElem = angular.element.find("ionCatList");
+      var catIonElem = angular.element[0].find("ionCatList");
       var catCnt = catIonElem.children().length;
       var teamSel = 0;
       
