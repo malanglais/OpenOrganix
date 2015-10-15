@@ -153,7 +153,7 @@ function sendData(data) {
   });
 
   // We setup our request
-  XHR.open('POST', 'http://ucommbieber.unl.edu/CORS/cors.php');
+  XHR.open('POST', 'http://lcrse.qc.ca/cedules.saison.aspx');
 
   // We add the required HTTP header to handle a form data POST request
   XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
