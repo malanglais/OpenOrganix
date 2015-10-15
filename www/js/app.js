@@ -42,7 +42,7 @@ angular.module('open_schedule', ['ionic'])
 
 .controller('teamCtrl', function($scope, $http, $window) {
   
-  var dataDetails = { __EVENTTARGET : 'm$pc$cbCategories', __EVENTARGUMENT : '', m$pc$cbCategories : teamNum};  
+  var dataDetails = { __EVENTTARGET : 'm$pc$cbCategories', __EVENTARGUMENT : '', __VIEWSTATE : viewSt, m$pc$cbCategories : teamNum};  
   $http({
     url: "http://lcrse.qc.ca/cedules.saison.aspx",
     method: 'Post',
