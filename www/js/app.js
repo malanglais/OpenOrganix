@@ -31,28 +31,18 @@ angular.module('open_schedule', ['ionic'])
       var catCnt = catIonElem.children().length;
       var teamSel = 0;
       
-      for (var i = 1; i <= catCnt ; i++) {
+      for (var i = 0; i < catCnt ; i++) {
         if (catIonElem.children().eq(i).html().indexOf(innTxt) != -1)
         {
-          teamSel = i;
+          teamNum = i+1;
         }
       }
-      
-      
-      /*var el = (function(){
-        var t=1;
-        if ($event.target.nodeName === 'IMG') {
-          return angular.element($event.target).parent(); // get li
-        } else {
-          return angular.element($event.target);          // is li
-        } 
-      })(); */
     };
 })
 
 .controller('teamCtrl', function($scope, $http, $window) {
   
-  var dataDetails = { m$pc$cbCategories : 4, __VIEWSTATE : viewSt};  
+  var dataDetails = { m$pc$cbCategories : teamNum, __VIEWSTATE : viewSt};  
   $http({
     url: "http://lcrse.qc.ca/cedules.saison.aspx",
     method: 'Post',
