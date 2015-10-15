@@ -8,6 +8,7 @@
 
 
 var viewSt= '';
+var teamNum = 0;
 
 angular.module('open_schedule', ['ionic']) 
 
@@ -21,10 +22,12 @@ angular.module('open_schedule', ['ionic'])
       viewSt = getVIEWSTATE(response.data);
       
     });
+    
+    // TODO : The following should be put in a directive
     $scope.getTeams=function($event, category) {
       
       var innTxt = $event.target.innerText;
-      var catIonElem = angular.element[0].find("ionCatList");
+      var catIonElem = angular.element($event.target).parent().parent().parent().eq(0);
       var catCnt = catIonElem.children().length;
       var teamSel = 0;
       
