@@ -32,7 +32,7 @@ angular.module('open_schedule', ['ionic'])
       var teamSel = 0;
       
       for (var i = 1; i <= catCnt ; i++) {
-        if (innTxt == catIonElem.children(i).eq(0).innerText)
+        if (catIonElem.children().eq(i).html().indexOf(innTxt) != -1)
         {
           teamSel = i;
         }
