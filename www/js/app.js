@@ -11,13 +11,26 @@ var viewSt= '';
 
 angular.module('open_schedule', ['ionic']) 
 
+// home page controller that loads the page... may be this can be put in as a service later on
+/* TODO : put in service */
 .controller('catCtrl', function($scope, $http, $window) {
   
   $http.get("http://lcrse.qc.ca/cedules.saison.aspx")
     .then(function(response) {
       $scope.categories = getArray(response.data);
       viewSt = getVIEWSTATE(response.data);
+      
     });
+    $scope.getTeams=function($event, team) {
+      var el = (function(){
+        var t=1;
+        /*if ($event.target.nodeName === 'IMG') {
+          return angular.element($event.target).parent(); // get li
+        } else {
+          return angular.element($event.target);          // is li
+        } */
+      })();
+    };
 })
 
 .controller('teamCtrl', function($scope, $http, $window) {
@@ -52,7 +65,7 @@ angular.module('open_schedule', ['ionic'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
-  $httpProvider.defaults.withCredentials = true;
+  //$httpProvider.defaults.withCredentials = true;
   
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -65,7 +78,16 @@ angular.module('open_schedule', ['ionic'])
       url: '/home',
       views: {
         home: {
-          templateUrl: 'home.html'
+          templateUrl: 'templates/home.html'
+        }
+      }
+    })
+    
+    .state('teams', {
+      url: '/teams',
+      views: {
+        teams: {
+          templateUrl: 'templates/teams.html'
         }
       }
     })
@@ -74,7 +96,7 @@ angular.module('open_schedule', ['ionic'])
       url: '/help',
       views: {
         help: {
-          templateUrl: 'help.html'
+          templateUrl: 'templates/help.html'
         }
       }
     })
