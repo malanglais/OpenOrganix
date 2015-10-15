@@ -22,14 +22,27 @@ angular.module('open_schedule', ['ionic'])
       
     });
     $scope.getTeams=function($event, category) {
-      var el = (function(){
+      
+      var innTxt = angular.element($event.target).innerText;
+      var catCnt = angular.element($event.target).parent().parent().parent().childElementCount;
+      var teamSel = 0;
+      
+      for (var i = 1; i <= catCnt ; i++) {
+        if (innTxt == angular.element($event.target).parent().parent().parent().children(i))
+        {
+          teamSel = i;
+        }
+      }
+      
+      
+      /*var el = (function(){
         var t=1;
-        /*if ($event.target.nodeName === 'IMG') {
+        if ($event.target.nodeName === 'IMG') {
           return angular.element($event.target).parent(); // get li
         } else {
           return angular.element($event.target);          // is li
-        } */
-      })();
+        } 
+      })(); */
     };
 })
 
