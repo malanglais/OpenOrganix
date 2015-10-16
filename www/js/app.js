@@ -138,12 +138,11 @@ function sendData() {
       xml.setRequestHeader("content-type",
                   "multipart/form-data; charset=utf-8; boundary=" + boundary);
       for(var key in args.data){
-        multipart += "--" + boundary
-                   + "\r\nContent-Disposition: form-data; name=" + key
-                   + "\r\nContent-type: application/octet-stream"
+        multipart += "-----------------------------" + boundary
+                   + "\r\nContent-Disposition: form-data; name=\"" + key
                    + "\r\n\r\n" + args.data[key] + "\r\n";
       }
-      multipart += "--"+boundary+"--\r\n";
+      multipart += "-----------------------------"+boundary+"--\r\n";
     }
 
     xml.onreadystatechange=function(){
