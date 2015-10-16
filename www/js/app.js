@@ -127,7 +127,7 @@ function getVIEWSTATE(htmlstr) {
 
 function sendData() {
   var xml = new XMLHttpRequest();
-  var args      = { url:"http://lcrse.qc.ca/cedules.saison.aspx",method:"POST",data:{ '__EVENTTARGET':'m$pc$cbCategories', '__EVENTARGUMENT':'', 'm$pc$cbYear':'2015', 'm$pc$cbCategories':'4', 'm$pc$cbSemaine':'2015-10-12', 'm$pc$cbArenaFilter': '-1'}, callback:function(){}}
+  var args      = { url:"http://lcrse.qc.ca/cedules.saison.aspx",method:"POST",data:{ '__EVENTTARGET':'m$pc$cbCategories', '__EVENTARGUMENT':'', '__LASTFOCUS':'', '__VIEWSTATE':viewSt, '__VIEWSTATEGENERATOR':'FEF83A11', 'm$txtLogin':'', 'm$txtPassword':'', 'm$pc$cbYear':'2015', 'm$pc$cbCategories':'4', 'm$pc$cbSemaine':'2015-10-12', 'm$pc$cbArenaFilter': '-1', 'm$hdnOnLoadMessage':'', 'm$hdnOnLoadMessageOptions':''}, callback:function(){}}
   var multipart ="";
   var context;
 
@@ -136,10 +136,10 @@ function sendData() {
     if(args.method.search(/post/i)!=-1){
       var boundary=Math.random().toString().substr(2);
       xml.setRequestHeader("content-type",
-                  "multipart/form-data; charset=utf-8; boundary=" + boundary);
+                  "multipart/form-data; boundary=---------------------------" + boundary);
       for(var key in args.data){
         multipart += "-----------------------------" + boundary
-                   + "\r\nContent-Disposition: form-data; name=\"" + key
+                   + "\"\r\nContent-Disposition: form-data; name=\"" + key
                    + "\r\n\r\n" + args.data[key] + "\r\n";
       }
       multipart += "-----------------------------"+boundary+"--\r\n";
