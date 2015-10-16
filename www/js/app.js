@@ -139,8 +139,8 @@ function sendData() {
                   "multipart/form-data; boundary=---------------------------" + boundary);
       for(var key in args.data){
         multipart += "-----------------------------" + boundary
-                   + "\"\r\nContent-Disposition: form-data; name=\"" + key
-                   + "\r\n\r\n" + args.data[key] + "\r\n";
+                   + "\r\nContent-Disposition: form-data; name=\"" + key
+                   + "\"\r\n\r\n" + args.data[key] + "\r\n";
       }
       multipart += "-----------------------------"+boundary+"--\r\n";
     }
