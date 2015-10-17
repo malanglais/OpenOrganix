@@ -133,28 +133,30 @@ function sendData() {
 
   xml.open(args.method,args.url,true);
 
-    if(args.method.search(/post/i)!=-1){
-      var boundary=Math.random().toString().substr(2);
-      xml.setRequestHeader("content-type",
-                  "multipart/form-data; boundary=---------------------------" + boundary);
-      for(var key in args.data){
-        multipart += "-----------------------------" + boundary
-                   + "\r\nContent-Disposition: form-data; name=\"" + key
-                   + "\"\r\n\r\n" + args.data[key] + "\r\n";
-      }
-      multipart += "-----------------------------"+boundary+"--\r\n";
+  if(args.method.search(/post/i)!=-1){
+    var boundary = '---------------------------';
+        boundary += Math.floor(Math.random()*32768);
+        boundary += Math.floor(Math.random()*32768);
+        boundary += Math.floor(Math.random()*32768);
+    xml.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+    for(var key in args.data){
+      multipart += boundary
+                 + '\r\nContent-Disposition: form-data; name="' + key
+                 + '"\r\n\r\n' + args.data[key] + '\r\n';
     }
+    multipart += boundary+'--\r\n';
+  }
 
-    xml.onreadystatechange=function(){
-      try{
-        if(xml.readyState==4){
-          context.txt=xml.responseText;
-          context.xml=xml.responseXML;
-          args.callback();
-        }
+  xml.onreadystatechange=function(){
+    try{
+      if(xml.readyState==4){
+        context.txt=xml.responseText;
+        context.xml=xml.responseXML;
+        args.callback();
       }
-      catch(e){}
     }
+    catch(e){}
+  }
 
-    xml.send(multipart);
+  xml.send(multipart);
 }
