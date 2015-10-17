@@ -135,9 +135,9 @@ function sendData() {
 
   if(args.method.search(/post/i)!=-1){
     var boundary = '---------------------------';
-        boundary += Math.floor(Math.random()*32768);
-        boundary += Math.floor(Math.random()*32768);
-        boundary += Math.floor(Math.random()*32768);
+        boundary += Math.floor(Math.random()*32768).toString();
+        boundary += Math.floor(Math.random()*32768).toString();
+        boundary += Math.floor(Math.random()*32768).toString();
     xml.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
     for(var key in args.data){
       multipart += boundary
