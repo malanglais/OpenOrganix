@@ -127,7 +127,7 @@ function getVIEWSTATE(htmlstr) {
 
 function sendData() {
   var xml = new XMLHttpRequest();
-  var args      = { url:"http://lcrse.qc.ca/cedules.saison.aspx",method:"POST",data:{ '__EVENTTARGET':'m$pc$cbCategories', '__EVENTARGUMENT':'', '__LASTFOCUS':'', '__VIEWSTATE':viewSt, '__VIEWSTATEGENERATOR':'FEF83A11', 'm$txtLogin':'', 'm$txtPassword':'', 'm$pc$cbYear':'2015', 'm$pc$cbCategories':'4', 'm$pc$cbSemaine':'2015-10-12', 'm$pc$cbArenaFilter': '-1', 'm$hdnOnLoadMessage':'', 'm$hdnOnLoadMessageOptions':''}, callback:function(){}}
+  var args      = { url:"http://lcrse.qc.ca/cedules.saison.aspx",method:"POST",data:{ '__EVENTTARGET':'m$pc$cbCategories', '__EVENTARGUMENT':'', '__LASTFOCUS':'', '__VIEWSTATE':viewSt, '__VIEWSTATEGENERATOR':'FEF83A11', 'm$txtLogin':'', 'm$txtPassword':'', 'm$pc$cbYear':'2015', 'm$pc$cbCategories':'4', 'm$pc$cbSemaine':'2015-10-5', 'm$pc$cbArenaFilter': '-1', 'm$hdnOnLoadMessage':'', 'm$hdnOnLoadMessageOptions':''}, callback:function(){}}
   var multipart ="";
   var context;
 
