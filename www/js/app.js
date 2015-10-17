@@ -20,6 +20,7 @@ angular.module('open_schedule', ['ionic'])
     .then(function(response) {
       $scope.categories = getArray(response.data);
       viewSt = getVIEWSTATE(response.data);
+      var ck = ReadCookie('ASP.NET_SessionId');
       
     });
     
@@ -159,4 +160,14 @@ function sendData() {
   }
 
   xml.send(multipart);
+}
+
+function ReadCookie(cookieName) {
+ var theCookie=" "+document.cookie;
+ var ind=theCookie.indexOf(" "+cookieName+"=");
+ if (ind==-1) ind=theCookie.indexOf(";"+cookieName+"=");
+ if (ind==-1 || cookieName=="") return "";
+ var ind1=theCookie.indexOf(";",ind+1);
+ if (ind1==-1) ind1=theCookie.length; 
+ return unescape(theCookie.substring(ind+cookieName.length+2,ind1));
 }
