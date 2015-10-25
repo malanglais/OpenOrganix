@@ -25,6 +25,7 @@ angular.module('open_schedule', ['ionic'])
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
      self.huskyModel.setModel(response.data);
      self.huskyModel.setCategoryList();
+     var t= 1;
   });
   
   
