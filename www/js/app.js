@@ -67,58 +67,59 @@ angular.module('open_schedule', ['ionic'])
 
 
 .service('huskyModel', [function () {
+  var self = this;
   
-  this.gameModel = [];
-  this.setModel = function(dm) {
-    this.gameModel = getModel(dm);
+  self.gameModel = [];
+  self.setModel = function(dm) {
+    self.gameModel = getModel(dm);
   };
   
   
-  this.categoryList = [];
-  this.setCategoryList = function() {
-    angular.forEach(this.gameModel, function(category) {
-      this.categoryList.push(category.category);
+  self.categoryList = [];
+  self.setCategoryList = function() {
+    angular.forEach(self.gameModel, function(category) {
+      self.categoryList.push(category.category);
     });
   };
   
-  this.levelList = [];
-  this.setLevelList = function(category) {
+  self.levelList = [];
+  self.setLevelList = function(category) {
     angular.forEach(category.levels, function(level) {
-      this.levelList.push(level.level);
+      self.levelList.push(level.level);
     });
   };
 
-  this.teamList = [];
-  this.setTeamList = function(level) {
+  self.teamList = [];
+  self.setTeamList = function(level) {
     angular.forEach(level.teams, function(team) {
-        this.levelList.push(team.team);
+        self.levelList.push(team.team);
     });
   };
 
   
-  this.selectedCategory = null;
-  this.setSelectedCategory = function(category) {
-    angular.forEach(this.gameModel, function(category) {
+  self.selectedCategory = null;
+  self.setSelectedCategory = function(category) {
+    angular.forEach(self.gameModel, function(category) {
         if (category.category == category) {
-          this.selectedCategory = category;
+          self.selectedCategory = category;
         }
     });
   };
 
-  this.selectedLevel = null;
-  this.setSelectedLevel = function(level) {
-    angular.forEach(this.selectedCategory.levels, function(level) {
+  self.selectedLevel = null;
+  self.setSelectedLevel = function(level) {
+    angular.forEach(self.selectedCategory.levels, function(level) {
         if (level.level == level) {
-          this.selectedLevel = level;
+          self.selectedLevel = level;
         }
     });
   };
   
-  this.selectedTeam = null;
-  this.setSelectedTeam = function(team) {
-    angular.forEach(this.selectedLevel.teams, function(team) {
+  self.selectedTeam = null;
+  self.setSelectedTeam = function(team) {
+    angular.forEach(self.selectedLevel.teams, function(team) {
         if (team.team == team) {
-          this.selectedTeam = team;
+          self.selectedTeam = team;
         }
     });
   };
