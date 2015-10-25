@@ -221,9 +221,9 @@ function getModel(htmlStr) {
         angular.forEach(categoriesDM, function(category) {
           if (category.category == nEntry.category) {
             angular.forEach(category.levels, function(level) {
-              if (levels.level == nEntry.level) {
+              if (level.level == nEntry.level) {
                 angular.forEach(level.teams, function(team) {
-                  if (teams.team == nEntry.team) {
+                  if (team.team == nEntry.team) {
                     found = true;
                   }
                 });
