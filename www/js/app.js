@@ -18,9 +18,13 @@ angular.module('open_schedule', ['ionic'])
 // home page controller that loads the page... may be this can be put in as a service later on
 /* TODO : put in service */
 
-.controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
+.controller('catController',  ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
   var self = this;
   self.huskyModel = huskyModel;
+  
+  var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
+     this.gameModel = self.huskyModel.setModel(response);
+  });
   
   self.selectCategory = function(category) {
         huskyModel.setSelectedCategory(category);
@@ -60,12 +64,12 @@ angular.module('open_schedule', ['ionic'])
 }])
 
 
-.service('huskyModel', ['$http', function ($http) {
+.service('huskyModel', [function () {
   
-  var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
-     this.gameModel = getModel(response.data);
-  });
   
+  this.setModel = function(dm) {
+    this.gameModel = getModel(dm);
+  };
   
   this.categoryList = [];
   angular.forEach(this.gameModel, function(category) {
