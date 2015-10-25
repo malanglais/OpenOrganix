@@ -18,7 +18,7 @@ angular.module('open_schedule', ['ionic'])
 // home page controller that loads the page... may be this can be put in as a service later on
 /* TODO : put in service */
 
-.controller('catController', 'huskyModel', function($scope, huskyModel) {
+.controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   var self = this;
   self.huskyModel = huskyModel;
   
@@ -30,10 +30,10 @@ angular.module('open_schedule', ['ionic'])
       return category === huskyModel.selectedCategory;
   };
   
-})
+}])
   
 
-.controller('levelController', 'huskyModel', function($scope, huskyModel) {
+.controller('levelController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   var self = this;
   self.levelList = huskyModel.levelList
   
@@ -44,9 +44,9 @@ angular.module('open_schedule', ['ionic'])
   self.isLvlSelected = function(level) {
       return level === huskyModel.selectedLevel;
   };
-})
+}])
 
-.controller('teamController', 'huskyModel', function($scope, huskyModel) {
+.controller('teamController', ['$scope', 'huskyModel', function($scope, huskyModel) {
   var self = this;
   self.teamList = huskyModel.teamList;
   
@@ -57,7 +57,7 @@ angular.module('open_schedule', ['ionic'])
       return team === huskyModel.selectedTeam;
   };
 
-})
+}])
 
 
 .service('huskyModel', [function ($http) {
