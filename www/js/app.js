@@ -23,7 +23,7 @@ angular.module('open_schedule', ['ionic'])
   self.huskyModel = huskyModel;
   
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
-     self.huskyModel = self.huskyModel.setModel(response.data);
+     self.huskyModel.gameModel = self.huskyModel.setModel(response.data);
      self.huskyModel.setCategoryList();
   });
   
