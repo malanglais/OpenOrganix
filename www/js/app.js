@@ -266,7 +266,7 @@ function dmLevels(lvl,tm) {
 function dmTeams(tm, gm) {
   this.team = tm;
   this.games = [];
-  this.games.push(tm);
+  this.games.push(gm);
 }
 
 function dmGame(dt, tm, loc) {
