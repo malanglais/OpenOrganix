@@ -23,15 +23,17 @@ angular.module('open_schedule', ['ionic'])
   self.huskyModel = huskyModel;
   
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
-     self.huskyModel = huskyModel.setModel(response.data);
+     self.huskyModel = self.huskyModel.setModel(response.data);
+     self.huskyModel.setCategoryList();
   });
   
+  
   self.selectCategory = function(category) {
-        huskyModel.setSelectedCategory(category);
-        huskyModel.setLevelList(category);
+        self.huskyModel.setSelectedCategory(category);
+        self.huskyModel.setLevelList(category);
   };
   self.isCatSelected = function(category) {
-      return category === huskyModel.selectedCategory;
+      return category === self.huskyModel.selectedCategory;
   };
   
 }])
@@ -39,20 +41,20 @@ angular.module('open_schedule', ['ionic'])
 
 .controller('levelController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   var self = this;
-  self.levelList = huskyModel.levelList
+  //self.levelList = huskyModel.levelList
   
   self.selectLevel = function(level) {
-        huskyModel.setSelectedLevel(level);
-        huskyModel.setTeamList(level);
+        self.huskyModel.setSelectedLevel(level);
+        self.huskyModel.setTeamList(level);
   };
   self.isLvlSelected = function(level) {
-      return level === huskyModel.selectedLevel;
+      return level === self.huskyModel.selectedLevel;
   };
 }])
 
 .controller('teamController', ['$scope', 'huskyModel', function($scope, huskyModel) {
   var self = this;
-  self.teamList = huskyModel.teamList;
+  //self.teamList = huskyModel.teamList;
   
   self.selectTeam = function(team) {
         huskyModel.setSelectedTeam(team);
@@ -71,10 +73,13 @@ angular.module('open_schedule', ['ionic'])
     this.gameModel = getModel(dm);
   };
   
+  
   this.categoryList = [];
-  angular.forEach(this.gameModel, function(category) {
-    this.categoryList.push(category.category);
-  });
+  this.setCategoryList = function() {
+    angular.forEach(this.gameModel, function(category) {
+      this.categoryList.push(category.category);
+    });
+  };
   
   this.levelList = [];
   this.setLevelList = function(category) {
