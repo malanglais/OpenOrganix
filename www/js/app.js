@@ -224,6 +224,7 @@ function getModel(htmlStr) {
               if (level.level == nEntry.level) {
                 angular.forEach(level.teams, function(team) {
                   if (team.team == nEntry.team) {
+                    team.games.push(newGame);
                     found = true;
                   }
                 });
@@ -246,7 +247,7 @@ function getModel(htmlStr) {
               newTeam = new dmTeams(nEntry.team, newGame);
               newLevel = new dmLevels(nEntry.level, newTeam);
               newCategory = new dmCategories(nEntry.category, newLevel);
-              dmCategories.push(newCategory);
+              categoriesDM.push(newCategory);
         }
       }
     }
