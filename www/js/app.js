@@ -159,9 +159,9 @@ angular.module('open_schedule', ['ionic'])
     })
     
     .state('levels', {
-      url: '/home',
+      url: '/levels',
       views: {
-        teams: {
+        home: {
           templateUrl: 'templates/levels.html'
           //controller: 'levelController'
         }
@@ -169,9 +169,9 @@ angular.module('open_schedule', ['ionic'])
     })
     
     .state('teams', {
-      url: '/home',
+      url: '/teams',
       views: {
-        teams: {
+        home: {
           templateUrl: 'templates/teams.html'
           //controller: 'teamController'
         }
