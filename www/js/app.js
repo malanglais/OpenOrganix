@@ -71,6 +71,7 @@ angular.module('open_schedule', ['ionic'])
   this.gameModel = [];
   this.setModel = function(dm) {
     this.gameModel = getModel(dm);
+    var t= 1;
   };
   
   
