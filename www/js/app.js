@@ -229,6 +229,7 @@ function getModel(htmlStr) {
                 });
                 if (!found) {                                       // team not found
                   newTeam = new dmTeams(nEntry.team, newGame);
+                  level.level.teams.push(newTeam);
                 }
                 found = true;
               }
@@ -236,6 +237,7 @@ function getModel(htmlStr) {
             if (!found) {
               newTeam = new dmTeams(nEntry.team, newGame);
               newLevel = new dmLevels(nEntry.level, newTeam);
+              category.category.levels.push(newLevel);
             }
             found = true;
           }
@@ -244,6 +246,7 @@ function getModel(htmlStr) {
               newTeam = new dmTeams(nEntry.team, newGame);
               newLevel = new dmLevels(nEntry.level, newTeam);
               newCategory = new dmCategories(nEntry.category, newLevel);
+              dmCategories.push(newCategory);
         }
       }
     }
