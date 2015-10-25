@@ -19,7 +19,6 @@ angular.module('open_schedule', ['ionic'])
 /* TODO : put in service */
 
 .controller('catController',  ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
-  var self = this;
   $scope.huskyModel = huskyModel;
   
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
@@ -41,27 +40,23 @@ angular.module('open_schedule', ['ionic'])
   
 
 .controller('levelController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
-  var self = this;
-  //self.levelList = huskyModel.levelList
   
-  self.selectLevel = function(level) {
-        self.huskyModel.setSelectedLevel(level);
-        self.huskyModel.setTeamList(level);
+  $scope.selectLevel = function(level) {
+        $scope.huskyModel.setSelectedLevel(level);
+        $scope.huskyModel.setTeamList(level);
   };
-  self.isLvlSelected = function(level) {
-      return level === self.huskyModel.selectedLevel;
+  $scope.isLvlSelected = function(level) {
+      return level === $scope.huskyModel.selectedLevel;
   };
 }])
 
 .controller('teamController', ['$scope', 'huskyModel', function($scope, huskyModel) {
-  var self = this;
-  //self.teamList = huskyModel.teamList;
   
-  self.selectTeam = function(team) {
-        huskyModel.setSelectedTeam(team);
+  $scope.selectTeam = function(team) {
+        $scope.huskyModel.setSelectedTeam(team);
   };
-  self.isTeamSelected = function(team) {
-      return team === huskyModel.selectedTeam;
+  $scope.isTeamSelected = function(team) {
+      return team === $scope.huskyModel.selectedTeam;
   };
 
 }])
