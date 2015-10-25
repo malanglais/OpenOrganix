@@ -68,7 +68,7 @@ angular.module('open_schedule', ['ionic'])
 
 .service('huskyModel', [function () {
   
-  
+  this.gameModel = [];
   this.setModel = function(dm) {
     this.gameModel = getModel(dm);
   };
