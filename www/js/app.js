@@ -70,20 +70,20 @@ angular.module('open_schedule', ['ionic'])
   this.categoryList = [];
   angular.forEach(this.gameModel, function(category) {
     this.categoryList.push(category.category);
-  })
+  });
   
   this.levelList = [];
   this.setLevelList = function(category) {
     angular.forEach(category.levels, function(level) {
       this.levelList.push(level.level);
-    })
+    });
   };
 
   this.teamList = [];
   this.setTeamList = function(level) {
     angular.forEach(level.teams, function(team) {
         this.levelList.push(team.team);
-    })
+    });
   };
 
   
@@ -93,7 +93,7 @@ angular.module('open_schedule', ['ionic'])
         if (category.category == category) {
           this.selectedCategory = category;
         }
-    })
+    });
   };
 
   this.selectedLevel = null;
@@ -102,7 +102,7 @@ angular.module('open_schedule', ['ionic'])
         if (level.level == level) {
           this.selectedLevel = level;
         }
-    })
+    });
   };
   
   this.selectedTeam = null;
@@ -111,7 +111,7 @@ angular.module('open_schedule', ['ionic'])
         if (team.team == team) {
           this.selectedTeam = team;
         }
-    })
+    });
   };
 }])
 
@@ -129,8 +129,6 @@ angular.module('open_schedule', ['ionic'])
       StatusBar.styleLightContent();
     }
   });
-  
-  
 })
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -208,49 +206,50 @@ function getModel(htmlStr) {
     if (trList[i].indexOf('eventListDayRowHeader') > 0) {                             // modify this to get the date
       day = getDay(trList[i]);                                                        // get the displayed day
     } else {
-    newGame = new dmGame(nEntry[i].day, nEntry.time, nEntry.loction);             // add game regardless
-    if (categoriesDM.length ==0) {                                                    // array is empty
-      newTeam = new dmTeams(nEntry[i].team, newGame);
-      newLevel = new dmLevels(nEntry[i].level, newTeam);
-      newCategory = new dmCategories(nEntry[i].category, newLevel);
-      categoriesDM.push(newCategory);
-    } else {            // not found, we're going to search
-      angular.forEach(categoriesDM, function(category) {
-        if (category.category == nEntry[i].category) {
-          angular.forEach(category.levels, function(level) {
-            if (levels.level == nEntry[i].level) {
-              angular.forEach(level.teams, function(team) {
-                if (teams.team == nEntry[i].team) {
-                  found = true;
+      newGame = new dmGame(nEntry[i].day, nEntry[i].time, nEntry[i].loction);             // add game regardless
+      if (categoriesDM.length ==0) {                                                    // array is empty
+        newTeam = new dmTeams(nEntry[i].team, newGame);
+        newLevel = new dmLevels(nEntry[i].level, newTeam);
+        newCategory = new dmCategories(nEntry[i].category, newLevel);
+        categoriesDM.push(newCategory);
+      } else {            // not found, we're going to search
+        angular.forEach(categoriesDM, function(category) {
+          if (category.category == nEntry[i].category) {
+            angular.forEach(category.levels, function(level) {
+              if (levels.level == nEntry[i].level) {
+                angular.forEach(level.teams, function(team) {
+                  if (teams.team == nEntry[i].team) {
+                    found = true;
+                  }
+                });
+                if (!found) {                                       // team not found
+                  newTeam = new dmTeams(nEntry[i].team, newGame);
                 }
-              })
-              if (!found) {                                       // team not found
-                newTeam = new dmTeams(nEntry[i].team, newGame);
+                found = true;
               }
-              found = true;
+            });
+            if (!found) {
+              newTeam = new dmTeams(nEntry[i].team, newGame);
+              newLevel = new dmLevels(nEntry[i].level, newTeam);
             }
-          })
-          if (!found) {
-            newTeam = new dmTeams(nEntry[i].team, newGame);
-            newLevel = new dmLevels(nEntry[i].level, newTeam);
+            found = true;
           }
-          found = true;
+        });
+        if (!found) {
+              newTeam = new dmTeams(nEntry[i].team, newGame);
+              newLevel = new dmLevels(nEntry[i].level, newTeam);
+              newCategory = new dmCategories(nEntry[i].category, newLevel);
         }
-      })
-      if (!found) {
-            newTeam = new dmTeams(nEntry[i].team, newGame);
-            newLevel = new dmLevels(nEntry[i].level, newTeam);
-            newCategory = new dmCategories(nEntry[i].category, newLevel);
       }
     }
   }
   return dmCategories;
-} 
+}
 
 function dmCategories(cat, lvl) {
   this.category = cat;
   this.levels = [];
-  this.levels.push(lvl)
+  this.levels.push(lvl);
 }
 
 function dmLevels(lvl,tm) {
@@ -288,77 +287,5 @@ function parseTr(trStr, day) { // returns parsed string
   var team = trs[3].slice(trs[3].indexOf(' ')+1, trs[3].indexOf('</td>'));
   var loction = trs[4].slice(trs[4].indexOf('blank\'>')+7, trs[4].indexOf('</a>'));
   var newEntry = new dmEntry(category, level, team, day, time, loction);
-  return newEntry
-}
-
-
-
-
-/*
-function getArray(htmlStr) {
-  var index;
-  var wholeList = htmlStr.split("<select");
-  var cleanList = wholeList[2].slice(wholeList[2].indexOf("<option value"),wholeList[2].lastIndexOf("<option value")).split("<option value");
-  for (index = 1; index < cleanList.length; index++)
-  {
-    cleanList[index] = cleanList[index].slice(cleanList[index].indexOf('>')+1, cleanList[index].indexOf('<'))
-  }
-  cleanList.splice(0, 1);
-  return cleanList;
-  
-};
-
-function getVIEWSTATE(htmlstr) {
-  var index;
-  var wholeTxt = htmlstr.split('<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="');
-  var halfTxt = wholeTxt[1].split('/>');
-  var result = halfTxt[0];
-  return result;
-}
-
-function sendData() {
-  var xml = new XMLHttpRequest();
-  var args      = { url:"http://lcrse.qc.ca/cedules.saison.aspx",method:"POST",data:{ '__EVENTTARGET':'m$pc$cbCategories', '__EVENTARGUMENT':'', '__LASTFOCUS':'', '__VIEWSTATEGENERATOR':'FEF83A11', 'm$txtLogin':'', 'm$txtPassword':'', 'm$pc$cbYear':'2015', 'm$pc$cbCategories':'4', 'm$pc$cbSemaine':'2015-10-5', 'm$pc$cbArenaFilter': '-1', 'm$hdnOnLoadMessage':'', 'm$hdnOnLoadMessageOptions':''}, callback:function(){}}
-  var multipart ="";
-  var context;
-
-  xml.open(args.method,args.url,true);
-
-  if(args.method.search(/post/i)!=-1){
-    var boundary = '---------------------------';
-        boundary += Math.floor(Math.random()*32768).toString();
-        boundary += Math.floor(Math.random()*32768).toString();
-        boundary += Math.floor(Math.random()*32768).toString();
-    xml.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
-    for(var key in args.data){
-      multipart += boundary
-                 + '\r\nContent-Disposition: form-data; name="' + key
-                 + '"\r\n\r\n' + args.data[key] + '\r\n';
-    }
-    multipart += boundary+'--\r\n';
-  }
-
-  xml.onreadystatechange=function(){
-    try{
-      if(xml.readyState==4){
-        context.txt=xml.responseText;
-        context.xml=xml.responseXML;
-        args.callback();
-      }
-    }
-    catch(e){}
-  }
-
-  xml.send(multipart);
-}
-
-function ReadCookie(cookieName) {
- var theCookie=" "+document.cookie;
- var ind=theCookie.indexOf(" "+cookieName+"=");
- if (ind==-1) ind=theCookie.indexOf(";"+cookieName+"=");
- if (ind==-1 || cookieName=="") return "";
- var ind1=theCookie.indexOf(";",ind+1);
- if (ind1==-1) ind1=theCookie.length; 
- return unescape(theCookie.substring(ind+cookieName.length+2,ind1));
-}
-*/
+  return newEntry;
+} 
