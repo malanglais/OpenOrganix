@@ -80,14 +80,14 @@ angular.module('open_schedule', ['ionic'])
   
   self.levelList = [];
   self.setLevelList = function() {
-    angular.forEach(selectedCategory.levels, function(level) {
+    angular.forEach(self.selectedCategory.levels, function(level) {
       self.levelList.push(level.level);
     });
   };
 
   self.teamList = [];
   self.setTeamList = function() {
-    angular.forEach(selectedLevel.teams, function(team) {
+    angular.forEach(self.selectedLevel.teams, function(team) {
         self.teamList.push(team.team);
     });
   };
