@@ -206,10 +206,11 @@ function getModel(htmlStr) {
   var trList = htmlStr.split("<tr");
   
   for (var i = 2; i < trList.length; i++) {                                           // loop through teams to single them out and create the vm
-    var nEntry = parseTr(trList[i], day);                                             // parsed data (cat, lvl, tm, d, t, loc)
+                                                // parsed data (cat, lvl, tm, d, t, loc)
     if (trList[i].indexOf('eventListDayRowHeader') > 0) {                             // modify this to get the date
       day = getDay(trList[i]);                                                        // get the displayed day
     } else {
+      var nEntry = parseTr(trList[i], day); 
       newGame = new dmGame(nEntry[i].day, nEntry[i].time, nEntry[i].loction);             // add game regardless
       if (categoriesDM.length ==0) {                                                    // array is empty
         newTeam = new dmTeams(nEntry[i].team, newGame);
