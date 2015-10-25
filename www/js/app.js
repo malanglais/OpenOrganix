@@ -30,7 +30,7 @@ angular.module('open_schedule', ['ionic'])
       return category === huskyModel.selectedCategory;
   };
   
-}
+})
   
 
 .controller('levelController', 'huskyModel', function($scope, huskyModel) {
