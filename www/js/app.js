@@ -60,7 +60,7 @@ angular.module('open_schedule', ['ionic'])
 }])
 
 
-.service('huskyModel', [function ($http) {
+.service('huskyModel', ['$http', function ($http) {
   
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
      this.gameModel = getModel(response.data);
