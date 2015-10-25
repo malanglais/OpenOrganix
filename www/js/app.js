@@ -157,8 +157,8 @@ angular.module('open_schedule', ['ionic'])
       url: '/home',
       views: {
         home: {
-          templateUrl: 'templates/categories.html',
-          controller: 'catController'
+          templateUrl: 'templates/categories.html'
+          //controller: 'catController'
         }
       }
     })
@@ -167,8 +167,8 @@ angular.module('open_schedule', ['ionic'])
       url: '/home',
       views: {
         teams: {
-          templateUrl: 'templates/levels.html',
-          controller: 'levelController'
+          templateUrl: 'templates/levels.html'
+          //controller: 'levelController'
         }
       }
     })
@@ -177,8 +177,8 @@ angular.module('open_schedule', ['ionic'])
       url: '/home',
       views: {
         teams: {
-          templateUrl: 'templates/teams.html',
-          controller: 'teamController'
+          templateUrl: 'templates/teams.html'
+          //controller: 'teamController'
         }
       }
     })
