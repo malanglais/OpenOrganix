@@ -30,7 +30,7 @@ angular.module('open_schedule', ['ionic'])
   
   $scope.selectCategory = function(category) {
         $scope.huskyModel.setSelectedCategory(category);
-        $scope.huskyModel.setLevelList(category);
+        $scope.huskyModel.setLevelList($scope.huskyModel.selectedCategory);
   };
   $scope.isCatSelected = function(category) {
       return category === $scope.huskyModel.selectedCategory;
@@ -43,7 +43,7 @@ angular.module('open_schedule', ['ionic'])
   
   $scope.selectLevel = function(level) {
         $scope.huskyModel.setSelectedLevel(level);
-        $scope.huskyModel.setTeamList(level);
+        $scope.huskyModel.setTeamList($scope.huskyModel.selectedLevel);
   };
   $scope.isLvlSelected = function(level) {
       return level === $scope.huskyModel.selectedLevel;
@@ -88,7 +88,7 @@ angular.module('open_schedule', ['ionic'])
   self.teamList = [];
   self.setTeamList = function(level) {
     angular.forEach(level.teams, function(team) {
-        self.levelList.push(team.team);
+        self.teamList.push(team.team);
     });
   };
 
