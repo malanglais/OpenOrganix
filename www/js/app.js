@@ -68,10 +68,12 @@ angular.module('open_schedule', ['ionic'])
 
 .service('huskyModel', [function () {
   
+  var tempArr=[];
+  
   this.gameModel = [];
   this.setModel = function(dm) {
-    this.gameModel = getModel(dm);
-    var t= 1;
+    tempArr = getModel(dm);
+    var t=1;
   };
   
   
