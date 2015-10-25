@@ -68,12 +68,9 @@ angular.module('open_schedule', ['ionic'])
 
 .service('huskyModel', [function () {
   
-  var tempArr=[];
-  
   this.gameModel = [];
   this.setModel = function(dm) {
-    tempArr = getModel(dm);
-    var t=1;
+    this.gameModel = getModel(dm);
   };
   
   
@@ -260,7 +257,7 @@ function getModel(htmlStr) {
       }
     }
   }
-  return dmCategories;
+  return categoriesDM;
 }
 
 function dmCategories(cat, lvl) {
