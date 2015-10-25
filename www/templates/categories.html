@@ -1,0 +1,9 @@
+<ion-view title="Categories">
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="category in huskyModel.categoryList" ng-click="selectCategory(category)" href="levels.html">
+                {{category.category}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

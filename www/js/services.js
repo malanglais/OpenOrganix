@@ -1,47 +1,57 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
+.factory('Teams', function() {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
-  var chats = [{
+  var teams = [{
     id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
+    name: 'Pré-Novice',
+    levels : ['MAHG 1', 'MAHG 2' ],
+    groupe : ['1','2','3']
   }, {
     id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  }, {
+    name: 'Novice',
+    levels : ['A', 'B', 'C'],
+    groupe : ['1', '2', '3', '4', '5', 'Clinique défenseur']
+    }, {
     id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
+    name: 'Atome',
+    levels : ['BB', 'CC', 'A', 'B', 'C'],
+    groupe : ['1', '2', '3', 'Féminin', 'Clinique défenseur']
   }, {
     id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
+    name: 'Pee-Wee',
+    levels : ['AA','BB', 'CC', 'A', 'B', 'C'],
+    groupe : ['1', '2', '3', 'Féminin', 'Clinique défenseur']
   }, {
     id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
+    name: 'Bantam',
+    levels : ['AA','BB', 'CC', 'A', 'B', 'C'],
+    groupe : ['1', '2', '3', 'Féminin']
+  }, {
+    id: 5,
+    name: 'Midget',
+    levels : ['AA','BB', 'CC', 'A', 'B', 'C'],
+    groupe : ['1', '2', '3', 'Féminin']
+  }, {
+    id: 6,
+    name: 'Junior',
+    levels : ['A', 'B'],
+    groupe : ['1', '2']
   }];
 
   return {
     all: function() {
-      return chats;
+      return teams;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    remove: function(team) {
+      team.splice(teams.indexOf(team), 1);
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    get: function(teamId) {
+      for (var i = 0; i < teams.length; i++) {
+        if (teams[i].id === parseInt(teamId)) {
+          return teams[i];
         }
       }
       return null;
