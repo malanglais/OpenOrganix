@@ -20,21 +20,21 @@ angular.module('open_schedule', ['ionic'])
 
 .controller('catController',  ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
   var self = this;
-  self.huskyModel = huskyModel;
+  $scope.huskyModel = huskyModel;
   
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
-     self.huskyModel.setModel(response.data);
-     self.huskyModel.setCategoryList();
+     $scope.huskyModel.setModel(response.data);
+     $scope.huskyModel.setCategoryList();
      var t= 1;
   });
   
   
-  self.selectCategory = function(category) {
-        self.huskyModel.setSelectedCategory(category);
-        self.huskyModel.setLevelList(category);
+  $scope.selectCategory = function(category) {
+        $scope.huskyModel.setSelectedCategory(category);
+        $scope.huskyModel.setLevelList(category);
   };
-  self.isCatSelected = function(category) {
-      return category === self.huskyModel.selectedCategory;
+  $scope.isCatSelected = function(category) {
+      return category === $scope.huskyModel.selectedCategory;
   };
   
 }])
