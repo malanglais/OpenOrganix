@@ -94,28 +94,28 @@ angular.module('open_schedule', ['ionic'])
 
   
   self.selectedCategory = null;
-  self.setSelectedCategory = function(category) {
+  self.setSelectedCategory = function(cat) {
     angular.forEach(self.gameModel, function(category) {
-        if (category.category == category) {
-          self.selectedCategory = category;
+        if (category.category == cat) {
+          self.selectedCategory = category.category;
         }
     });
   };
 
   self.selectedLevel = null;
-  self.setSelectedLevel = function(level) {
+  self.setSelectedLevel = function(lvl) {
     angular.forEach(self.selectedCategory.levels, function(level) {
         if (level.level == level) {
-          self.selectedLevel = level;
+          self.selectedLevel = level.level;
         }
     });
   };
   
   self.selectedTeam = null;
-  self.setSelectedTeam = function(team) {
+  self.setSelectedTeam = function(tm) {
     angular.forEach(self.selectedLevel.teams, function(team) {
-        if (team.team == team) {
-          self.selectedTeam = team;
+        if (team.team == tm) {
+          self.selectedTeam = team.team;
         }
     });
   };
