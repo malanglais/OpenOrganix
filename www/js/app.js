@@ -222,14 +222,12 @@ function getModel(htmlStr) {
               angular.forEach(level.teams, function(team) {
                 if (teams.team == nEntry[i].team) {
                   found = true;
-                  break;
                 }
               })
               if (!found) {                                       // team not found
                 newTeam = new dmTeams(nEntry[i].team, newGame);
               }
               found = true;
-              break;
             }
           })
           if (!found) {
@@ -237,7 +235,6 @@ function getModel(htmlStr) {
             newLevel = new dmLevels(nEntry[i].level, newTeam);
           }
           found = true;
-          break;
         }
       })
       if (!found) {
