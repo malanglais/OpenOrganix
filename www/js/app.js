@@ -211,39 +211,39 @@ function getModel(htmlStr) {
       day = getDay(trList[i]);                                                        // get the displayed day
     } else {
       var nEntry = parseTr(trList[i], day); 
-      newGame = new dmGame(nEntry[i].day, nEntry[i].time, nEntry[i].loction);             // add game regardless
+      newGame = new dmGame(nEntry.day, nEntry.time, nEntry.loction);             // add game regardless
       if (categoriesDM.length ==0) {                                                    // array is empty
-        newTeam = new dmTeams(nEntry[i].team, newGame);
-        newLevel = new dmLevels(nEntry[i].level, newTeam);
-        newCategory = new dmCategories(nEntry[i].category, newLevel);
+        newTeam = new dmTeams(nEntry.team, newGame);
+        newLevel = new dmLevels(nEntry.level, newTeam);
+        newCategory = new dmCategories(nEntry.category, newLevel);
         categoriesDM.push(newCategory);
       } else {            // not found, we're going to search
         angular.forEach(categoriesDM, function(category) {
-          if (category.category == nEntry[i].category) {
+          if (category.category == nEntry.category) {
             angular.forEach(category.levels, function(level) {
-              if (levels.level == nEntry[i].level) {
+              if (levels.level == nEntry.level) {
                 angular.forEach(level.teams, function(team) {
-                  if (teams.team == nEntry[i].team) {
+                  if (teams.team == nEntry.team) {
                     found = true;
                   }
                 });
                 if (!found) {                                       // team not found
-                  newTeam = new dmTeams(nEntry[i].team, newGame);
+                  newTeam = new dmTeams(nEntry.team, newGame);
                 }
                 found = true;
               }
             });
             if (!found) {
-              newTeam = new dmTeams(nEntry[i].team, newGame);
-              newLevel = new dmLevels(nEntry[i].level, newTeam);
+              newTeam = new dmTeams(nEntry.team, newGame);
+              newLevel = new dmLevels(nEntry.level, newTeam);
             }
             found = true;
           }
         });
         if (!found) {
-              newTeam = new dmTeams(nEntry[i].team, newGame);
-              newLevel = new dmLevels(nEntry[i].level, newTeam);
-              newCategory = new dmCategories(nEntry[i].category, newLevel);
+              newTeam = new dmTeams(nEntry.team, newGame);
+              newLevel = new dmLevels(nEntry.level, newTeam);
+              newCategory = new dmCategories(nEntry.category, newLevel);
         }
       }
     }
