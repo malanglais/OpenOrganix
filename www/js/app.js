@@ -40,6 +40,7 @@ angular.module('open_schedule', ['ionic'])
   
 
 .controller('levelController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
+  $scope.huskyModel = huskyModel;
   
   $scope.selectLevel = function(level) {
         $scope.huskyModel.setSelectedLevel(level);
@@ -51,6 +52,7 @@ angular.module('open_schedule', ['ionic'])
 }])
 
 .controller('teamController', ['$scope', 'huskyModel', function($scope, huskyModel) {
+  $scope.huskyModel = huskyModel;
   
   $scope.selectTeam = function(team) {
         $scope.huskyModel.setSelectedTeam(team);
