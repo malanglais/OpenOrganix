@@ -107,7 +107,7 @@ angular.module('open_schedule', ['ionic'])
   self.selectedLevel = null;
   self.setSelectedLevel = function(lvl) {
     angular.forEach(self.selectedCategory.levels, function(level) {
-        if (level.level == level) {
+        if (level.level == lvl) {
           self.selectedLevel = level;
         }
     });
