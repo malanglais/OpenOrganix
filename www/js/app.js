@@ -30,7 +30,7 @@ angular.module('open_schedule', ['ionic'])
   
   $scope.selectCategory = function(category) {
         $scope.huskyModel.setSelectedCategory(category);
-        $scope.huskyModel.setLevelList($scope.huskyModel.selectedCategory);
+        $scope.huskyModel.setLevelList();
   };
   $scope.isCatSelected = function(category) {
       return category === $scope.huskyModel.selectedCategory;
@@ -43,7 +43,7 @@ angular.module('open_schedule', ['ionic'])
   
   $scope.selectLevel = function(level) {
         $scope.huskyModel.setSelectedLevel(level);
-        $scope.huskyModel.setTeamList($scope.huskyModel.selectedLevel);
+        $scope.huskyModel.setTeamList();
   };
   $scope.isLvlSelected = function(level) {
       return level === $scope.huskyModel.selectedLevel;
@@ -79,25 +79,25 @@ angular.module('open_schedule', ['ionic'])
   };
   
   self.levelList = [];
-  self.setLevelList = function(category) {
-    angular.forEach(category.levels, function(level) {
+  self.setLevelList = function() {
+    angular.forEach(selectedCategory.levels, function(level) {
       self.levelList.push(level.level);
     });
   };
 
   self.teamList = [];
-  self.setTeamList = function(level) {
-    angular.forEach(level.teams, function(team) {
+  self.setTeamList = function() {
+    angular.forEach(selectedLevel.teams, function(team) {
         self.teamList.push(team.team);
     });
   };
 
-  
+  // this has to return the array... not the name
   self.selectedCategory = null;
   self.setSelectedCategory = function(cat) {
     angular.forEach(self.gameModel, function(category) {
         if (category.category == cat) {
-          self.selectedCategory = category.category;
+          self.selectedCategory = category;
         }
     });
   };
@@ -106,7 +106,7 @@ angular.module('open_schedule', ['ionic'])
   self.setSelectedLevel = function(lvl) {
     angular.forEach(self.selectedCategory.levels, function(level) {
         if (level.level == level) {
-          self.selectedLevel = level.level;
+          self.selectedLevel = level;
         }
     });
   };
@@ -115,7 +115,7 @@ angular.module('open_schedule', ['ionic'])
   self.setSelectedTeam = function(tm) {
     angular.forEach(self.selectedLevel.teams, function(team) {
         if (team.team == tm) {
-          self.selectedTeam = team.team;
+          self.selectedTeam = team;
         }
     });
   };
