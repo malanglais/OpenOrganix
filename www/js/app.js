@@ -22,7 +22,7 @@ angular.module('open_schedule', ['ionic'])
   $scope.huskyModel = huskyModel;
 
   $scope.resetLists = function() {
-    $scope.huskyModel.resetLists(3);
+    $scope.huskyModel.resetLists(2);
   }
 
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
