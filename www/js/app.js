@@ -24,7 +24,6 @@ angular.module('open_schedule', ['ionic'])
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
      $scope.huskyModel.setModel(response.data);
      $scope.huskyModel.setCategoryList();
-     var t= 1;
   });
   
   
@@ -41,6 +40,7 @@ angular.module('open_schedule', ['ionic'])
 
 .controller('levelController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
+  
   
   $scope.selectLevel = function(level) {
         $scope.huskyModel.setSelectedLevel(level);
@@ -66,6 +66,23 @@ angular.module('open_schedule', ['ionic'])
 
 .service('huskyModel', [function () {
   var self = this;
+  
+  self.resetLists = function(num) {
+    if (num >= 1) {
+      self.teamList = [];               // Assuming this is the only reference
+      self.selectedTeam = null;         // reset is selected to null
+    }
+    if (num >= 2) {
+      self.levelList = [];
+      self.selectedLevel = null;
+    }
+    if (num >= 3) {
+      self.categoryList = [];
+      self.selectedCategory = null;
+    }
+               
+  }
+  
   
   self.gameModel = [];
   self.setModel = function(dm) {
