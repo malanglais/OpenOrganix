@@ -237,11 +237,12 @@ function getDay(trStr) {
   return trStr.slice(trStr.indexOf('5\'>')+3, trStr.indexOf('</td>'));
 }
 
-function getModel(htmlStr) {
+function getModel(htmlStr, eventType) {
   var categoriesDM = [];
   var found = false;
   var day = '';
   var newGame;
+  var newDate;
   var newTeam;
   var newLevel;
   var newCategory;
@@ -254,8 +255,9 @@ function getModel(htmlStr) {
       day = getDay(trList[i]);                                                        // get the displayed day
     } else {
       var nEntry = parseTr(trList[i], day);                                       // parsed data (cat, lvl, tm, d, t, loc)
-      newGame = new dmGame(nEntry.day, nEntry.time, nEntry.loction);             // add game regardless
+      newGame = new dmGame(nEntry.time, eventType, nEntry.loction);             // add game regardless
       if (categoriesDM.length ==0) {                                                    // array is empty
+        newDate = new dmDate(nEntry.date);
         newTeam = new dmTeams(nEntry.team, newGame);
         newLevel = new dmLevels(nEntry.level, newTeam);
         newCategory = new dmCategories(nEntry.category, newLevel);
@@ -265,20 +267,31 @@ function getModel(htmlStr) {
           if (category.category == nEntry.category) {
             angular.forEach(category.levels, function(level) {
               if (level.level == nEntry.level) {
-                angular.forEach(level.teams, function(team) {
+                angular.forEach(level.teams, function(team) {                     // Adding a class date to check. This date class contains game
                   if (team.team == nEntry.team) {
-                    team.games.push(newGame);
+                    angular.forEach(team.dates, function(date) {                     // Adding a class date to check. This date class contains game
+                      if (date.date == nEntry.team) {
+                        date.games.push(newGame);
+                        found = true;
+                      }
+                    });
+                    if (!found) {                                       // date not found
+                      newDate = new dmDate(nEntry.date, newGame);
+                      team.dates.push(newDate);
+                    }
                     found = true;
                   }
                 });
                 if (!found) {                                       // team not found
-                  newTeam = new dmTeams(nEntry.team, newGame);
+                  newDate = new dmDate(nEntry.date, newGame);
+                  newTeam = new dmTeams(nEntry.team, newDate);
                   level.teams.push(newTeam);
                 }
                 found = true;
               }
             });
             if (!found) {
+              newDate = new dmDate(nEntry.date, newGame);
               newTeam = new dmTeams(nEntry.team, newGame);
               newLevel = new dmLevels(nEntry.level, newTeam);
               category.levels.push(newLevel);
@@ -287,6 +300,7 @@ function getModel(htmlStr) {
           }
         });
         if (!found) {
+              newDate = new dmDate(nEntry.date, newGame);
               newTeam = new dmTeams(nEntry.team, newGame);
               newLevel = new dmLevels(nEntry.level, newTeam);
               newCategory = new dmCategories(nEntry.category, newLevel);
@@ -316,7 +330,7 @@ function dmTeams(tm, gd) {
   this.dates.push(gd);
 }
 
-function dmGameDay (dt, gm) {
+function dmDate (dt, gm) {
   this.date = dt;
   this.games = [];
   this.games.push(gm);
@@ -332,7 +346,7 @@ function dmEntry(cat, lvl, tm, d, t, pg, loc) {
   this.category = cat;
   this.level = lvl;
   this.team = tm;
-  this.day = d;
+  this.date = d;
   this.time = t;
   this.type = pg;
   this.loction = loc;
@@ -345,7 +359,7 @@ function parseTr(trStr, day) { // returns parsed string
   var level = trs[2].slice(trs[2].indexOf(' ')+1, trs[2].indexOf('</td>'));
   var team = trs[3].slice(trs[3].indexOf(' ')+1, trs[3].indexOf('</td>'));
   var loction = trs[4].slice(trs[4].indexOf('blank\'>')+7, trs[4].indexOf('</a>'));
-  var newEntry = new dmEntry(category, level, team, day, time, '', loction);
+  var newEntry = new dmEntry(category, level, team, day, time, loction);
   return newEntry;
 } 
 
