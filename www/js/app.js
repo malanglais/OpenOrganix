@@ -36,7 +36,7 @@ angular.module('open_schedule', ['ionic'])
   $scope.huskyModel = huskyModel;
 
   $scope.resetLists = function() {
-    $scope.huskyModel.resetLists(3);
+    $scope.huskyModel.resetLists(2);
   }
 }])
 
