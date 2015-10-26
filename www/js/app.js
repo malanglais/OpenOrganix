@@ -21,10 +21,6 @@ angular.module('open_schedule', ['ionic'])
 .controller('mainController', ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
   $scope.huskyModel = huskyModel;
 
-  $scope.resetLists = function() {
-    $scope.huskyModel.resetLists(2);
-  }
-
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
     $scope.huskyModel.setModel(response.data);
     $scope.huskyModel.setCategoryList();
@@ -36,12 +32,9 @@ angular.module('open_schedule', ['ionic'])
 .controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
   
-  $scope.resetLists = function(num) {
-    $scope.huskyModel.resetLists(num);
-  }
-  
   $scope.selectCategory = function(category) {
         $scope.huskyModel.setSelectedCategory(category);
+        $scope.huskyModel.resetLists(2);
         $scope.huskyModel.setLevelList();
   };
   $scope.isCatSelected = function(category) {
@@ -57,6 +50,7 @@ angular.module('open_schedule', ['ionic'])
   
   $scope.selectLevel = function(level) {
         $scope.huskyModel.setSelectedLevel(level);
+        $scope.huskyModel.resetLists(1);
         $scope.huskyModel.setTeamList();
   };
   $scope.isLvlSelected = function(level) {
@@ -195,7 +189,6 @@ angular.module('open_schedule', ['ionic'])
       views: {
         'home': {
           templateUrl: 'templates/levels.html'
-          //controller: 'levelController'
         }
       }
     })
@@ -205,7 +198,6 @@ angular.module('open_schedule', ['ionic'])
       views: {
         'home': {
           templateUrl: 'templates/teams.html'
-          //controller: 'teamController'
         }
       }
     })
