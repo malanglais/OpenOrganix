@@ -9,8 +9,8 @@
 
 //var viewSt= '';
 //var teamNum = 0;
-//var categories = ['Pré-Novice', 'Novice', 'Atome', 'Pee-Wee', 'Bantam', 'Midget', 'Junior', 'Autre'];
-//var levels = ['AAA', 'AA', 'BB', 'CC', 'A', 'B', 'C', 'F'];
+var orderCategories = ['Pré-Novice', 'Novice', 'Atome', 'Pee-Wee', 'Bantam', 'Midget', 'Junior', 'Autre'];
+var orderLevels = ['AAA', 'AA', 'BB', 'CC', 'A', 'B', 'C', 'F'];
 //var teams = ['1', '2', '3', '4', '5'];
 
 angular.module('open_schedule', ['ionic']) 
@@ -101,6 +101,7 @@ angular.module('open_schedule', ['ionic'])
   self.setCategoryList = function() {
     angular.forEach(self.gameModel, function(category) {
       self.categoryList.push(category.category);
+      sortIt(self.categoryList, orderCategories);
     });
   };
   
@@ -108,7 +109,7 @@ angular.module('open_schedule', ['ionic'])
   self.setLevelList = function() {
     angular.forEach(self.selectedCategory.levels, function(level) {
       self.levelList.push(level.level);
-      sortLvl(self.levelList);
+      sortIt(self.levelList, orderLevels);
     });
   };
 
@@ -326,32 +327,15 @@ function parseTr(trStr, day) { // returns parsed string
   return newEntry;
 } 
 
-function sortLvl(lvls) {    // receiving a collection
+function sortIt(lvls, ord) {    // receiving a collection
   var indexFilled = 0;
-  if (lvls.indexOf('AAA') != -1) {
-    lvls.move(lvls.indexOf('AAA'), indexFilled);
-    indexFilled++;
-  }
-  if (lvls.indexOf('AA') != -1) {
-    lvls.move(lvls.indexOf('AA'), indexFilled);
-    indexFilled++;
-  }
-  if (lvls.indexOf('BB') != -1) {
-    lvls.move(lvls.indexOf('BB'), indexFilled);
-    indexFilled++;
-  }
-  if (lvls.indexOf('A') != -1) {
-    lvls.move(lvls.indexOf('A'), indexFilled);
-    indexFilled++;
-  }
-  if (lvls.indexOf('B') != -1) {
-    lvls.move(lvls.indexOf('B'), indexFilled);
-    indexFilled++;
-  }
-  if (lvls.indexOf('C') != -1) {
-    lvls.move(lvls.indexOf('C'), indexFilled);
-    indexFilled++;
-  }
+  angular.forEach(ord, function(ordItem) {
+    indexFilled = 0;
+    if (lvls.indexOf(ordItem) != -1) {
+      lvls.move(lvls.indexOf(ordItem), indexFilled);
+      indexFilled++;
+    }
+  })
 }
 
 Array.prototype.move = function (old_index, new_index) {
