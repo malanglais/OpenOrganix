@@ -330,7 +330,6 @@ function parseTr(trStr, day) { // returns parsed string
 function sortIt(lvls, ord) {    // receiving a collection
   var indexFilled = 0;
   angular.forEach(ord, function(ordItem) {
-    indexFilled = 0;
     if (lvls.indexOf(ordItem) != -1) {
       lvls.move(lvls.indexOf(ordItem), indexFilled);
       indexFilled++;
