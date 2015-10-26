@@ -32,7 +32,7 @@ angular.module('open_schedule', ['ionic'])
      headers: {
        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
      },
-     data: { eventType: 'EVENT_PRACTICES' } //EVENT_GAMES
+     data: { eventType: 'EVENT_PRACTICES' } //EVENT_GAMES <-- this is the param to get the games 
   }
   
   var promise = $http(req).then(function(response) {
