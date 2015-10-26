@@ -295,24 +295,31 @@ function dmLevels(lvl,tm) {
   this.teams.push(tm);
 }
 
-function dmTeams(tm, gm) {
+function dmTeams(tm, gd) {
   this.team = tm;
+  this.dates = [];
+  this.dates.push(gd);
+}
+
+function dmGameDay (dt, gm) {
+  this.date = dt;
   this.games = [];
   this.games.push(gm);
 }
 
-function dmGame(dt, tm, loc) {
-    this.date = dt;
+function dmGame(tm, pg, loc) {
     this.time = tm;
+    this.type = pg;
     this.loction = loc; 
 }
 
-function dmEntry(cat, lvl, tm, d, t, loc) {
+function dmEntry(cat, lvl, tm, d, t, pg, loc) {
   this.category = cat;
   this.level = lvl;
   this.team = tm;
   this.day = d;
   this.time = t;
+  this.type = pg;
   this.loction = loc;
 }
 
@@ -323,7 +330,7 @@ function parseTr(trStr, day) { // returns parsed string
   var level = trs[2].slice(trs[2].indexOf(' ')+1, trs[2].indexOf('</td>'));
   var team = trs[3].slice(trs[3].indexOf(' ')+1, trs[3].indexOf('</td>'));
   var loction = trs[4].slice(trs[4].indexOf('blank\'>')+7, trs[4].indexOf('</a>'));
-  var newEntry = new dmEntry(category, level, team, day, time, loction);
+  var newEntry = new dmEntry(category, level, team, day, time, '', loction);
   return newEntry;
 } 
 
