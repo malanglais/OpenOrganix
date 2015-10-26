@@ -167,7 +167,6 @@ angular.module('open_schedule', ['ionic'])
 
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  var self = this;
   //$httpProvider.defaults.withCredentials = true;
   
   // Ionic uses AngularUI Router which uses the concept of states
@@ -184,12 +183,7 @@ angular.module('open_schedule', ['ionic'])
           templateUrl: 'templates/categories.html'
           //controller: 'catController'
         }
-      },
-      onEnter: function(reg){
-        if(reg) { 
-          huskyModel.resetLists(3);
-        }
-  }
+      }
     })
     
     .state('levels', {
