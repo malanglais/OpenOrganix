@@ -20,11 +20,7 @@ angular.module('open_schedule', ['ionic'])
 
 .controller('mainController', ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
     $scope.huskyModel = huskyModel;
-    
-    $scope.resetLists = function(num) {
-      $scope.huskyModel.resetLists(num);
-    }
-    
+
     var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
      $scope.huskyModel.setModel(response.data);
      $scope.huskyModel.setCategoryList();
@@ -149,6 +145,14 @@ angular.module('open_schedule', ['ionic'])
     });
   };
 }])
+
+.directive('resetLists', ['$compile', 'huskyModel', function($compile, huskyModel){
+    return {
+        link: function (scope, element, attrs) {
+            huskyModel.resetLists(3);
+        }
+    }
+ }]);
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
