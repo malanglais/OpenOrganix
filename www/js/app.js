@@ -21,8 +21,8 @@ angular.module('open_schedule', ['ionic'])
 .controller('mainController', ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
   $scope.huskyModel = huskyModel;
 
-  $scope.resetLists = function(num) {
-    $scope.huskyModel.resetLists(num);
+  $scope.resetLists = function() {
+    $scope.huskyModel.resetLists(3);
   }
 
   var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
