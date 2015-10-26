@@ -152,7 +152,7 @@ angular.module('open_schedule', ['ionic'])
             huskyModel.resetLists(3);
         }
     }
- }]);
+ }])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
