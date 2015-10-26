@@ -32,6 +32,15 @@ angular.module('open_schedule', ['ionic'])
   
 }])
 
+.controller('homeController', ['$scope', 'huskyModel', function($scope, huskyModel) {
+  $scope.huskyModel = huskyModel;
+
+  $scope.resetLists = function() {
+    $scope.huskyModel.resetLists(3);
+  }
+}])
+
+
 .controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
   
@@ -184,8 +193,8 @@ angular.module('open_schedule', ['ionic'])
       url: '/home',
       views: {
         home: {
-          templateUrl: 'templates/categories.html'
-          //controller: 'catController'
+          templateUrl: 'templates/categories.html',
+          controller: 'homeController'
         }
       }
     })

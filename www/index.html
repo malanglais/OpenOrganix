@@ -31,13 +31,13 @@
     <script src="cordova.js"></script>
     
   </head>
-  <body ng-app="open_schedule" ng-controller="mainController as mCtrl">
+  <body ng-app="open_schedule" ng-controller="mainController">
     
     <ion-nav-bar animation="nav-title-slide-ios7"
            type="bar-positive">Open Schedule</ion-nav-bar>
     <ion-nav-view animation="slide-left-right"></ion-nav-view>
     <ion-tabs class="tabs-positive">
-      <ion-tab icon="ion-home" ui-sref="home" select="mCtrl.resetLists()">
+      <ion-tab icon="ion-home" ui-sref="home" ng-click="resetLists()">
         <ion-nav-view name="home"></ion-nav-view>
       </ion-tab>
       <ion-tab icon="ion-help" ui-sref="help">
