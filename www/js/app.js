@@ -18,18 +18,23 @@ angular.module('open_schedule', ['ionic'])
 // home page controller that loads the page... may be this can be put in as a service later on
 /* TODO : put in service */
 
-.controller('catController',  ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
-  $scope.huskyModel = huskyModel;
-  
-  $scope.resetLists = function(num) {
-    $scope.huskyModel.resetLists(num);
-  }
-  
-  var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
+.controller('mainController', ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
+    $scope.huskyModel = huskyModel;
+    
+    $scope.resetLists = function(num) {
+      $scope.huskyModel.resetLists(num);
+    }
+    
+    var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
      $scope.huskyModel.setModel(response.data);
      $scope.huskyModel.setCategoryList();
   });
   
+}
+.controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
+  $scope.huskyModel = huskyModel;
+  
+  $scope.huskyModel.resetLists(3);
   
   $scope.selectCategory = function(category) {
         $scope.huskyModel.setSelectedCategory(category);
