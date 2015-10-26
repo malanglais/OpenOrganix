@@ -104,10 +104,11 @@ angular.module('open_schedule', ['ionic'])
     });
   };
   
-  self.levelList = [];
+  self.levelList = [];                      // make sure it's ordered. These are the levels AA first
   self.setLevelList = function() {
     angular.forEach(self.selectedCategory.levels, function(level) {
       self.levelList.push(level.level);
+      sortLvl(self.levelList);
     });
   };
 
@@ -324,3 +325,41 @@ function parseTr(trStr, day) { // returns parsed string
   var newEntry = new dmEntry(category, level, team, day, time, loction);
   return newEntry;
 } 
+
+function sortLvl(lvls) {    // receiving a collection
+  var indexFilled = 0;
+  if (lvls.indexOf('AAA') != -1) {
+    lvls.move(lvls.indexOf('AAA'), indexFilled);
+    indexFilled++;
+  }
+  if (lvls.indexOf('AA') != -1) {
+    lvls.move(lvls.indexOf('AA'), indexFilled);
+    indexFilled++;
+  }
+  if (lvls.indexOf('BB') != -1) {
+    lvls.move(lvls.indexOf('BB'), indexFilled);
+    indexFilled++;
+  }
+  if (lvls.indexOf('A') != -1) {
+    lvls.move(lvls.indexOf('A'), indexFilled);
+    indexFilled++;
+  }
+  if (lvls.indexOf('B') != -1) {
+    lvls.move(lvls.indexOf('B'), indexFilled);
+    indexFilled++;
+  }
+  if (lvls.indexOf('C') != -1) {
+    lvls.move(lvls.indexOf('C'), indexFilled);
+    indexFilled++;
+  }
+}
+
+Array.prototype.move = function (old_index, new_index) {
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while ((k--) + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+};
