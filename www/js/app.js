@@ -21,10 +21,25 @@ angular.module('open_schedule', ['ionic'])
 .controller('mainController', ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
   $scope.huskyModel = huskyModel;
 
-  var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
+  /*var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
+    $scope.huskyModel.setModel(response.data);
+    $scope.huskyModel.setCategoryList();
+  });*/
+  
+  var req = {
+     method: 'POST',
+     url: 'http://huskyco.com/php/newevents.php',
+     headers: {
+       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+     },
+     data: { eventType: 'EVENT_PRACTICES' } //EVENT_GAMES
+  }
+  
+  var promise = $http(req).then(function(response) {
     $scope.huskyModel.setModel(response.data);
     $scope.huskyModel.setCategoryList();
   });
+
   
 }])
 
