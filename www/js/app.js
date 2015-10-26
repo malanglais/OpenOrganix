@@ -30,7 +30,8 @@ angular.module('open_schedule', ['ionic'])
      $scope.huskyModel.setCategoryList();
   });
   
-}
+}])
+
 .controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
   
