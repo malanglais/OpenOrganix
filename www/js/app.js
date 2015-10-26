@@ -32,14 +32,6 @@ angular.module('open_schedule', ['ionic'])
   
 }])
 
-.controller('homeController', ['$scope', 'huskyModel', function($scope, huskyModel) {
-  $scope.huskyModel = huskyModel;
-
-  $scope.resetLists = function() {
-    $scope.huskyModel.resetLists(2);
-  }
-}])
-
 
 .controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
@@ -192,9 +184,8 @@ angular.module('open_schedule', ['ionic'])
     .state('home', {
       url: '/home',
       views: {
-        home: {
-          templateUrl: 'templates/categories.html',
-          controller: 'homeController'
+        'home': {
+          templateUrl: 'templates/categories.html'
         }
       }
     })
@@ -202,7 +193,7 @@ angular.module('open_schedule', ['ionic'])
     .state('levels', {
       url: '/levels',
       views: {
-        home: {
+        'home': {
           templateUrl: 'templates/levels.html'
           //controller: 'levelController'
         }
@@ -212,7 +203,7 @@ angular.module('open_schedule', ['ionic'])
     .state('teams', {
       url: '/teams',
       views: {
-        home: {
+        'home': {
           templateUrl: 'templates/teams.html'
           //controller: 'teamController'
         }
@@ -222,7 +213,7 @@ angular.module('open_schedule', ['ionic'])
     .state('help', {
       url: '/help',
       views: {
-        help: {
+        'help': {
           templateUrl: 'templates/help.html'
         }
       }
