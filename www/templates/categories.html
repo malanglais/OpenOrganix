@@ -1,5 +1,4 @@
-<ion-view title="Categories" ng-controller="catController">
-    <resetLists></resetLists>
+<ion-view title="Categories" ng-controller="catController as catCtrl" select="catCtrl.resetLists(3)>
     <ion-content>
         <ion-list>
             <ion-item ng-repeat="category in huskyModel.categoryList" ng-click="selectCategory(category)" href="#/levels">

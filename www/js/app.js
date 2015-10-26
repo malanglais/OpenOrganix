@@ -31,7 +31,9 @@ angular.module('open_schedule', ['ionic'])
 .controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
   
-  $scope.huskyModel.resetLists(3);
+  $scope.resetLists = function(num) {
+    $scope.huskyModel.resetLists(num);
+  }
   
   $scope.selectCategory = function(category) {
         $scope.huskyModel.setSelectedCategory(category);
@@ -146,14 +148,6 @@ angular.module('open_schedule', ['ionic'])
   };
 }])
 
-.directive('resetLists', ['$compile', 'huskyModel', function($compile, huskyModel){
-    return {
-        link: function (scope, element, attrs) {
-            huskyModel.resetLists(3);
-        }
-    }
- }])
-
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -170,8 +164,10 @@ angular.module('open_schedule', ['ionic'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
+
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  var self = this;
   //$httpProvider.defaults.withCredentials = true;
   
   // Ionic uses AngularUI Router which uses the concept of states
@@ -188,7 +184,12 @@ angular.module('open_schedule', ['ionic'])
           templateUrl: 'templates/categories.html'
           //controller: 'catController'
         }
-      }
+      },
+      onEnter: function(reg){
+        if(reg) { 
+          huskyModel.resetLists(3);
+        }
+  }
     })
     
     .state('levels', {
