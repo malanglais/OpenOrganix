@@ -28,11 +28,11 @@ angular.module('open_schedule', ['ionic'])
   
   var req = {
      method: 'POST',
-     url: 'http://lcrse.qc.ca/cedules.saison.aspx',
+     url: 'http://huskyco.com/php/newevents.php',
      headers: {
        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
      },
-     data: { m$pc$cbCategories: '11' } //EVENT_GAMES
+     data: { eventType: 'EVENT_PRACTICES' } //EVENT_GAMES
   }
   
   var promise = $http(req).then(function(response) {
