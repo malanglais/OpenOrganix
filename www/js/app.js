@@ -19,11 +19,15 @@ angular.module('open_schedule', ['ionic'])
 /* TODO : put in service */
 
 .controller('mainController', ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
-    $scope.huskyModel = huskyModel;
+  $scope.huskyModel = huskyModel;
 
-    var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
-     $scope.huskyModel.setModel(response.data);
-     $scope.huskyModel.setCategoryList();
+  $scope.resetLists = function(num) {
+    $scope.huskyModel.resetLists(num);
+  }
+
+  var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
+    $scope.huskyModel.setModel(response.data);
+    $scope.huskyModel.setCategoryList();
   });
   
 }])
