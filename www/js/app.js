@@ -96,6 +96,24 @@ angular.module('open_schedule', ['ionic'])
   $scope.isTeamSelected = function(team) {
       return team === $scope.huskyModel.selectedTeam;
   };
+  
+  // functions for toggle section ** Don't need as we're expanding all groups
+  
+  
+  /*
+   * if given group is the selected group, deselect it
+   * else, select the given group
+   */
+  /*$scope.toggleDate = function(date) {
+    if ($scope.isGroupShown(group)) {
+      $scope.shownGroup = null;
+    } else {
+      $scope.shownGroup = group;
+    }
+  };
+  $scope.isGroupShown = function(group) {
+    return $scope.shownGroup === group;
+  };*/
 
 }])
 
@@ -156,9 +174,7 @@ angular.module('open_schedule', ['ionic'])
   self.gameList = [];                       // This structure should respect the data model
   self.setGameList = function() {
     angular.forEach(self.selectedTeam.dates, function(date) {
-      angular.forEach(date.games, function(time) {
-        self.gameList.push(time.time);
-      });
+      self.gameList.push(date);
     });
   };
 

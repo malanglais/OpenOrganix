@@ -1,9 +1,25 @@
 <ion-view title="Games" ng-controller="gameController">
-    <ion-content>
+    <!--<ion-content>
         <ion-list>
             <ion-item ng-repeat="time in huskyModel.gameList" ng-click="selectGame(time)">
                 {{time}}
             </ion-item>
         </ion-list>
+    </ion-content> -->
+    <ion-content>
+        <ion-list>
+            <div ng-repeat="date in huskyModel.gameList">
+                <ion-item class="item-stable">
+                    Date: {{date.date}}
+                </ion-item>
+                <ion-item class="item-accordion"
+                    ng-repeat="game in date.games">
+                {{game.type}}    {{game.time}}    {{game.loction}}
+              </ion-item>
+            </div>
+        </ion-list>
     </ion-content>
 </ion-view>
+
+
+    
