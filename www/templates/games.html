@@ -1,11 +1,7 @@
 <ion-view title="Games" ng-controller="gameController">
-    <!--<ion-content>
-        <ion-list>
-            <ion-item ng-repeat="time in huskyModel.gameList" ng-click="selectGame(time)">
-                {{time}}
-            </ion-item>
-        </ion-list>
-    </ion-content> -->
+    <ion-nav-back-button class="button-clear">
+		<i class="ion-chevron"></i> Back
+    </ion-nav-back-button>
     <ion-content>
         <ion-list>
             <div ng-repeat="date in huskyModel.gameList">
