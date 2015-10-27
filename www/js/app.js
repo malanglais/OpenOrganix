@@ -347,7 +347,7 @@ function getModel(htmlStr, eventType) {
             });
             if (!found) {
               newDate = new dmDate(nEntry.date, newGame);
-              newTeam = new dmTeams(nEntry.team, newGame);
+              newTeam = new dmTeams(nEntry.team, newDate);
               newLevel = new dmLevels(nEntry.level, newTeam);
               category.levels.push(newLevel);
             }
@@ -356,7 +356,7 @@ function getModel(htmlStr, eventType) {
         });
         if (!found) {
               newDate = new dmDate(nEntry.date, newGame);
-              newTeam = new dmTeams(nEntry.team, newGame);
+              newTeam = new dmTeams(nEntry.team, newDate);
               newLevel = new dmLevels(nEntry.level, newTeam);
               newCategory = new dmCategories(nEntry.category, newLevel);
               categoriesDM.push(newCategory);
