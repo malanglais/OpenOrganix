@@ -20,11 +20,6 @@ angular.module('open_schedule', ['ionic'])
 
 .controller('mainController', ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
   $scope.huskyModel = huskyModel;
-
-  /*var promise = $http.get("http://huskyco.com/php/newevents.php").then(function(response) {
-    $scope.huskyModel.setModel(response.data);
-    $scope.huskyModel.setCategoryList();
-  });*/
   
   var req = {
      method: 'POST',
@@ -43,7 +38,6 @@ angular.module('open_schedule', ['ionic'])
   
 }])
 
-
 .controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
   
@@ -58,7 +52,6 @@ angular.module('open_schedule', ['ionic'])
   
 }])
   
-
 .controller('levelController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
   
@@ -96,24 +89,6 @@ angular.module('open_schedule', ['ionic'])
   $scope.isTeamSelected = function(team) {
       return team === $scope.huskyModel.selectedTeam;
   };
-  
-  // functions for toggle section ** Don't need as we're expanding all groups
-  
-  
-  /*
-   * if given group is the selected group, deselect it
-   * else, select the given group
-   */
-  /*$scope.toggleDate = function(date) {
-    if ($scope.isGroupShown(group)) {
-      $scope.shownGroup = null;
-    } else {
-      $scope.shownGroup = group;
-    }
-  };
-  $scope.isGroupShown = function(group) {
-    return $scope.shownGroup === group;
-  };*/
 
 }])
 
@@ -141,12 +116,10 @@ angular.module('open_schedule', ['ionic'])
                
   }
   
-  
   self.gameModel = [];
   self.setModel = function(dm, et) {
     self.gameModel = getModel(dm, et);
   };
-  
   
   self.categoryList = [];
   self.setCategoryList = function() {
@@ -207,8 +180,8 @@ angular.module('open_schedule', ['ionic'])
     });
   };
   
-  
 }])
+
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -227,7 +200,6 @@ angular.module('open_schedule', ['ionic'])
 })
 
 
-
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   //$httpProvider.defaults.withCredentials = true;
   
@@ -238,6 +210,11 @@ angular.module('open_schedule', ['ionic'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
+    .state('app', {
+      abstract: true,
+      templateUrl: 'main.html'
+    })
+    
     .state('home', {
       url: '/home',
       views: {
