@@ -36,7 +36,7 @@ angular.module('open_schedule', ['ionic'])
   }
   
   var promise = $http(req).then(function(response) {
-    $scope.huskyModel.setModel(response.data);
+    $scope.huskyModel.setModel(response.data, 'Pratique');
     $scope.huskyModel.setCategoryList();
   });
 
@@ -143,8 +143,8 @@ angular.module('open_schedule', ['ionic'])
   
   
   self.gameModel = [];
-  self.setModel = function(dm) {
-    self.gameModel = getModel(dm);
+  self.setModel = function(dm, et) {
+    self.gameModel = getModel(dm, et);
   };
   
   
