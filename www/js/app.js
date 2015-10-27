@@ -49,7 +49,7 @@ angular.module('open_schedule', ['ionic'])
   
   $scope.selectCategory = function(category) {
         $scope.huskyModel.setSelectedCategory(category);
-        $scope.huskyModel.resetLists(2);
+        $scope.huskyModel.resetLists(3);
         $scope.huskyModel.setLevelList();
   };
   $scope.isCatSelected = function(category) {
@@ -65,7 +65,7 @@ angular.module('open_schedule', ['ionic'])
   
   $scope.selectLevel = function(level) {
         $scope.huskyModel.setSelectedLevel(level);
-        $scope.huskyModel.resetLists(1);
+        $scope.huskyModel.resetLists(2);
         $scope.huskyModel.setTeamList();
   };
   $scope.isLvlSelected = function(level) {
@@ -74,6 +74,20 @@ angular.module('open_schedule', ['ionic'])
 }])
 
 .controller('teamController', ['$scope', 'huskyModel', function($scope, huskyModel) {
+  $scope.huskyModel = huskyModel;
+  
+  $scope.selectTeam = function(team) {
+        $scope.huskyModel.setSelectedTeam(team);
+        $scope.huskyModel.resetLists(1);
+        $scope.huskyModel.setGameList();
+  };
+  $scope.isTeamSelected = function(team) {
+      return team === $scope.huskyModel.selectedTeam;
+  };
+
+}])
+
+.controller('gameController', ['$scope', 'huskyModel', function($scope, huskyModel) {
   $scope.huskyModel = huskyModel;
   
   $scope.selectTeam = function(team) {
@@ -91,14 +105,18 @@ angular.module('open_schedule', ['ionic'])
   
   self.resetLists = function(num) {
     if (num >= 1) {
+      self.gameList = [];               // Assuming this is the only reference
+      self.selectedGame = null;         // reset is selected to null
+    }
+    if (num >= 2) {
       self.teamList = [];               // Assuming this is the only reference
       self.selectedTeam = null;         // reset is selected to null
     }
-    if (num >= 2) {
+    if (num >= 3) {
       self.levelList = [];
       self.selectedLevel = null;
     }
-    if (num >= 3) {
+    if (num >= 4) {
       self.categoryList = [];
       self.selectedCategory = null;
     }
@@ -134,6 +152,16 @@ angular.module('open_schedule', ['ionic'])
         self.teamList.push(team.team);
     });
   };
+  
+  self.gameList = [];                       // This structure should respect the data model
+  self.setGameList = function() {
+    angular.forEach(self.selectedTeam.dates, function(date) {
+      angular.forEach(date.games, function(time) {
+        self.gameList.push(time.time);
+      });
+    });
+  };
+
 
   // this has to return the array... not the name
   self.selectedCategory = null;
@@ -162,6 +190,8 @@ angular.module('open_schedule', ['ionic'])
         }
     });
   };
+  
+  
 }])
 
 .run(function($ionicPlatform) {
@@ -215,6 +245,15 @@ angular.module('open_schedule', ['ionic'])
       views: {
         'home': {
           templateUrl: 'templates/teams.html'
+        }
+      }
+    })
+    
+    .state('games', {
+      url: '/games',
+      views: {
+        'home': {
+          templateUrl: 'templates/games.html'
         }
       }
     })

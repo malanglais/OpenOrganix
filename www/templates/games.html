@@ -1,7 +1,7 @@
 <ion-view title="Games" ng-controller="gameController">
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="game in huskyModel.gameList" ng-click="selectGame(time)">
+            <ion-item ng-repeat="time in huskyModel.gameList" ng-click="selectGame(time)">
                 {{time}}
             </ion-item>
         </ion-list>
