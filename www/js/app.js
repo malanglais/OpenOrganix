@@ -312,8 +312,8 @@ function getModel(htmlStr, eventType) {
       var nEntry = parseTr(trList[i], day);                                       // parsed data (cat, lvl, tm, d, t, loc)
       newGame = new dmGame(nEntry.time, eventType, nEntry.loction);             // add game regardless
       if (categoriesDM.length ==0) {                                                    // array is empty
-        newDate = new dmDate(nEntry.date);
-        newTeam = new dmTeams(nEntry.team, newGame);
+        newDate = new dmDate(nEntry.date, newGame);
+        newTeam = new dmTeams(nEntry.team, newDate);
         newLevel = new dmLevels(nEntry.level, newTeam);
         newCategory = new dmCategories(nEntry.category, newLevel);
         categoriesDM.push(newCategory);
