@@ -212,7 +212,7 @@ angular.module('open_schedule', ['ionic'])
   // setup an abstract state for the tabs directive
     .state('app', {
       abstract: true,
-      templateUrl: 'main.html'
+      templateUrl: 'templates/main.html'
     })
     
     .state('home', {
