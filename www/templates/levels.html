@@ -1,7 +1,7 @@
 <ion-view title="Levels" ng-controller="levelController">
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="level in huskyModel.levelList" ng-click="selectLevel(level)" href="#/teams">
+            <ion-item ng-repeat="level in huskyModel.levelList" ng-click="selectLevel(level)" ui-sref="#/teams">
                 {{level}}
             </ion-item>
         </ion-list>
