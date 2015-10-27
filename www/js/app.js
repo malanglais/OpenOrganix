@@ -414,7 +414,7 @@ function parseTr(trStr, day) { // returns parsed string
   var level = trs[2].slice(trs[2].indexOf(' ')+1, trs[2].indexOf('</td>'));
   var team = trs[3].slice(trs[3].indexOf(' ')+1, trs[3].indexOf('</td>'));
   var loction = trs[4].slice(trs[4].indexOf('blank\'>')+7, trs[4].indexOf('</a>'));
-  var newEntry = new dmEntry(category, level, team, day, time, loction);
+  var newEntry = new dmEntry(category, level, team, day, time, '',loction);
   return newEntry;
 } 
 
