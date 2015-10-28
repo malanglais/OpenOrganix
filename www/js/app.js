@@ -19,7 +19,8 @@ angular.module('open_schedule', ['ionic'])
 /* TODO : put in service */
 
 .controller('mainController', ['$scope', '$http', 'huskyModel', function($scope, $http, huskyModel) {
-  $scope.huskyModel = huskyModel;
+  var self = this;
+  self.huskyModel = huskyModel;
   
   var req = {
      method: 'POST',
@@ -31,8 +32,8 @@ angular.module('open_schedule', ['ionic'])
   }
   
   var promise = $http(req).then(function(response) {
-    $scope.huskyModel.setModel(response.data, 'Pratique');
-    $scope.huskyModel.setCategoryList();
+    self.huskyModel.setModel(response.data, 'Pratique');
+    self.huskyModel.setCategoryList();
   });
 
   
