@@ -1,12 +1,12 @@
-<ion-view ng-controller="gameController">
+<ion-view ng-controller="gameController as gCtrl">
     <ion-nav-bar>
         <ion-nav-back-button class="button-clear">
-		    <i class="ion-chevron-left"></i> {{huskyModel.selectedCategory.category}} - {{huskyModel.selectedLevel.level}} - {{huskyModel.selectedTeam.team}}
+		    <i class="ion-chevron-left"></i> {{gCtrl.huskyModel.selectedCategory.category}} - {{gCtrl.huskyModel.selectedLevel.level}} - {{gCtrl.huskyModel.selectedTeam.team}}
         </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <div ng-repeat="date in huskyModel.gameList">
+            <div ng-repeat="date in gCtrl.huskyModel.gameList">
                 <ion-item class="item-stable">
                     Date: {{date.date}}
                 </ion-item>
