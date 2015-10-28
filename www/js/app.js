@@ -46,9 +46,7 @@ angular.module('open_schedule', ['ionic'])
         $scope.huskyModel.resetLists(3);
         $scope.huskyModel.setLevelList();
   };
-  $scope.isCatSelected = function(category) {
-      return category === $scope.huskyModel.selectedCategory;
-  };
+  
   
 }])
   
@@ -61,9 +59,7 @@ angular.module('open_schedule', ['ionic'])
         $scope.huskyModel.resetLists(2);
         $scope.huskyModel.setTeamList();
   };
-  $scope.isLvlSelected = function(level) {
-      return level === $scope.huskyModel.selectedLevel;
-  };
+  
 }])
 
 .controller('teamController', ['$scope', 'huskyModel', function($scope, huskyModel) {
@@ -74,10 +70,7 @@ angular.module('open_schedule', ['ionic'])
         $scope.huskyModel.resetLists(1);
         $scope.huskyModel.setGameList();
   };
-  $scope.isTeamSelected = function(team) {
-      return team === $scope.huskyModel.selectedTeam;
-  };
-
+  
 }])
 
 .controller('gameController', ['$scope', 'huskyModel', function($scope, huskyModel) {
@@ -86,9 +79,7 @@ angular.module('open_schedule', ['ionic'])
   $scope.selectTeam = function(team) {
         $scope.huskyModel.setSelectedTeam(team);
   };
-  $scope.isTeamSelected = function(team) {
-      return team === $scope.huskyModel.selectedTeam;
-  };
+  
 
 }])
 
@@ -96,22 +87,31 @@ angular.module('open_schedule', ['ionic'])
 .service('huskyModel', [function () {
   var self = this;
   
+  self.isGameSelected = null;
+  self.isTeamSelected = null;
+  self.isLevelSelected = null;
+  self.isCategorySelected = null;
+  
   self.resetLists = function(num) {
     if (num >= 1) {
       self.gameList = [];               // Assuming this is the only reference
       self.selectedGame = null;         // reset is selected to null
+      self.isTeamSelected = false;
     }
     if (num >= 2) {
       self.teamList = [];               // Assuming this is the only reference
       self.selectedTeam = null;         // reset is selected to null
+      self.isLevelSelected = false;
     }
     if (num >= 3) {
       self.levelList = [];
       self.selectedLevel = null;
+      self.isCategorySelected = false;
     }
     if (num >= 4) {
       self.categoryList = [];
       self.selectedCategory = null;
+      
     }
                
   }
@@ -134,6 +134,7 @@ angular.module('open_schedule', ['ionic'])
     angular.forEach(self.selectedCategory.levels, function(level) {
       self.levelList.push(level.level);
       sortIt(self.levelList, orderLevels);
+      isCategorySelected = true;
     });
   };
 
@@ -141,6 +142,7 @@ angular.module('open_schedule', ['ionic'])
   self.setTeamList = function() {
     angular.forEach(self.selectedLevel.teams, function(team) {
         self.teamList.push(team.team);
+        isLevelSelected = true;
     });
   };
   
@@ -148,6 +150,7 @@ angular.module('open_schedule', ['ionic'])
   self.setGameList = function() {
     angular.forEach(self.selectedTeam.dates, function(date) {
       self.gameList.push(date);
+      isTeamSelected = true;
     });
   };
 
