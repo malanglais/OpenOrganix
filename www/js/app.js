@@ -134,7 +134,7 @@ angular.module('open_schedule', ['ionic'])
     angular.forEach(self.selectedCategory.levels, function(level) {
       self.levelList.push(level.level);
       sortIt(self.levelList, orderLevels);
-      isCategorySelected = true;
+      self.isCategorySelected = true;
     });
   };
 
@@ -142,7 +142,7 @@ angular.module('open_schedule', ['ionic'])
   self.setTeamList = function() {
     angular.forEach(self.selectedLevel.teams, function(team) {
         self.teamList.push(team.team);
-        isLevelSelected = true;
+        self.isLevelSelected = true;
     });
   };
   
@@ -150,7 +150,7 @@ angular.module('open_schedule', ['ionic'])
   self.setGameList = function() {
     angular.forEach(self.selectedTeam.dates, function(date) {
       self.gameList.push(date);
-      isTeamSelected = true;
+      self.isTeamSelected = true;
     });
   };
 
