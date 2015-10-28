@@ -87,10 +87,10 @@ angular.module('open_schedule', ['ionic'])
 .service('huskyModel', [function () {
   var self = this;
   
-  self.isGameSelected = null;
-  self.isTeamSelected = null;
-  self.isLevelSelected = null;
-  self.isCategorySelected = null;
+  self.isGameSelected = false;
+  self.isTeamSelected = false;
+  self.isLevelSelected = false;
+  self.isCategorySelected = false;
   
   self.resetLists = function(num) {
     if (num >= 1) {
