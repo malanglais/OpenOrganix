@@ -31,7 +31,7 @@
     <script src="cordova.js"></script>
     
   </head>
-  <body ng-app="open_schedule" ng-controller="mainController">
+  <body ng-app="open_schedule" ng-controller="mainController as mCtrl">
     
   <ion-nav-view animation="slide-left-right"></ion-nav-view>
   
@@ -46,7 +46,7 @@
         <ion-nav-view name="help"></ion-nav-view>
     </ion-tab>
       <ion-tab>
-        <i icon="ion-calendar" ng-show="huskyModel.isTeamSelected"></i>
+        <i icon="ion-calendar" ng-show="mCtrl.huskyModel.isTeamSelected"></i>
     </ion-tab>
   </ion-tabs>
     
