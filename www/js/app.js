@@ -40,6 +40,7 @@ angular.module('open_schedule', ['ionic'])
 }])
 
 .controller('catController',  ['huskyModel', function(huskyModel) {
+  var self = this;
   self.huskyModel = huskyModel;
   
   self.selectCategory = function(category) {
@@ -52,6 +53,7 @@ angular.module('open_schedule', ['ionic'])
 }])
   
 .controller('levelController',  ['huskyModel', function(huskyModel) {
+  var self = this;
   self.huskyModel = huskyModel;
   
   
@@ -76,6 +78,7 @@ angular.module('open_schedule', ['ionic'])
 }])
 
 .controller('gameController', ['huskyModel', function(huskyModel) {
+  var self = this;
   self.huskyModel = huskyModel;
   
   self.selectTeam = function(team) {
