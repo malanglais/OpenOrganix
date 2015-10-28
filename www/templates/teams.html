@@ -6,7 +6,7 @@
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="team in tCtrl.huskyModel.teamList" ng-click="selectTeam(team)" ui-sref="games">
+            <ion-item ng-repeat="team in tCtrl.huskyModel.teamList" ng-click="tCtrl.selectTeam(team)" ui-sref="games">
                 {{team}}
             </ion-item>
         </ion-list>
