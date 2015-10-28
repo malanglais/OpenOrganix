@@ -39,26 +39,26 @@ angular.module('open_schedule', ['ionic'])
   
 }])
 
-.controller('catController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
-  $scope.huskyModel = huskyModel;
+.controller('catController',  ['huskyModel', function(huskyModel) {
+  self.huskyModel = huskyModel;
   
-  $scope.selectCategory = function(category) {
-        $scope.huskyModel.setSelectedCategory(category);
-        $scope.huskyModel.resetLists(3);
-        $scope.huskyModel.setLevelList();
+  self.selectCategory = function(category) {
+        self.huskyModel.setSelectedCategory(category);
+        self.huskyModel.resetLists(3);
+        self.huskyModel.setLevelList();
   };
   
   
 }])
   
-.controller('levelController',  ['$scope', 'huskyModel', function($scope, huskyModel) {
-  $scope.huskyModel = huskyModel;
+.controller('levelController',  ['huskyModel', function(huskyModel) {
+  self.huskyModel = huskyModel;
   
   
-  $scope.selectLevel = function(level) {
-        $scope.huskyModel.setSelectedLevel(level);
-        $scope.huskyModel.resetLists(2);
-        $scope.huskyModel.setTeamList();
+  self.selectLevel = function(level) {
+        self.huskyModel.setSelectedLevel(level);
+        self.huskyModel.resetLists(2);
+        self.huskyModel.setTeamList();
   };
   
 }])
@@ -75,11 +75,11 @@ angular.module('open_schedule', ['ionic'])
   
 }])
 
-.controller('gameController', ['$scope', 'huskyModel', function($scope, huskyModel) {
-  $scope.huskyModel = huskyModel;
+.controller('gameController', ['huskyModel', function(huskyModel) {
+  self.huskyModel = huskyModel;
   
-  $scope.selectTeam = function(team) {
-        $scope.huskyModel.setSelectedTeam(team);
+  self.selectTeam = function(team) {
+        self.huskyModel.setSelectedTeam(team);
   };
   
 
