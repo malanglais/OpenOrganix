@@ -45,7 +45,7 @@ angular.module('open_schedule', ['ionic'])
   fData.append("__EVENTTARGET", "m$pc$cbCategories");
   fData.append("__EVENTARGUMENT", "");
   fData.append("__LASTFOCUS", "");
-  fData.append("__VIEWSTATE", vSt);
+  //fData.append("__VIEWSTATE", vSt);
   fData.append("m$txtLogin", "");
   fData.append("m$txtPassword", "");
   fData.append("m$pc$cbYear", "2015");
@@ -58,25 +58,7 @@ angular.module('open_schedule', ['ionic'])
   
   var ajaxURL = "http://lcrse.qc.ca/cedules.saison.aspx";
  
-  /*$.ajax({
-       type: "POST",
-       data: fData,
-       url: ajaxURL,
-       processData: false,
-       contentType: false,
-       cache: false,
-       dataType: "json",
-  }).success(function(data,textStatus,jqXHR) {
-        var t=1;
-    })
-    .error(function (jqXHR, textStatus, errorThrown) {
-        var t=1;
-    })
-    .always(function () {
-        var t=1;
-    });*/
-    
-    $http({
+  $http({
       url: ajaxURL,
       method: "POST",
       data: fData,
