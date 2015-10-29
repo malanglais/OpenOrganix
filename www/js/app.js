@@ -48,8 +48,15 @@ angular.module('open_schedule', ['ionic'])
        contentType: false,
        cache: false,
        dataType: "json",
-  });
-  var t =1;
+  }).done(function (xhr_data) {
+        var t=1;
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+        var t=1;
+    })
+    .always(function () {
+        var t=1;
+    });
   
 }])
 
