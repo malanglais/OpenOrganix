@@ -37,7 +37,7 @@ angular.module('open_schedule', ['ionic'])
   }); */
   
   var fData = new FormData();
-  fData.append(JSON.stringify({ __EVENTTARGET: "m$pc$cbCategories", __EVENTARGUMENT: "",   __LASTFOCUS: "", __VIEWSTATEGENERATOR: "FEF83A11", m$txtLogin: "", m$txtPassword: "", m$pc$cbYear: "2015", m$pc$cbCategories: "11", m$pc$cbSemaine: "2015-10-26", m$pc$cbArenaFilter: "-1", m$hdnOnLoadMessage: "", m$hdnOnLoadMessageOptions: ""}));
+  fData = JSON.stringify({ __EVENTTARGET: "m$pc$cbCategories", __EVENTARGUMENT: "",   __LASTFOCUS: "", __VIEWSTATEGENERATOR: "FEF83A11", m$txtLogin: "", m$txtPassword: "", m$pc$cbYear: "2015", m$pc$cbCategories: "11", m$pc$cbSemaine: "2015-10-26", m$pc$cbArenaFilter: "-1", m$hdnOnLoadMessage: "", m$hdnOnLoadMessageOptions: ""});
  
  
   $.ajax({
