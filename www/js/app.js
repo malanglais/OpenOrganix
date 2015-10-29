@@ -82,8 +82,10 @@ angular.module('open_schedule', ['ionic'])
       data: fData,
       headers: { 'Content-Type': undefined },       
       transformRequest: function (data) { return data; }
-      }).success(function (response) {      
-      }).error(function () {  
+      }).success(function (response) {  
+        var t = 1;
+      }).error(function () { 
+        var t=1;
     });
 
   
