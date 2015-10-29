@@ -60,7 +60,8 @@ angular.module('open_schedule', ['ionic'])
       data: fData,
       headers: { 'Content-Type': undefined },       
       transformRequest: function (data) { return data; }
-      }).success(function (response) {  
+      }).success(function (response) {
+        var s = response.getElementByID("__VIEWSTATE").value;
         var t = 1;
       }).error(function () { 
         var t=1;
