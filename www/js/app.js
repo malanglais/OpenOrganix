@@ -58,7 +58,7 @@ angular.module('open_schedule', ['ionic'])
   
   var ajaxURL = "http://lcrse.qc.ca/cedules.saison.aspx";
  
-  $.ajax({
+  /*$.ajax({
        type: "POST",
        data: fData,
        url: ajaxURL,
@@ -74,13 +74,13 @@ angular.module('open_schedule', ['ionic'])
     })
     .always(function () {
         var t=1;
-    });
+    });*/
     
     $http({
-      url: serviceBase + 'api/Client/' + item.practiceID + '/SavePhoto',
+      url: ajaxURL,
       method: "POST",
-      data: formData,
-      headers: { 'Content-Type': false },       
+      data: fData,
+      headers: { 'Content-Type': undefined },       
       transformRequest: function (data) { return data; }
       }).success(function (response) {      
       }).error(function () {  
