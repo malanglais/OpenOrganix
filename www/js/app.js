@@ -310,19 +310,19 @@ function getDay(trStr) {
 
 function getTeamModel(htmlStr) {
 
-  var DM = [];
-  var teamList = parseTeamList(htmlStr);
+  
   var found = false;
   //var day = '';
   //var newGame;
   //var newDate;
-  var newTeam;
+  //var newTeam;
   var newLevel;
   var newCategory;
   var catStr;
   var lvlStr;
   
   var trList = parseInitial(htmlStr); // collection of options
+  var teamList = parseTeamList(trList);
   
   for (var i = 1; i < trList.length; i++) {  // loop through teams to single them out and create the vm
     found = false;
@@ -344,78 +344,34 @@ function getTeamModel(htmlStr) {
             } else {
               angular.forEach(category.levels, function(level) {
                 if(level.level == lvlStr) {
-                  
+                  found = true;
                 }
               });
+              if (!found) {
+                newLevel = new dmLevels(lvlStr);
+                category.levels.push(newLevel);
+              }
+              found = true;
             }
           });
+          if (!found) {
+            newLevel = new dmLevels(lvlStr);
+            newCategory = new dmCategories(catStr);
+            newCategory.levels.push(newLevel);
+          }
+          found = true;
         }
       });
     }
-    
-      
-      
-      newCategory = new dmCategories(nEntry.category
-      var nEntry = parseTr(trList[i], day);                                       // parsed data (cat, lvl, tm, d, t, loc)
-      newGame = new dmGame(nEntry.time, eventType, nEntry.loction);             // add game regardless
-      if (categoriesDM.length ==0) {                                                    // array is empty
-        newDate = new dmDate(nEntry.date, newGame);
-        newTeam = new dmTeams(nEntry.team, newDate);
-        newLevel = new dmLevels(nEntry.level, newTeam);
-        newCategory = new dmCategories(nEntry.category, newLevel);
-        categoriesDM.push(newCategory);
-      } else {            // not found, we're going to search
-        angular.forEach(categoriesDM, function(category) {
-          if (category.category == nEntry.category) {
-            angular.forEach(category.levels, function(level) {
-              if (level.level == nEntry.level) {
-                angular.forEach(level.teams, function(team) {                     // Adding a class date to check. This date class contains game
-                  if (team.team == nEntry.team) {
-                    angular.forEach(team.dates, function(date) {                     // Adding a class date to check. This date class contains game
-                      if (date.date == nEntry.team) {
-                        date.games.push(newGame);
-                        found = true;
-                      }
-                    });
-                    if (!found) {                                       // date not found
-                      newDate = new dmDate(nEntry.date, newGame);
-                      team.dates.push(newDate);
-                    }
-                    found = true;
-                  }
-                });
-                if (!found) {                                       // team not found
-                  newDate = new dmDate(nEntry.date, newGame);
-                  newTeam = new dmTeams(nEntry.team, newDate);
-                  level.teams.push(newTeam);
-                }
-                found = true;
-              }
-            });
-            if (!found) {
-              newDate = new dmDate(nEntry.date, newGame);
-              newTeam = new dmTeams(nEntry.team, newDate);
-              newLevel = new dmLevels(nEntry.level, newTeam);
-              category.levels.push(newLevel);
-            }
-            found = true;
-          }
-        });
-        if (!found) {
-              newDate = new dmDate(nEntry.date, newGame);
-              newTeam = new dmTeams(nEntry.team, newDate);
-              newLevel = new dmLevels(nEntry.level, newTeam);
-              newCategory = new dmCategories(nEntry.category, newLevel);
-              categoriesDM.push(newCategory);
-        }
-      }
-    }
   }
-  return categoriesDM;
+  return teamList;
 }
 
-
-
+function dmTeams(id, tm) {
+  this.id;
+  this.team = tm;
+  this.categories = [];
+}
 
 function dmCategories(cat) {
   this.category = cat;
@@ -425,12 +381,6 @@ function dmCategories(cat) {
 function dmLevels(lvl) {
   this.level = lvl;
   this.dates = [];
-}
-
-function dmTeams(id, tm) {
-  this.id;
-  this.team = tm;
-  this.categories = [];
 }
 
 function dmDate (dt, gm) {
@@ -455,40 +405,23 @@ function dmEntry(cat, lvl, tm, d, t, pg, loc) {
   this.loction = loc;
 }
 
-// Initial parse to get the collection of options in the list
-// We're going to be parsing the data so we get the category - level - team model here
-function createCatLevel(initStr) {
-  var retCol = [];
-  
-  var trs = initStr.splice(initStr.indexOf('option value='), initStr.indexOf('</select>'));
-  var optionsCol = options.split('<option value=\"');
-  for (var i=0; i <= optionsCol.length; i++) {
-    if (trList[i].indexOf('separator') > 0) {
-      var newLevel = new dmLevels(getLevelParse(optionsCol[0]));
-      var newCategory = new dmCategories(getCategoryParse(optionsCol[0])); // possible wrong mem usage. Don't need create the category if it exists already
-    } else {
-      
-    }
-  }
-  
-  
-  
-  
-  angular.forEach(optionsCol, function(line) {
-    if()
-  })
-  return options; // return collection of options
+function parseInitial(htmlStr) {
+  var str = htmlStr.splice(htmlStr.indexOf('id=\"m_pc_cbEquipes\">' +20, htmlStr.length));
+  var str2 = str.splice(str.indexOf('option value'), str.indexOf('</select>'));
+  var retStr = str2.split('<option value=\"');
+  return retStr;
 }
 
 // parse team list first
-function parseTeamList(str) {
+function parseTeamList(cols) {
   var teamCol = [];
   var found = false;
-  var newTeam = getTeam(optionsCol[i]);
-  var trs = str.splice(str.indexOf('option value='), str.indexOf('</select>'));
-  var optionsCol = trs.split('<option value=\"');
+  
+  var optionsCol = cols;
+  var newTeam;
+  
   for (var i=0; i <= optionsCol.length; i++) {
-    if (optionsCol[i].indexOf('separator') = -1) { // team item
+    if (optionsCol[i].indexOf('separator') == -1) { // team item
       newTeam = getTeam(optionsCol[i])
       if (teamCol.length ==0) {
         teamCol.push(newTeam);
@@ -518,13 +451,13 @@ function getTeam(str) {
 // This function gets the category
 function getCategoryParse(trs) {
   var temp = trs.split('>');
-  return temp[1].splice(0, indexOf(' '));
+  return temp[1].splice(0, temp[1].indexOf(' '));
 }
 
 function getLevelParse(trs) {
   var temp = trs.split('>');
   var temp2 = temp[1].split();
-  return temp2[1]..splice(0, indexOf('<'));
+  return temp2[1].splice(0, temp[1].indexOf('<'));
 }
 
 
