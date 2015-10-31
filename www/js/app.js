@@ -61,8 +61,8 @@ angular.module('open_schedule', ['ionic'])
       headers: { 'Content-Type': undefined },       
       transformRequest: function (data) { return data; }
       }).then(function (response) {
-        self.huskyModel.setModel(response, 'Partie');
-        self.huskyModel.setCategoryList();
+        self.huskyModel.getTeamModel(response);
+        //self.huskyModel.setCategoryList();
       }).error(function () { 
         var t=1;
     });
