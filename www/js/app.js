@@ -63,11 +63,7 @@ angular.module('open_schedule', ['ionic'])
       }).then(function (response) {
         self.huskyModel.getTeamModel(response);
         //self.huskyModel.setCategoryList();
-      }).error(function () { 
-        var t=1;
-    });
-
-  
+      });
 }])
 
 .controller('catController',  ['huskyModel', function(huskyModel) {
