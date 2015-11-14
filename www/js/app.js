@@ -31,7 +31,7 @@ angular.module('open_schedule', ['ionic'])
   fData.append("m$txtLogin", "");
   fData.append("m$txtPassword", "");
   fData.append("m$pc$cbYear", "2015");
-  fData.append("m$pc$cbCategories", "11");
+  fData.append("m$pc$cbCategories", "-1");
   fData.append("m$pc$cbSemaine", "2015-11-2");
   fData.append("m$pc$cbArenaFilter", "-1");
   fData.append("m$hdnOnLoadMessage", "");
@@ -44,15 +44,17 @@ angular.module('open_schedule', ['ionic'])
       url: aURL,
       method: "POST",
       data: fData,
-      headers: { 'Content-Type': undefined },      
+      headers: { 'Content-Type': undefined, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+      },      
       transformResponse: function (data) { 
         return data; 
       }
       }).then(function (response) {
+        vSt2 = getViewState(response.data);
         self.huskyModel.teamList= getTeamModel(response.data);
-        
+        var t = 1;
     }); 
-    var t =1;
+
 }])
 
 .controller('catController',  ['huskyModel', function(huskyModel) {
@@ -295,77 +297,115 @@ function getDay(trStr) {
 
 function getTeamModel(htmlStr) {
 
-  
-  var found = false;
-  //var day = '';
-  //var newGame;
-  //var newDate;
-  //var newTeam;
-  var newLevel;
-  var newCategory;
+  var foundClub = false;
+  var clubList = [];
+  var newClub = null;
+  var newTeam = null;
+  var newLevel = null;
+  var newLvlBool = false;
+  var newCategory = null;
+  var newCatBool = false;
   var catStr;
   var lvlStr;
+  var clubStr;
+  
   
   var trList = parseInitial(htmlStr); // collection of options
-  var teamList = parseTeamList(trList);
   
-  for (var i = 1; i < trList.length; i++) {  // loop through teams to single them out and create the vm
-    found = false;
-    if (trList[i].indexOf('separator') > 0) {   // got a new level in a category
+  for (var i = 0; i < trList.length; i++) {  // loop through teams to single them out and create the vm
+    foundClub = false;
+    if (trList[i].indexOf('separator') > 0) {   // always a new level in a category
       catStr = getCategoryParse(trList[i]);
       lvlStr = getLevelParse(trList[i]);
+      
+      newLevel = new dmLevel(lvlStr); // always new level
+      
+      // check if new category
+      if (newCategory != null) {
+        if(catStr != newCategory.category) { // new category
+          newCategory = new dmCategory(catStr);
+        }
+      } else {
+        newCategory = new dmCategory(catStr);
+      }
+      
+      //newCategory.Levels.push(newLevel);
+      //newCategory.currentLevel = findLevel(newLevel.level, newCategory.Levels);
+      
     } else {
-      angular.forEach(teamList, function(team) {
-        if(team.categories.length == 0) {
-          newLevel = new dmLevels(lvlStr);
-          newCategory = new dmCategories(catStr);
-          newCategory.levels.push(newLevel);
-          team.push(newCategory);
-        } else {
-          angular.forEach(team.categories, function(category) {
-            if(category.levels.length ==0) {
-              newLevel = new dmLevels(lvlStr);
-              category.levels.push(newLevel);
-            } else {
-              angular.forEach(category.levels, function(level) {
-                if(level.level == lvlStr) {
-                  found = true;
-                }
-              });
-              if (!found) {
-                newLevel = new dmLevels(lvlStr);
-                category.levels.push(newLevel);
-              }
-              found = true;
-            }
-          });
-          if (!found) {
-            newLevel = new dmLevels(lvlStr);
-            newCategory = new dmCategories(catStr);
-            newCategory.levels.push(newLevel);
+      // need to pass strings and create new instances of categories and levels when required
+      clubStr = getClubParse(trList[i]);   // club will always contain something prior to team
+      newTeam = new dmTeam(getTeamParse(trList[i]));   // will always be a new team
+      newClub = findClub(clubStr, clubList, catStr, lvlStr);   // assign club
+      //newClub.currentCategory = findCategory(catStr, newClub.Categories);
+      newClub.Categories[findCategoryIndex(newClub.currentCategory.category, newClub.Categories)].Levels[findLevelIndex(newClub.currentCategory.currentLevel.level, newClub.Categories[findCategoryIndex(newClub.currentCategory.category, newClub.Categories)].Levels)].Teams.push(newTeam);
+      if (clubList.length == 0) {
+        clubList.push(newClub);
+      } else {
+        angular.forEach(clubList, function(club){
+          if(club.name == newClub.name) {
+            foundClub = true;
           }
-          found = true;
+        });
+        if (!foundClub) {
+          clubList.push(newClub);
+        }
+      }
+    }
+  }
+  return clubList;
+}
+      
+function dmClub(cl) {
+  this.name = cl;
+  this.currentCategory = null;
+  this.Categories = [];
+  
+  this.setCurrentCategory = function(cat) {
+    if (this.Categories.length == 0) {
+      this.currentCategory = cat;
+    } else {
+      angular.forEach(this.Categories, function(category){
+        if(cat.category == category.category) {
+          this.currentCategory = category;
         }
       });
     }
   }
-  return teamList;
 }
 
-function dmTeams(id, tm) {
-  this.id;
-  this.team = tm;
-  this.categories = [];
-}
-
-function dmCategories(cat) {
+function dmCategory(cat) {
   this.category = cat;
-  this.levels = [];
+  this.currentLevel = null;
+  this.Levels = [];
+  
+  this.setCurrentLevel = function(lvl) {
+    angular.forEach(this.Levels, function(level){
+      if(lvl.level == level.level) {
+        this.currentLevel = level;
+      }
+    });
+  }
 }
 
-function dmLevels(lvl) {
+function dmLevel(lvl) {
   this.level = lvl;
-  this.dates = [];
+  this.currentTeam = null;
+  this.Teams = [];
+  
+  this.setCurrentTeam = function(tm) {
+    angular.forEach(this.Teams, function(team){
+      if(tm.id == team.id) {
+        this.currentTeam = team;
+      }
+    });
+  }
+}
+
+function dmTeam(id, tm) {
+  this.id = id;
+  this.team = tm;
+  this.Dates = [];
 }
 
 function dmDate (dt, gm) {
@@ -374,10 +414,19 @@ function dmDate (dt, gm) {
   this.games.push(gm);
 }
 
-function dmGame(tm, pg, loc) {
-    this.time = tm;
+function dmEvent(tm, time, pg, loc) {
+    this.Team = tm;
+    this.time = time;
     this.type = pg;
-    this.loction = loc; 
+    this.Locotion = loc; 
+}
+
+function dmLocation (nm, crd, cty, ph, web) {
+  this.name = nm;
+  this.coordinates = crd;
+  this.city = cty;
+  this.phone = ph;
+  this.web = web;
 }
 
 function dmEntry(cat, lvl, tm, d, t, pg, loc) {
@@ -391,21 +440,26 @@ function dmEntry(cat, lvl, tm, d, t, pg, loc) {
 }
 
 function parseInitial(htmlStr) {
-  var str = htmlStr.slice(htmlStr.indexOf('id=\"m_pc_cbEquipes\">' +20, htmlStr.length));
-  var str2 = str.slice(str.indexOf('option value'), str.indexOf('</select>'));
+  var str = htmlStr.slice(htmlStr.indexOf('id=\"m_pc_cbEquipes\">') +20, htmlStr.length);
+  var str2 = str.slice(str.indexOf('<option value'), str.indexOf('</select>'));
   var retStr = str2.split('<option value=\"');
+  retStr.splice(retStr.length -1, 1); // remove last element in list which is option 0
+  retStr.splice(0,1); // remove first element in list which is an empty string
+  
   return retStr;
 }
 
-// parse team list first
-function parseTeamList(cols) {
-  var teamCol = [];
+// parse team list first - this returns the unique list of teams e.g. Huskys, Éclaireurs
+function parseClubList(cols) {
+  var clubCol = [];
   var found = false;
   
   var optionsCol = cols;
-  var newTeam;
+  var newClub;
   
-  for (var i=0; i <= optionsCol.length; i++) {
+  // loop through the collection of options to get the clubs
+  
+  for (var i=0; i <= cols.length; i++) {
     if (optionsCol[i].indexOf('separator') == -1) { // team item
       newTeam = getTeam(optionsCol[i])
       if (teamCol.length ==0) {
@@ -425,12 +479,25 @@ function parseTeamList(cols) {
   return teamCol;
 }
 
-function getTeam(str) {
-  str.slice(str.indexOf('='+2), str.indexOf('</'));
+function getTeamParse(str) {
+  str.slice(1, str.indexOf('</'));
   var id = str.slice(0, str.indexOf('\"'));
-  var name = str.slice(str.indexOf('>'+1), str.indexOf('</'));
-  var team = new dmTeams(id, name);
+  var name = str.slice(str.indexOf('>') +1, str.indexOf('</'));
+  var team = new dmTeam(id, name);
   return team;
+}
+
+function getClubParse(str) {
+  str.slice(1, str.indexOf('</'));
+  var name = str.slice(str.indexOf('>') +1, str.indexOf('</'));
+  if (name.lastIndexOf('-') == name.length -2) { // verify and remove hiphen at end of string
+    name = name.substring(0, name.length -2);
+  } else { 
+    if(name.indexOf("-F&#233;m") != -1) {
+      name = name.substring(0, name.indexOf("-F&#233;m"));
+    }
+  }
+  return name;
 }
 
 // This function gets the category
@@ -441,8 +508,167 @@ function getCategoryParse(trs) {
 
 function getLevelParse(trs) {
   var temp = trs.split('>');
-  var temp2 = temp[1].split();
-  return temp2[1].slice(0, temp[1].indexOf('<'));
+  var temp2 = temp[1].slice(0, temp[1].indexOf('<')).split(" ");
+  return temp2[1];
+}
+
+function findCategoryIndex(str, col) {
+  var returnVal;
+  var found = false;
+  
+  if (col.length > 0) {
+    for(var i =0; i< col.length; i++) {
+      if (str == col[i].category) {
+        found = true;
+        returnVal = i;
+      }
+    }
+    if (!found) {
+      returnVal = false;
+    }
+  }
+  return returnVal;
+}
+
+function findCategory(str, col, lvl) {
+  var returnVal;
+  var found = false;
+  var numArgs = arguments.length;
+  
+  if (col.length > 0) {
+    angular.forEach(col, function(category) {
+      if (str == category.category) {
+        found = true;
+        if(numArgs ==3) { 
+          category.Levels.push(lvl);
+        }
+        returnVal = category;
+      }
+    });
+    if (!found && numArgs == 2) {
+      returnVal = false;
+    }
+  } else {
+    if(numArgs ==3) {
+      var retCat = new dmCategory(str);
+      retCat.Levels.push(lvl);
+      returnVal = retCat;
+    } else { 
+      returnVal = false;
+    }
+  }
+  return returnVal;
+}
+
+function findClub(str, col, cat, lvl) { // find club in col of clubs
+// str: string to search
+// col: collection to search through
+// cat: string for category
+// lvl: string for level
+  var returnVal;
+  var foundClub = false;
+  var foundCat = false;
+  var foundLvl = false;
+  var retClub = null;
+  
+  if (col.length > 0) {
+    angular.forEach(col, function(club) {
+      if (str == club.name) {
+        foundClub = true;
+        angular.forEach(club.Categories, function(category){
+          if(category.category == cat) {
+            foundCat = true;
+            //club.currentCategory = club.Categories[findCategoryIndex(cat, club.Categories)];
+            angular.forEach(category.Levels, function(level){
+              if(level.level == lvl) {
+                foundLvl = true;
+                //club.Categories[findCategoryIndex(cat, club.Categories)].currentLevel = club.Categories[findCategoryIndex(cat, club.Categories)].Levels[findLevelIndex(lvl, club.Categories[findCategoryIndex(cat, club.Categories)].Levels)];
+                
+              }
+            });
+          }
+        });
+        if (!foundCat) {    // new category - create a new instance
+          var newCat = new dmCategory(cat);
+          club.Categories.push(newCat);
+          club.currentCategory = club.Categories[findCategoryIndex(cat, club.Categories)];
+        }
+        if (!foundLvl) {    // new level - create a new instance
+          var newlvl = new dmLevel(lvl);
+          club.Categories[findCategoryIndex(cat, club.Categories)].Levels.push(newlvl);
+          club.Categories[findCategoryIndex(cat, club.Categories)].currentLevel = club.Categories[findCategoryIndex(cat, club.Categories)].Levels[findLevelIndex(lvl, club.Categories[findCategoryIndex(cat, club.Categories)].Levels)];
+        }
+        returnVal = club;
+      }
+    });
+  } else {
+    foundClub = false;
+  }
+  if(!foundClub){
+    var nLvl = new dmLevel(lvl);
+    var nCat = new dmCategory(cat);
+    nCat.Levels.push(nLvl);
+    nCat.currentLevel = findLevel(nLvl.level, nCat.Levels);
+    retClub = new dmClub(str);
+    retClub.Categories.push(nCat);
+    retClub.currentCategory = findCategory(nCat.category, retClub.Categories);
+    returnVal = retClub;
+  }
+  return returnVal;
+}
+
+function findTeam(str, col) { // find team in collection of teams by using id
+  var returnVal;
+  var found = false;
+  
+  if(col.length > 0) {
+    angular.forEach(col, function(team) {
+      if(str == team.id) {
+        returnVal = team;
+        found = true;
+      }
+    });
+    if(!found) {
+      returnVal = false;
+    }
+  }
+  return returnVal;
+}
+
+function findLevelIndex(str, col) {
+  var returnVal;
+  var found = false;
+  
+  if(col.length > 0) {
+    for(var i =0; i<col.length; i++) {
+      if(str == col[i].level) {
+        returnVal = i;
+        found = true;
+      }
+    }
+    if (!found) {
+      returnVal = false;
+    }
+  }
+  return returnVal;
+}
+
+function findLevel(str, col) {
+  var returnVal;
+  var found = false;
+  
+  if(col.length > 0) {
+    angular.forEach(col, function(level) {
+      if(str == level.level) {
+        returnVal = level;
+        found = true;
+      }
+    });
+    if (!found) {
+      returnVal = false;
+    }
+  }
+  return returnVal;
 }
 
 function parseTr(trStr, day) { // returns parsed string
