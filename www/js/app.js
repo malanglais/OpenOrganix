@@ -7,12 +7,6 @@
 // 'starter.controllers' is found in controllers.js
 
 
-//var viewSt= '';
-//var teamNum = 0;
-var orderCategories = ['Pré-Novice', 'Novice', 'Atome', 'Pee-Wee', 'Bantam', 'Midget', 'Junior', 'Autre'];
-var orderLevels = ['AAA', 'AA', 'BB', 'CC', 'A', 'B', 'C', 'F'];
-//var teams = ['1', '2', '3', '4', '5'];
-
 angular.module('open_schedule', ['ionic']) 
 
 // home page controller that loads the page... may be this can be put in as a service later on
@@ -55,60 +49,15 @@ angular.module('open_schedule', ['ionic'])
     }); 
   self.selectClub = function(club) {
     self.huskyModel.setSelectedClub(club);
-    //self.huskyModel.resetLists(4);
-    //self.huskyModel.setCategoryList();
   };
   self.selectCategory = function(category) {
     self.huskyModel.setSelectedCategory(category);
-    //self.huskyModel.resetLists(3);
-    //self.huskyModel.setLevelList();
   };
   self.selectLevel = function(level) {
     self.huskyModel.setSelectedLevel(level);
-    //self.huskyModel.resetLists(2);
-    //self.huskyModel.setTeamList();
   };
   self.selectTeam = function(team) {
     self.huskyModel.setSelectedTeam(team);
-    //self.huskyModel.resetLists(1);
-    //self.huskyModel.setGameList();
-  };
-  
-}])
-
-.controller('catController',  ['huskyModel', function(huskyModel) {
-  var self = this;
-  self.huskyModel = huskyModel;
-  
-  self.selectCategory = function(category) {
-        self.huskyModel.setSelectedCategory(category);
-        self.huskyModel.resetLists(3);
-        self.huskyModel.setLevelList();
-  };
-  
-  
-}])
-  
-.controller('levelController',  ['huskyModel', function(huskyModel) {
-  var self = this;
-  self.huskyModel = huskyModel;
-  
-  self.selectLevel = function(level) {
-        self.huskyModel.setSelectedLevel(level);
-        self.huskyModel.resetLists(2);
-        self.huskyModel.setTeamList();
-  };
-  
-}])
-
-.controller('teamController', ['huskyModel', function(huskyModel) {
-  var self = this;
-  self.huskyModel = huskyModel;
-  
-  self.selectTeam = function(team) {
-        self.huskyModel.setSelectedTeam(team);
-        self.huskyModel.resetLists(1);
-        self.huskyModel.setGameList();
   };
   
 }])
@@ -135,80 +84,11 @@ angular.module('open_schedule', ['ionic'])
   self.isLevelSelected = false;
   self.isCategorySelected = false;
   
-  self.resetLists = function(num) {
-    if (num >= 1) {
-      self.gameList = [];               // Assuming this is the only reference
-      self.selectedGame = null;         // reset is selected to null
-      self.isTeamSelected = false;
-    }
-    if (num >= 2) {
-      self.teamList = [];               // Assuming this is the only reference
-      self.selectedTeam = null;         // reset is selected to null
-      self.isLevelSelected = false;
-    }
-    if (num >= 3) {
-      self.levelList = [];
-      self.selectedLevel = null;
-      self.isCategorySelected = false;
-    }
-    if (num >= 4) {
-      self.categoryList = [];
-      self.selectedCategory = null;
-      
-    }
-               
-  }
-  
-  self.gameModel = [];
-  self.setModel = function(dm, et) {
-    self.gameModel = getModel(dm, et);
-  };
-  
-  
+ 
   // this is the complete model
   self.clubList = [];
-  self.setCategoryList = function() {
-    angular.forEach(self.gameModel, function(club) {
-      self.clubList.push(club);
-      //sortIt(self.clubList, orderCategories);
-    });
-  };
   
-  self.categoryList = [];
-  self.setCategoryList = function() {
-    angular.forEach(self.gameModel, function(category) {
-      self.categoryList.push(category.category);
-      sortIt(self.categoryList, orderCategories);
-    });
-  };
-  
-  self.levelList = [];                      // make sure it's ordered. These are the levels AA first
-  self.setLevelList = function() {
-    angular.forEach(self.selectedCategory.levels, function(level) {
-      self.levelList.push(level.level);
-      sortIt(self.levelList, orderLevels);
-      self.isCategorySelected = true;
-    });
-  };
-
-  self.teamList = [];
-  self.setTeamList = function() {
-    angular.forEach(self.selectedLevel.teams, function(team) {
-        self.teamList.push(team.team);
-        self.isLevelSelected = true;
-    });
-  };
-  
-  self.gameList = [];                       // This structure should respect the data model
-  self.setGameList = function() {
-    angular.forEach(self.selectedTeam.dates, function(date) {
-      self.gameList.push(date);
-      self.isTeamSelected = true;
-    });
-  };
-
-
-  // this has to return the array... not the name
+ // this has to return the array... not the name
   self.selectedClub = null;
   self.setSelectedClub = function(club) {
     angular.forEach(self.clubList, function(clb) {
@@ -339,10 +219,6 @@ angular.module('open_schedule', ['ionic'])
 }); 
 
 
-function getDay(trStr) {
-  return trStr.slice(trStr.indexOf('5\'>')+3, trStr.indexOf('</td>'));
-}
-
 function getTeamModel(htmlStr) {
 
   var foundClub = false;
@@ -350,9 +226,9 @@ function getTeamModel(htmlStr) {
   var newClub = null;
   var newTeam = null;
   var newLevel = null;
-  var newLvlBool = false;
+  //var newLvlBool = false;
   var newCategory = null;
-  var newCatBool = false;
+  //var newCatBool = false;
   var catStr;
   var lvlStr;
   var clubStr;
@@ -377,15 +253,11 @@ function getTeamModel(htmlStr) {
         newCategory = new dmCategory(catStr);
       }
       
-      //newCategory.Levels.push(newLevel);
-      //newCategory.currentLevel = findLevel(newLevel.level, newCategory.Levels);
-      
     } else {
       // need to pass strings and create new instances of categories and levels when required
       clubStr = getClubParse(trList[i]);   // club will always contain something prior to team
       newTeam = getTeamParse(trList[i]);   // will always be a new team... constructor is inside function getTeamParse
       newClub = findClub(clubStr, clubList, catStr, lvlStr);   // assign club
-      //newClub.currentCategory = findCategory(catStr, newClub.Categories);
       newClub.Categories[findCategoryIndex(newClub.currentCategory.category, newClub.Categories)].Levels[findLevelIndex(newClub.currentCategory.currentLevel.level, newClub.Categories[findCategoryIndex(newClub.currentCategory.category, newClub.Categories)].Levels)].Teams.push(newTeam);
       if (clubList.length == 0) {
         clubList.push(newClub);
@@ -477,16 +349,6 @@ function dmLocation (nm, crd, cty, ph, web) {
   this.web = web;
 }
 
-function dmEntry(cat, lvl, tm, d, t, pg, loc) {
-  this.category = cat;
-  this.level = lvl;
-  this.team = tm;
-  this.date = d;
-  this.time = t;
-  this.type = pg;
-  this.loction = loc;
-}
-
 function parseInitial(htmlStr) {
   var str = htmlStr.slice(htmlStr.indexOf('id=\"m_pc_cbEquipes\">') +20, htmlStr.length);
   var str2 = str.slice(str.indexOf('<option value'), str.indexOf('</select>'));
@@ -495,36 +357,6 @@ function parseInitial(htmlStr) {
   retStr.splice(0,1); // remove first element in list which is an empty string
   
   return retStr;
-}
-
-// parse team list first - this returns the unique list of teams e.g. Huskys, Éclaireurs
-function parseClubList(cols) {
-  var clubCol = [];
-  var found = false;
-  
-  var optionsCol = cols;
-  var newClub;
-  
-  // loop through the collection of options to get the clubs
-  
-  for (var i=0; i <= cols.length; i++) {
-    if (optionsCol[i].indexOf('separator') == -1) { // team item
-      newTeam = getTeam(optionsCol[i])
-      if (teamCol.length ==0) {
-        teamCol.push(newTeam);
-      } else {
-        angular.forEach(teamCol, function(team) {
-          if (team.team == newTeam.team) {
-            found = true;
-          }
-        });
-        if (!found) {
-          teamCol.push(newTeam);
-        }
-      }
-    }
-  }
-  return teamCol;
 }
 
 function getTeamParse(str) {
@@ -718,17 +550,6 @@ function findLevel(str, col) {
   }
   return returnVal;
 }
-
-function parseTr(trStr, day) { // returns parsed string
-  var trs = trStr.split('<td>');
-  var time = trs[1].slice(0, trs[1].indexOf(' '));
-  var category = trs[2].slice(0, trs[2].indexOf(' '));
-  var level = trs[2].slice(trs[2].indexOf(' ')+1, trs[2].indexOf('</td>'));
-  var team = trs[3].slice(trs[3].indexOf(' ')+1, trs[3].indexOf('</td>'));
-  var loction = trs[4].slice(trs[4].indexOf('blank\'>')+7, trs[4].indexOf('</a>'));
-  var newEntry = new dmEntry(category, level, team, day, time, '',loction);
-  return newEntry;
-} 
 
 function sortIt(lvls, ord) {    // receiving a collection
   var indexFilled = 0;
