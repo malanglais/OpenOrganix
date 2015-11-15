@@ -5,14 +5,18 @@
         </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
+        <ion-checkbox class="item-checkbox-right" ng-model="gCtrl.huskyModel.selectedTeam.allEventsSelected" ng-change="gCtrl.selectAllEvents()">Select all events</ion-checkbox>
+        <div class="text-right">
+            <button class="button button-light" ng-click="gCtrl.huskyModel.createEvents()">Create events</button>
+        </div>
         <ion-list>
             <div ng-repeat="date in gCtrl.huskyModel.selectedTeam.Dates">
                 <ion-item class="item-stable">
                     Date: {{date.date}}
                 </ion-item>
-                <ion-item class="item-accordion" ng-repeat="event in date.Events">
-                {{event.Location.city}}-{{event.Location.arena}}  {{event.time}}    {{event.adversary}}
-              </ion-item>
+                <ion-checkbox class="item-accordion item-checkbox-right" ng-repeat="event in date.Events" ng-model="event.isSelected">
+                {{event.time}} | {{event.Location.city}}-{{event.Location.arena}} | {{event.adversary}}
+                </ion-checkbox>
             </div>
         </ion-list>
     </ion-content>

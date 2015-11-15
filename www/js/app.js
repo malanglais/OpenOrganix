@@ -65,7 +65,7 @@ angular.module('open_schedule', ['ionic'])
   
 }])
 
-.controller('gameController', ['$http', 'huskyModel', function($http, huskyModel) {
+.controller('gameController', ['$http', 'huskyModel', '$cordovaCalendar', function($http, huskyMode, $cordovaCalendar) {
   var self = this;
   self.huskyModel = huskyModel;
   
@@ -98,8 +98,36 @@ angular.module('open_schedule', ['ionic'])
       }).then(function (response) {
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
-        var t =1;
   });
+  
+  self.selectAllEvents = function() {
+    self.huskyModel.selectAllEvents(self.huskyModel.selectedTeam.allEventsSelected);
+  };
+  
+  self.createEvents = function() {
+    var stDate = null; // start date in Date format
+    var enDate = null; // end date in Date format
+    
+    angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
+      angular.forEach(date.Events, function(event){
+        if (event.isSelected) { // create event
+          $cordovaCalendar.createEvent({
+            title: "Hockey - " + event.Location.city + event.adversary,
+            location: event.Location.city + event.Location.arena,
+            notes: "Bonne partie!",
+            startDate: getStartDate(date.date, event.time),
+            endDate: getEndDate(date.date, event.time, 120)
+          }).then (function(result){
+            alert("event created");
+          }, function(err){
+            alert(err);
+          });
+        }
+      });
+    });
+  };
+  
+  
 }])
 
 
@@ -154,6 +182,14 @@ angular.module('open_schedule', ['ionic'])
         }
     });
   };
+  
+  self.selectAllEvents = function(selected) {
+    angular.forEach(self.selectedTeam.Dates, function(date){
+      angular.forEach(date.Events, function(event){
+        event.isSelected = selected;
+      });
+    });
+  }
   
 }])
 
@@ -302,6 +338,7 @@ function dmLevel(lvl) {
 function dmTeam(id, tm) {
   this.id = id;
   this.team = tm;
+  this.allEventsSelected;
   this.Dates = [];
 }
 
@@ -316,6 +353,7 @@ function dmEvent(tm, time, pg, loc, hg) {
     this.time = time;
     this.type = pg;
     this.Location = loc; 
+    this.isSelected = false;
 }
 
 function dmLocation (ar, crd, cty, ph, web) {
@@ -635,7 +673,6 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 processed = true;
                 if(isNewDate(ctrlValue, returnCollectionDates)) {
                   // add date to collection
-                  //returnCollectionDates.push(new dmDate(ctrlValue));
                   currentDate = new dmDate(ctrlValue);
                 } else {
                   currentDate = findDate(ctrlValue, returnCollectionDates);
@@ -722,7 +759,45 @@ function findDate(date, col) {
   return retDate;
 }
 
+/* ==============================================
 
+Calendar fuctions
+
+================================================*/
+
+function getStartDate(date, time) {
+  var dateItems = date.split('/');
+  var timeItems = time.split(':');
+  var yr = parseInt(dateItems[2]);
+  var mn = parseInt(dateItems[1]);
+  var dy = parseInt(dateItems[0]);
+  var hr = parseInt(tmieItems[0]);
+  var mi = parseInt(tmieItems[1]);
+  return new Date(yr, dy, mn, hr, mi, 0,0,0);
+}
+
+function getEndDate(date, time, duration) {
+  var dateItems = date.split('/');
+  var timeItems = time.split(':');
+  var yr = parseInt(dateItems[2]);
+  var mn = parseInt(dateItems[1]);
+  var dy = parseInt(dateItems[0]);
+  var hr = parseInt(tmieItems[0]);
+  var mi = parseInt(tmieItems[1]);
+  var durHr = Math.floor(duration / 60);
+  var durMi = duration % 60;
+  mi = mi + durMi;
+  if (mi >= 60) {
+    durHr = durHr + Math.floor(mi/60);
+    mi = mi % 60;
+  }
+  hr = hr + durHr;
+  if(hr >= 24) {
+    dy = dy + Math.floor(hr/24);
+    hr = hr % 24;
+  }
+  return new Date(yr, dy, mn, hr, mi, 0,0,0);
+}
 
 /* ==============================================
 
