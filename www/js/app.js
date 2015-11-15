@@ -363,6 +363,7 @@ function getTeamParse(str) {
   str.slice(1, str.indexOf('</'));
   var id = str.slice(0, str.indexOf('\"'));
   var name = str.slice(str.indexOf('>') +1, str.indexOf('</'));
+  name = convertHTML(name);
   var team = new dmTeam(id, name);
   return team;
 }
@@ -377,6 +378,7 @@ function getClubParse(str) {
       name = name.substring(0, name.indexOf("-F&#233;m"));
     }
   }
+  name = convertHTML(name);
   return name;
 }
 
@@ -575,4 +577,20 @@ function getViewState(htmlStr) {
   var str = htmlStr.slice(htmlStr.indexOf('__VIEWSTATE\" v')+20, htmlStr.length);
   var vst = str.slice(0, str.indexOf('</option>'));
   return vst;
+}
+
+function convertHTML(str) {
+  var returnVal = null;
+  var tempStr = str.substr(str.indexOf("&"), 6);
+  switch (tempStr) {
+    case '&#201;':
+      returnVal = str.replace(tempStr,"É");
+      break;
+    case '&#233;':
+      returnVal = str.replace(tempStr,"é");
+      break;
+    default:
+      returnVal = null;
+  }
+  return returnVal;
 }
