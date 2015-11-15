@@ -575,7 +575,7 @@ Array.prototype.move = function (old_index, new_index) {
 
 function getViewState(htmlStr) {
   var str = htmlStr.slice(htmlStr.indexOf('__VIEWSTATE\" v')+20, htmlStr.length);
-  var vst = str.slice(0, str.indexOf('</option>'));
+  var vst = str.slice(0, str.indexOf('/>')-2);
   return vst;
 }
 
