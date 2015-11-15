@@ -51,10 +51,29 @@ angular.module('open_schedule', ['ionic'])
       }
       }).then(function (response) {
         vSt2 = getViewState(response.data);
-        self.huskyModel.teamList= getTeamModel(response.data);
-        var t = 1;
+        self.huskyModel.clubList= getTeamModel(response.data);
     }); 
-
+  self.selectClub = function(club) {
+    self.huskyModel.setSelectedClub(club);
+    //self.huskyModel.resetLists(4);
+    //self.huskyModel.setCategoryList();
+  };
+  self.selectCategory = function(category) {
+    self.huskyModel.setSelectedCategory(category);
+    //self.huskyModel.resetLists(3);
+    //self.huskyModel.setLevelList();
+  };
+  self.selectLevel = function(level) {
+    self.huskyModel.setSelectedLevel(level);
+    //self.huskyModel.resetLists(2);
+    //self.huskyModel.setTeamList();
+  };
+  self.selectTeam = function(team) {
+    self.huskyModel.setSelectedTeam(team);
+    //self.huskyModel.resetLists(1);
+    //self.huskyModel.setGameList();
+  };
+  
 }])
 
 .controller('catController',  ['huskyModel', function(huskyModel) {
@@ -72,8 +91,7 @@ angular.module('open_schedule', ['ionic'])
   
 .controller('levelController',  ['huskyModel', function(huskyModel) {
   var self = this;
-  
-  
+  self.huskyModel = huskyModel;
   
   self.selectLevel = function(level) {
         self.huskyModel.setSelectedLevel(level);
@@ -111,6 +129,7 @@ angular.module('open_schedule', ['ionic'])
   var self = this;
   
   self.ViewState = null;
+  self.isClubSelected = null;
   self.isGameSelected = false;
   self.isTeamSelected = false;
   self.isLevelSelected = false;
@@ -143,6 +162,16 @@ angular.module('open_schedule', ['ionic'])
   self.gameModel = [];
   self.setModel = function(dm, et) {
     self.gameModel = getModel(dm, et);
+  };
+  
+  
+  // this is the complete model
+  self.clubList = [];
+  self.setCategoryList = function() {
+    angular.forEach(self.gameModel, function(club) {
+      self.clubList.push(club);
+      //sortIt(self.clubList, orderCategories);
+    });
   };
   
   self.categoryList = [];
@@ -180,10 +209,20 @@ angular.module('open_schedule', ['ionic'])
 
 
   // this has to return the array... not the name
+  self.selectedClub = null;
+  self.setSelectedClub = function(club) {
+    angular.forEach(self.clubList, function(clb) {
+        if (clb.name == club.name) {
+          self.selectedClub = clb;
+        }
+    });
+  };
+  
+  // this has to return the array... not the name
   self.selectedCategory = null;
   self.setSelectedCategory = function(cat) {
-    angular.forEach(self.gameModel, function(category) {
-        if (category.category == cat) {
+    angular.forEach(self.selectedClub.Categories, function(category) {
+        if (category.category == cat.category) {
           self.selectedCategory = category;
         }
     });
@@ -191,8 +230,8 @@ angular.module('open_schedule', ['ionic'])
 
   self.selectedLevel = null;
   self.setSelectedLevel = function(lvl) {
-    angular.forEach(self.selectedCategory.levels, function(level) {
-        if (level.level == lvl) {
+    angular.forEach(self.selectedCategory.Levels, function(level) {
+        if (level.level == lvl.level) {
           self.selectedLevel = level;
         }
     });
@@ -200,8 +239,8 @@ angular.module('open_schedule', ['ionic'])
   
   self.selectedTeam = null;
   self.setSelectedTeam = function(tm) {
-    angular.forEach(self.selectedLevel.teams, function(team) {
-        if (team.team == tm) {
+    angular.forEach(self.selectedLevel.Teams, function(team) {
+        if (team.team == tm.team) {
           self.selectedTeam = team;
         }
     });
@@ -245,7 +284,7 @@ angular.module('open_schedule', ['ionic'])
       url: '/home',
       views: {
         'home': {
-          templateUrl: 'templates/teams.html'
+          templateUrl: 'templates/clubs.html'
         }
       }
     })
@@ -264,6 +303,15 @@ angular.module('open_schedule', ['ionic'])
       views: {
         'home': {
           templateUrl: 'templates/categories.html'
+        }
+      }
+    })
+    
+    .state('teams', {
+      url: '/teams',
+      views: {
+        'home': {
+          templateUrl: 'templates/teams.html'
         }
       }
     })
@@ -335,7 +383,7 @@ function getTeamModel(htmlStr) {
     } else {
       // need to pass strings and create new instances of categories and levels when required
       clubStr = getClubParse(trList[i]);   // club will always contain something prior to team
-      newTeam = new dmTeam(getTeamParse(trList[i]));   // will always be a new team
+      newTeam = getTeamParse(trList[i]);   // will always be a new team... constructor is inside function getTeamParse
       newClub = findClub(clubStr, clubList, catStr, lvlStr);   // assign club
       //newClub.currentCategory = findCategory(catStr, newClub.Categories);
       newClub.Categories[findCategoryIndex(newClub.currentCategory.category, newClub.Categories)].Levels[findLevelIndex(newClub.currentCategory.currentLevel.level, newClub.Categories[findCategoryIndex(newClub.currentCategory.category, newClub.Categories)].Levels)].Teams.push(newTeam);
