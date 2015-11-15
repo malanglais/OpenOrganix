@@ -33,7 +33,6 @@ angular.module('open_schedule', ['ionic'])
   
   var aURL = "http://lcrse.qc.ca/cedules.saison.aspx";
 
-  
   $http({
       url: aURL,
       method: "POST",
@@ -44,33 +43,63 @@ angular.module('open_schedule', ['ionic'])
         return data; 
       }
       }).then(function (response) {
-        vSt2 = getViewState(response.data);
+        self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.clubList= getTeamModel(response.data);
-    }); 
+  }); 
+  
   self.selectClub = function(club) {
     self.huskyModel.setSelectedClub(club);
   };
+  
   self.selectCategory = function(category) {
     self.huskyModel.setSelectedCategory(category);
   };
+  
   self.selectLevel = function(level) {
     self.huskyModel.setSelectedLevel(level);
   };
+  
   self.selectTeam = function(team) {
     self.huskyModel.setSelectedTeam(team);
   };
   
 }])
 
-.controller('gameController', ['huskyModel', function(huskyModel) {
+.controller('gameController', ['$http', 'huskyModel', function($http, huskyModel) {
   var self = this;
   self.huskyModel = huskyModel;
   
-  self.selectTeam = function(team) {
-        self.huskyModel.setSelectedTeam(team);
-  };
+  var fData = new FormData();
+  fData.append("__EVENTTARGET", "m$pc$cbSemaine");
+  fData.append("__EVENTARGUMENT", "");
+  fData.append("__LASTFOCUS", "");
+  fData.append("__VIEWSTATE", self.huskyModel.ViewState);
+  fData.append("m$txtLogin", "");
+  fData.append("m$txtPassword", "");
+  fData.append("m$pc$cbYear", "2015");
+  fData.append("m$pc$cbCategories", "-1");
+  fData.append("m$pc$cbEquipes", self.huskyModel.selectedTeam.id);
+  fData.append("m$pc$cbSemaine", "-1");
+  fData.append("m$pc$cbArenaFilter", "-1");
+  fData.append("m$hdnOnLoadMessage", "");
+  fData.append("m$hdnOnLoadMessageOptions", "");
   
+  var aURL = "http://lcrse.qc.ca/cedules.saison.aspx";
 
+  $http({
+      url: aURL,
+      method: "POST",
+      data: fData,
+      headers: { 'Content-Type': undefined, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+      },      
+      transformResponse: function (data) { 
+        return data; 
+      }
+      }).then(function (response) {
+        self.huskyModel.ViewState = getViewState(response.data);
+        self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
+        var t =1;
+  });
 }])
 
 
@@ -218,6 +247,90 @@ angular.module('open_schedule', ['ionic'])
   $urlRouterProvider.otherwise('/home');
 }); 
 
+/* ==============================================
+
+Data model
+
+================================================*/
+
+function dmClub(cl) {
+  this.name = cl;
+  this.currentCategory = null;
+  this.Categories = [];
+  
+  this.setCurrentCategory = function(cat) {
+    if (this.Categories.length == 0) {
+      this.currentCategory = cat;
+    } else {
+      angular.forEach(this.Categories, function(category){
+        if(cat.category == category.category) {
+          this.currentCategory = category;
+        }
+      });
+    }
+  }
+}
+
+function dmCategory(cat) {
+  this.category = cat;
+  this.currentLevel = null;
+  this.Levels = [];
+  
+  this.setCurrentLevel = function(lvl) {
+    angular.forEach(this.Levels, function(level){
+      if(lvl.level == level.level) {
+        this.currentLevel = level;
+      }
+    });
+  }
+}
+
+function dmLevel(lvl) {
+  this.level = lvl;
+  this.currentTeam = null;
+  this.Teams = [];
+  
+  this.setCurrentTeam = function(tm) {
+    angular.forEach(this.Teams, function(team){
+      if(tm.id == team.id) {
+        this.currentTeam = team;
+      }
+    });
+  }
+}
+
+function dmTeam(id, tm) {
+  this.id = id;
+  this.team = tm;
+  this.Dates = [];
+}
+
+function dmDate (dt) {
+  this.date = dt;
+  this.Events = [];
+}
+
+function dmEvent(tm, time, pg, loc, hg) {
+    this.isHomeGame = hg;
+    this.adversary = tm;
+    this.time = time;
+    this.type = pg;
+    this.Location = loc; 
+}
+
+function dmLocation (ar, crd, cty, ph, web) {
+  this.arena = ar;
+  this.coordinates = crd;
+  this.city = cty;
+  this.phone = ph;
+  this.web = web;
+}
+
+/* ==============================================
+
+Model fuctions
+
+================================================*/
 
 function getTeamModel(htmlStr) {
 
@@ -274,79 +387,6 @@ function getTeamModel(htmlStr) {
     }
   }
   return clubList;
-}
-      
-function dmClub(cl) {
-  this.name = cl;
-  this.currentCategory = null;
-  this.Categories = [];
-  
-  this.setCurrentCategory = function(cat) {
-    if (this.Categories.length == 0) {
-      this.currentCategory = cat;
-    } else {
-      angular.forEach(this.Categories, function(category){
-        if(cat.category == category.category) {
-          this.currentCategory = category;
-        }
-      });
-    }
-  }
-}
-
-function dmCategory(cat) {
-  this.category = cat;
-  this.currentLevel = null;
-  this.Levels = [];
-  
-  this.setCurrentLevel = function(lvl) {
-    angular.forEach(this.Levels, function(level){
-      if(lvl.level == level.level) {
-        this.currentLevel = level;
-      }
-    });
-  }
-}
-
-function dmLevel(lvl) {
-  this.level = lvl;
-  this.currentTeam = null;
-  this.Teams = [];
-  
-  this.setCurrentTeam = function(tm) {
-    angular.forEach(this.Teams, function(team){
-      if(tm.id == team.id) {
-        this.currentTeam = team;
-      }
-    });
-  }
-}
-
-function dmTeam(id, tm) {
-  this.id = id;
-  this.team = tm;
-  this.Dates = [];
-}
-
-function dmDate (dt, gm) {
-  this.date = dt;
-  this.games = [];
-  this.games.push(gm);
-}
-
-function dmEvent(tm, time, pg, loc) {
-    this.Team = tm;
-    this.time = time;
-    this.type = pg;
-    this.Locotion = loc; 
-}
-
-function dmLocation (nm, crd, cty, ph, web) {
-  this.name = nm;
-  this.coordinates = crd;
-  this.city = cty;
-  this.phone = ph;
-  this.web = web;
 }
 
 function parseInitial(htmlStr) {
@@ -553,6 +593,143 @@ function findLevel(str, col) {
   return returnVal;
 }
 
+function getViewState(htmlStr) {
+  var str = htmlStr.slice(htmlStr.indexOf('__VIEWSTATE\" v')+20, htmlStr.length);
+  var vst = str.slice(0, str.indexOf('/>')-2);
+  return vst;
+}
+
+function constructGameModel(htmlstr, hTeam) { // will fill in the model with the corresponding games for the teams
+  var returnCollectionDates = [];
+  var ctrlId = null;
+  var ctrlValue = null;
+  var currentDate = null;
+  var tdCollection = [];
+  var tmpTime=null;
+  var tmpArena=null;
+  var tmpAdversary=null;
+  var tmpCity=null;
+  var tmpIsHomeGame=null;
+  var tmpEvent = null;
+  var tmpLocation = null;
+  var foundLocation = false;
+  var processed = false;
+  
+  var str = htmlstr.slice(htmlstr.indexOf("<section id=\"m_pc_sctCedule\""), htmlstr.length);
+  str = str.slice(str.indexOf("<table"), str.lastIndexOf("</table>"));
+  var trCollection = str.split("<tr>");
+
+  angular.forEach(trCollection, function(trStr){ // new game entry
+    if(trStr.indexOf("lblCode") != -1) {
+      tdCollection = trStr.split("<td");
+      
+      angular.forEach(tdCollection, function(lineStr){
+        processed = false;
+        lineStr = lineStr.substring(lineStr.indexOf("<span"), lineStr.indexOf("</span>"));
+        if(lineStr.length > 0) {
+          ctrlId = lineStr.substring(lineStr.lastIndexOf("_") +1, lineStr.lastIndexOf("\""));
+          ctrlValue = lineStr.substring(lineStr.indexOf("\">") +2, lineStr.length);
+          
+          switch (ctrlId) {
+            case 'lblDate':
+                processed = true;
+                if(isNewDate(ctrlValue, returnCollectionDates)) {
+                  // add date to collection
+                  //returnCollectionDates.push(new dmDate(ctrlValue));
+                  currentDate = new dmDate(ctrlValue);
+                } else {
+                  currentDate = findDate(ctrlValue, returnCollectionDates);
+                }
+              break;
+            case 'lblTime': // assuming this is always going to be unique so save in date
+                processed = true;
+                tmpTime = ctrlValue
+              break;  
+            case 'lblVisitor': // assuming this is always going to be unique so save in date
+                processed = true;
+                if(convertHTML(ctrlValue) != hTeam) { // visitor team is adversary, so local game
+                  tmpAdversary = convertHTML(ctrlValue);
+                  tmpIsHomeGame = true;
+                }
+              break;
+            case 'lblLocal': // assuming this is always going to be unique so save in date
+                processed = true;
+                if(convertHTML(ctrlValue) != hTeam) { // visitor team is local, so NOT local game
+                  tmpAdversary = convertHTML(ctrlValue);
+                  tmpIsHomeGame = false;
+                }
+              break;
+            case 'lblArena': // assuming this is always going to be unique so save in date
+                processed = true;
+                tmpCity = convertHTML(ctrlValue.substring(0, ctrlValue.indexOf(":")));
+                tmpArena = convertHTML(ctrlValue.substring(ctrlValue.indexOf(":")+2, ctrlValue.length));
+              break;
+            default:
+              // code
+            }
+          }
+        });
+        if(returnCollectionDates.length == 0) {
+          tmpLocation = new dmLocation(tmpArena, 0, tmpCity, null, null);
+          tmpEvent = new dmEvent(tmpAdversary, tmpTime, "Partie", tmpLocation, tmpIsHomeGame);
+          currentDate.Events.push(tmpEvent);
+        } else {
+          angular.forEach(returnCollectionDates, function(date){
+            angular.forEach(currentDate.Events, function(event){
+              if(event.Location.arena == tmpArena) {
+                foundLocation = true;
+                tmpLocation = event.Location;
+              }
+            });
+          });
+          if(!foundLocation) {
+            tmpLocation = new dmLocation(tmpArena, 0, tmpCity, null, null);
+          }
+          tmpEvent = new dmEvent(tmpAdversary, tmpTime, "Partie", tmpLocation, tmpIsHomeGame);
+          currentDate.Events.push(tmpEvent);
+        }
+        returnCollectionDates.push(currentDate);
+    }
+  });
+  return returnCollectionDates;
+}
+
+function isNewDate(date, col) {
+  // return bool value , found or mot
+   var newDate = true;
+   
+   if(col.length !=0){
+     angular.forEach(col, function(dd){
+       if(dd.date == date) {
+         newDate = false;
+       }
+     });
+   }
+  return newDate;
+}
+
+function findDate(date, col) {
+  // return bool value , found or mot
+   var retDate = null;
+   
+   if(col.length !=0){
+     angular.forEach(col, function(dd){
+       if(dd.date == date) {
+         retDate = dd;
+       }
+     });
+   }
+  return retDate;
+}
+
+
+
+/* ==============================================
+
+Various fuctions
+
+================================================*/
+
 function sortIt(lvls, ord) {    // receiving a collection
   var indexFilled = 0;
   angular.forEach(ord, function(ordItem) {
@@ -573,12 +750,6 @@ Array.prototype.move = function (old_index, new_index) {
     this.slice(new_index, 0, this.slice(old_index, 1)[0]);
 };
 
-function getViewState(htmlStr) {
-  var str = htmlStr.slice(htmlStr.indexOf('__VIEWSTATE\" v')+20, htmlStr.length);
-  var vst = str.slice(0, str.indexOf('/>')-2);
-  return vst;
-}
-
 function convertHTML(str) {
   var returnVal = null;
   var tempStr = str.substr(str.indexOf("&"), 6);
@@ -590,7 +761,7 @@ function convertHTML(str) {
       returnVal = str.replace(tempStr,"é");
       break;
     default:
-      returnVal = null;
+      returnVal = str;
   }
   return returnVal;
 }

@@ -6,12 +6,12 @@
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <div ng-repeat="date in gCtrl.huskyModel.gameList">
+            <div ng-repeat="date in gCtrl.huskyModel.selectedTeam.Dates">
                 <ion-item class="item-stable">
                     Date: {{date.date}}
                 </ion-item>
-                <ion-item class="item-accordion" ng-repeat="game in date.games">
-                {{game.type}}    {{game.time}}    {{game.loction}}
+                <ion-item class="item-accordion" ng-repeat="event in date.Events">
+                {{event.Location.city}}-{{event.Location.arena}}  {{event.time}}    {{event.adversary}}
               </ion-item>
             </div>
         </ion-list>
