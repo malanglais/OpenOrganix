@@ -65,7 +65,7 @@ angular.module('open_schedule', ['ionic'])
   
 }])
 
-.controller('gameController', ['$http', 'huskyModel', '$cordovaCalendar', function($http, huskyMode, $cordovaCalendar) {
+.controller('gameController', ['$http', '$cordovaCalendar','huskyModel', function($http, $cordovaCalendar, huskyModel) {
   var self = this;
   self.huskyModel = huskyModel;
   
