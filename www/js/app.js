@@ -771,8 +771,8 @@ function getStartDate(date, time) {
   var yr = parseInt(dateItems[2]);
   var mn = parseInt(dateItems[1]);
   var dy = parseInt(dateItems[0]);
-  var hr = parseInt(tmieItems[0]);
-  var mi = parseInt(tmieItems[1]);
+  var hr = parseInt(timeItems[0]);
+  var mi = parseInt(timeItems[1]);
   return new Date(yr, dy, mn, hr, mi, 0,0,0);
 }
 
@@ -782,8 +782,8 @@ function getEndDate(date, time, duration) {
   var yr = parseInt(dateItems[2]);
   var mn = parseInt(dateItems[1]);
   var dy = parseInt(dateItems[0]);
-  var hr = parseInt(tmieItems[0]);
-  var mi = parseInt(tmieItems[1]);
+  var hr = parseInt(timeItems[0]);
+  var mi = parseInt(timeItems[1]);
   var durHr = Math.floor(duration / 60);
   var durMi = duration % 60;
   mi = mi + durMi;
