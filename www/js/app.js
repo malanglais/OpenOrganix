@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 
 
-angular.module('open_schedule', ['ionic']) 
+angular.module('open_schedule', ['ionic', 'ngCordova']) 
 
 // home page controller that loads the page... may be this can be put in as a service later on
 /* TODO : put in service */
