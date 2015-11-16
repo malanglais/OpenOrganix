@@ -12,9 +12,9 @@
         <ion-list>
             <div ng-repeat="date in gCtrl.huskyModel.selectedTeam.Dates">
                 <ion-item class="item-stable">
-                    Date: {{date.date}}
+                    Date: {{date.date | date:'yyyy-MM-dd'}}
                 </ion-item>
-                <ion-checkbox class="item-accordion item-checkbox-right" ng-repeat="event in date.Events" ng-model="event.isSelected">
+                <ion-checkbox class="item-accordion item-checkbox-right" ng-class="{'icon ion-ios7-heart': liked, 'icon ion-ios7-heart-outline': !liked}" ng-click="liked=!liked" ng-repeat="event in date.Events" ng-model="event.isSelected">
                 {{event.time}} | {{event.Location.city}}-{{event.Location.arena}} | {{event.adversary}}
                 </ion-checkbox>
             </div>

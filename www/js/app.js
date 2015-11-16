@@ -108,11 +108,11 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     var stDate = null; // start date in Date format
     var enDate = null; // end date in Date format
     
-    $cordovaCalendar.listCalendars().then(function (result) {
+    /*$cordovaCalendar.listCalendars().then(function (result) {
       var t=1;
     }, function (err) {
       var t=1;
-    });
+    }); */
     
     angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
       angular.forEach(date.Events, function(event){
@@ -121,8 +121,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             title: "Hockey - " + event.Location.city + event.adversary,
             location: event.Location.city + event.Location.arena,
             notes: "Bonne partie!",
-            startDate: getStartDate(date.date, event.time),
-            endDate: getEndDate(date.date, event.time, 120)
+            startDate: date.date,
+            endDate: getEndDate(startDate, 120)
           }).then (function(result){
             alert("event created");
           }, function(err){
@@ -349,7 +349,11 @@ function dmTeam(id, tm) {
 }
 
 function dmDate (dt) {
-  this.date = dt;
+  // date: Date
+  // isPassed: bool - flag for UI
+  // Events: array of dmEvents
+  this.date = dt;         
+  this.isPassed = false;
   this.Events = [];
 }
 
@@ -679,7 +683,12 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 processed = true;
                 if(isNewDate(ctrlValue, returnCollectionDates)) {
                   // add date to collection
-                  currentDate = new dmDate(ctrlValue);
+                  // convert string to Date
+                  var dateItems = ctrlValue.split('/');
+                  var yr = parseInt(dateItems[2]);
+                  var mn = parseInt(dateItems[1]) - 1;
+                  var dy = parseInt(dateItems[0]);
+                  currentDate = new dmDate(new Date(yr, mn, dy));
                 } else {
                   currentDate = findDate(ctrlValue, returnCollectionDates);
                 }
@@ -782,27 +791,9 @@ function getStartDate(date, time) {
   return new Date(yr, mn, dy, hr, mi, 0,0,0);
 }
 
-function getEndDate(date, time, duration) {
-  var dateItems = date.split('/');
-  var timeItems = time.split(':');
-  var yr = parseInt(dateItems[2]);
-  var mn = parseInt(dateItems[1])-1;
-  var dy = parseInt(dateItems[0]);
-  var hr = parseInt(timeItems[0]);
-  var mi = parseInt(timeItems[1]);
-  var durHr = Math.floor(duration / 60);
-  var durMi = duration % 60;
-  mi = mi + durMi;
-  if (mi >= 60) {
-    durHr = durHr + Math.floor(mi/60);
-    mi = mi % 60;
-  }
-  hr = hr + durHr;
-  if(hr >= 24) {
-    dy = dy + Math.floor(hr/24);
-    hr = hr % 24;
-  }
-  return new Date(yr, mn, dy, hr, mi, 0,0,0);
+function getEndDate(date, minutes) {
+  // date: Date - corresponds to the startdate of the event
+  return new Date(date.getTime() + minutes*60000);
 }
 
 /* ==============================================
