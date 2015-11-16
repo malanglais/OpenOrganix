@@ -108,6 +108,12 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     var stDate = null; // start date in Date format
     var enDate = null; // end date in Date format
     
+    $cordovaCalendar.listCalendars().then(function (result) {
+      var t=1;
+    }, function (err) {
+      var t=1;
+    });
+    
     angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
       angular.forEach(date.Events, function(event){
         if (event.isSelected) { // create event
