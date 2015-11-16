@@ -117,12 +117,13 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
       angular.forEach(date.Events, function(event){
         if (event.isSelected) { // create event
-          $cordovaCalendar.createEvent({
+          $cordovaCalendar.createEventInNamedCalendar({
             title: "Hockey - " + event.Location.city + event.adversary,
             location: event.Location.city + event.Location.arena,
             notes: "Bonne partie!",
             startDate: getStartDate(date.date, event.time),
-            endDate: getEndDate(date.date, event.time, 120)
+            endDate: getEndDate(date.date, event.time, 120),
+            calendarName: 'malanglais@epicoaching.net'
           }).then (function(result){
             alert("event created");
           }, function(err){
