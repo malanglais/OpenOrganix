@@ -117,13 +117,12 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
       angular.forEach(date.Events, function(event){
         if (event.isSelected) { // create event
-          $cordovaCalendar.createEventInNamedCalendar({
+          $cordovaCalendar.createEvent({
             title: "Hockey - " + event.Location.city + event.adversary,
             location: event.Location.city + event.Location.arena,
             notes: "Bonne partie!",
             startDate: getStartDate(date.date, event.time),
-            endDate: getEndDate(date.date, event.time, 120),
-            calendarName: 'malanglais@epicoaching.net'
+            endDate: getEndDate(date.date, event.time, 120)
           }).then (function(result){
             alert("event created");
           }, function(err){
@@ -776,18 +775,18 @@ function getStartDate(date, time) {
   var dateItems = date.split('/');
   var timeItems = time.split(':');
   var yr = parseInt(dateItems[2]);
-  var mn = parseInt(dateItems[1]);
+  var mn = parseInt(dateItems[1]) - 1;
   var dy = parseInt(dateItems[0]);
   var hr = parseInt(timeItems[0]);
   var mi = parseInt(timeItems[1]);
-  return new Date(yr, dy, mn, hr, mi, 0,0,0);
+  return new Date(yr, mn, dy, hr, mi, 0,0,0);
 }
 
 function getEndDate(date, time, duration) {
   var dateItems = date.split('/');
   var timeItems = time.split(':');
   var yr = parseInt(dateItems[2]);
-  var mn = parseInt(dateItems[1]);
+  var mn = parseInt(dateItems[1])-1;
   var dy = parseInt(dateItems[0]);
   var hr = parseInt(timeItems[0]);
   var mi = parseInt(timeItems[1]);
@@ -803,7 +802,7 @@ function getEndDate(date, time, duration) {
     dy = dy + Math.floor(hr/24);
     hr = hr % 24;
   }
-  return new Date(yr, dy, mn, hr, mi, 0,0,0);
+  return new Date(yr, mn, dy, hr, mi, 0,0,0);
 }
 
 /* ==============================================
