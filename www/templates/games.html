@@ -7,7 +7,7 @@
     <ion-content>
         <ion-checkbox class="item-checkbox-right" ng-model="gCtrl.huskyModel.selectedTeam.allEventsSelected" ng-change="gCtrl.selectAllEvents()">Select all events</ion-checkbox>
         <div class="text-right">
-            <button class="button button-light" ng-click="gCtrl.huskyModel.createEvents()">Create events</button>
+            <button class="button button-light" ng-click="gCtrl.createEvents()">Create events</button>
         </div>
         <ion-list>
             <div ng-repeat="date in gCtrl.huskyModel.selectedTeam.Dates">
