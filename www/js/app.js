@@ -117,7 +117,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       alert("No calendars available");
   }); 
   
-  self.actionSheet = function() {
+  /*self.actionSheet = function() {
 
     // Show the action sheet
     var hideSheet = $ionicActionSheet.show({
@@ -138,7 +138,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         hideSheet();
     }, 0);
 
-    };
+    }; */
   
   
   self.createEvents = function() {
@@ -157,7 +157,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
               location: event.Location.city + event.Location.arena,
               notes: "Bonne partie!",
               startDate: date.date,
-              endDate: getEndDate(startDate, 120),
+              endDate: getEndDate(date.date, 120),
               calendarName:selectedCalendarName
             }).then (function(result){
               alert("event created");

@@ -17,6 +17,8 @@
     display: none;
 }
 
-.unhidden {
-  display: ;
+.hAlign {
+  display: inline-block;
+  width: 50%;
 }
+
