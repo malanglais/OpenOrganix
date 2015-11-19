@@ -29,6 +29,7 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script type="text/javascript" src="cordova.js"></script>
     
+
     
     
   </head>
@@ -39,14 +40,16 @@
   <ion-nav-bar>
 	
   </ion-nav-bar>
-  <ion-tabs class="tabs-bottom">
+  <ion-tabs>
     <ion-tab icon="ion-home" ui-sref="home">
         <ion-nav-view name="home"></ion-nav-view>
     </ion-tab>
     <ion-tab icon="ion-help" ui-sref="help">
         <ion-nav-view name="help"></ion-nav-view>
     </ion-tab>
-      
+      <ion-tab>
+        <i icon="ion-calendar" ng-show="mCtrl.huskyModel.isTeamSelected"></i>
+    </ion-tab>
   </ion-tabs>
     
   </body>

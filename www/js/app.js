@@ -222,6 +222,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     angular.forEach(self.selectedLevel.Teams, function(team) {
         if (team.team == tm.team) {
           self.selectedTeam = team;
+          self.isTeamSelected = true;
         }
     });
   };
@@ -254,8 +255,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 })
 
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  //$httpProvider.defaults.withCredentials = true;
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
+  
+  $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
+  $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
   
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https:/
