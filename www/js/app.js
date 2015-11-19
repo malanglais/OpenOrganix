@@ -105,10 +105,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   };
   
   var calendarList = [];
-  var selectedCalendar = null;
+  var calNameList = [];
+  var selectedCalendarName = null;
   
   $cordovaCalendar.listCalendars().then(function (result) {
-      calendarList = result;
+    calendarList = result;
+    angular.forEach(result, function(calentry){
+      calNameList = calentry.name;
+    });
     }, function (err) {
       alert("No calendars available");
   }); 
@@ -117,18 +121,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 
     // Show the action sheet
     var hideSheet = $ionicActionSheet.show({
-        buttons: [{
-            text: '<b>Share</b> This'
-        }, {
-            text: 'Move'
-        }],
-        destructiveText: 'Delete',
-        titleText: 'Modify your album',
+        buttons: calNameList,
+        titleText: 'Choose Calendar',
         cancelText: 'Cancel',
         cancel: function() {
             // add cancel code..
         },
         buttonClicked: function(index) {
+          selectedCalendarName = calendarList[index];
             return true;
         }
     });
@@ -136,7 +136,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     // For example's sake, hide the sheet after two seconds
     $timeout(function() {
         hideSheet();
-    }, 2000);
+    }, 0);
 
     };
   
@@ -145,23 +145,29 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     var stDate = null; // start date in Date format
     var enDate = null; // end date in Date format
     
-    angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
-      angular.forEach(date.Events, function(event){
-        if (event.isSelected) { // create event
-          $cordovaCalendar.createEvent({
-            title: "Hockey - " + event.Location.city + event.adversary,
-            location: event.Location.city + event.Location.arena,
-            notes: "Bonne partie!",
-            startDate: date.date,
-            endDate: getEndDate(startDate, 120)
-          }).then (function(result){
-            alert("event created");
-          }, function(err){
-            alert(err);
-          });
-        }
+    if(selectedCalendarName = null) {
+      alert("Please select a calendar");
+    } else {
+    
+      angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
+        angular.forEach(date.Events, function(event){
+          if (event.isSelected) { // create event
+            $cordovaCalendar.createEventInNamedCalendar({
+              title: "Hockey - " + event.Location.city + event.adversary,
+              location: event.Location.city + event.Location.arena,
+              notes: "Bonne partie!",
+              startDate: date.date,
+              endDate: getEndDate(startDate, 120),
+              calendarName:selectedCalendarName
+            }).then (function(result){
+              alert("event created");
+            }, function(err){
+              alert(err);
+            });
+          }
+        });
       });
-    });
+    }
   };
   
   
