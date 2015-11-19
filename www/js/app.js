@@ -104,15 +104,46 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     self.huskyModel.selectAllEvents(self.huskyModel.selectedTeam.allEventsSelected);
   };
   
+  var calendarList = [];
+  var selectedCalendar = null;
+  
+  $cordovaCalendar.listCalendars().then(function (result) {
+      calendarList = result;
+    }, function (err) {
+      alert("No calendars available");
+  }); 
+  
+  self.actionSheet = function() {
+
+    // Show the action sheet
+    var hideSheet = $ionicActionSheet.show({
+        buttons: [{
+            text: '<b>Share</b> This'
+        }, {
+            text: 'Move'
+        }],
+        destructiveText: 'Delete',
+        titleText: 'Modify your album',
+        cancelText: 'Cancel',
+        cancel: function() {
+            // add cancel code..
+        },
+        buttonClicked: function(index) {
+            return true;
+        }
+    });
+
+    // For example's sake, hide the sheet after two seconds
+    $timeout(function() {
+        hideSheet();
+    }, 2000);
+
+    };
+  
+  
   self.createEvents = function() {
     var stDate = null; // start date in Date format
     var enDate = null; // end date in Date format
-    
-    /*$cordovaCalendar.listCalendars().then(function (result) {
-      var t=1;
-    }, function (err) {
-      var t=1;
-    }); */
     
     angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
       angular.forEach(date.Events, function(event){
@@ -661,6 +692,8 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
   var tmpEvent = null;
   var tmpLocation = null;
   var foundLocation = false;
+  var dtNow = new Date();
+  dtNow = Date.now();
   var processed = false;
   
   var str = htmlstr.slice(htmlstr.indexOf("<section id=\"m_pc_sctCedule\""), htmlstr.length);
@@ -689,6 +722,10 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                   var mn = parseInt(dateItems[1]) - 1;
                   var dy = parseInt(dateItems[0]);
                   currentDate = new dmDate(new Date(yr, mn, dy));
+                  if (currentDate.date < dtNow) {
+                    currentDate.isPassed = true;
+                  }
+                  
                 } else {
                   currentDate = findDate(ctrlValue, returnCollectionDates);
                 }
@@ -743,6 +780,7 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
         returnCollectionDates.push(currentDate);
     }
   });
+  var t = 1;
   return returnCollectionDates;
 }
 
