@@ -785,14 +785,14 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 processed = true;
                 if(convertHTML(ctrlValue) != hTeam) { // visitor team is adversary, so local game
                   tmpAdversary = convertHTML(ctrlValue);
-                  tmpIsHomeGame = false;
+                  tmpIsHomeGame = true;
                 }
               break;
             case 'lblLocal': // assuming this is always going to be unique so save in date
                 processed = true;
                 if(convertHTML(ctrlValue) != hTeam) { // visitor team is local, so NOT local game
                   tmpAdversary = convertHTML(ctrlValue);
-                  tmpIsHomeGame = true;
+                  tmpIsHomeGame = false;
                 }
               break;
             case 'lblArena': // assuming this is always going to be unique so save in date
