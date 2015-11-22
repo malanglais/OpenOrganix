@@ -102,8 +102,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
             $cordovaCalendar.findEvent({
-                title: "Hockey - " + event.adversary +" - " + event.id,
-                location: event.Location.city + event.Location.arena
+                title: "Hockey - " + event.adversary +" - " + event.id
               }).then(function (result) {
                 event.onCalendar = true;
               }, function (err) {
@@ -178,6 +177,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
                 endDate: getEndDate(date.date, 120)
                 //calendarName:selectedCalendarName
               }).then (function(result){
+                event.onCalendar = true;
                 alert("Event created (" + event.id + ")");
               }, function(err){
                 alert(err);
