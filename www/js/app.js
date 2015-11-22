@@ -781,9 +781,9 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 }
               break;
             case 'lblTime': // assuming this is always going to be unique so save in date
-                var tmpTmStr = crtlValue.split(':');
-                var nTime = new Date(0,0,0,tmpTmStr[0],tmpTmStr[1])
-                tmpTime = ctrlValue
+                var tmpTmStr = ctrlValue.split(':');
+                var nTime = new Date(0,0,0,tmpTmStr[0],tmpTmStr[1]);
+                tmpTime = nTime;
               break;  
             case 'lblVisitor': // assuming this is always going to be unique so save in date
                 if(convertHTML(ctrlValue) != hTeam) { // visitor team is adversary, so local game
