@@ -85,7 +85,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   fData.append("m$hdnOnLoadMessageOptions", "");
   
   var aURL = "http://lcrse.qc.ca/cedules.saison.aspx";
-
+  var stDate = null;
+  
   $http({
       url: aURL,
       method: "POST",
@@ -101,12 +102,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         // find calendar entries
         angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
+            var tmpTmStr = event.time.split(':');
+            stDate = date.date + (parseInt(tmpTmStr[0])*3600*1000) + (parseInt(tmpTmStr[1])*60000);
             $cordovaCalendar.findEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
                 notes: "Bonne partie! -" + event.id,
-                startDate: date.date,
-                endDate: getEndDate(date.date, 120)
+                startDate: stDate,
+                endDate: getEndDate(stDate, 120)
               }).then(function (result) {
                 event.onCalendar = true;
               }, function (err) {
@@ -173,12 +176,15 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
         angular.forEach(date.Events, function(event){
           if (event.isSelected && !event.onCalendar) { // create event
+            // Format date
+            var tmpTmStr = event.time.split(':');
+            stDate = date.date + (parseInt(tmpTmStr[0])*3600*1000) + (parseInt(tmpTmStr[1])*60000);
               $cordovaCalendar.createEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
                 notes: "Bonne partie! -" + event.id,
-                startDate: date.date + event.time,
-                endDate: getEndDate(date.date+event.time, 120)
+                startDate: stDate,
+                endDate: getEndDate(stDate, 120)
                 //calendarName:selectedCalendarName
               }).then (function(result){
                 event.onCalendar = true;
@@ -781,9 +787,7 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 }
               break;
             case 'lblTime': // assuming this is always going to be unique so save in date
-                var tmpTmStr = ctrlValue.split(':');
-                var nTime = new Date(0,0,0,tmpTmStr[0],tmpTmStr[1]);
-                tmpTime = nTime;
+                tmpTime = ctrlValue;
               break;  
             case 'lblVisitor': // assuming this is always going to be unique so save in date
                 if(convertHTML(ctrlValue) != hTeam) { // visitor team is adversary, so local game
