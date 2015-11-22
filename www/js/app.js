@@ -103,13 +103,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
             var tmpTmStr = event.time.split(':');
-            stDate = date.date + (parseInt(tmpTmStr[0])*3600*1000) + (parseInt(tmpTmStr[1])*60000);
+            date.date.addHours(parseInt(tmpTmStr[0]));
+            date.date.addMinutes(parseInt(tmpTmStr[1]));
             $cordovaCalendar.findEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
                 notes: "Bonne partie! -" + event.id,
-                startDate: stDate,
-                endDate: getEndDate(stDate, 120)
+                startDate: date.date,
+                endDate: date.date.addMinutes(120)
               }).then(function (result) {
                 event.onCalendar = true;
               }, function (err) {
@@ -178,13 +179,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
           if (event.isSelected && !event.onCalendar) { // create event
             // Format date
             var tmpTmStr = event.time.split(':');
-            stDate = date.date + (parseInt(tmpTmStr[0])*3600*1000) + (parseInt(tmpTmStr[1])*60000);
+            date.date.addHours(parseInt(tmpTmStr[0]));
+            date.date.addMinutes(parseInt(tmpTmStr[1]));
               $cordovaCalendar.createEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
                 notes: "Bonne partie! -" + event.id,
-                startDate: stDate,
-                endDate: getEndDate(stDate, 120)
+                startDate: date.date,
+                endDate: date.date.addMinutes(120)
                 //calendarName:selectedCalendarName
               }).then (function(result){
                 event.onCalendar = true;
@@ -927,6 +929,16 @@ Array.prototype.move = function (old_index, new_index) {
     }
     this.slice(new_index, 0, this.slice(old_index, 1)[0]);
 };
+
+Date.prototype.addHours= function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+}
+
+Date.prototype.addMinutes= function(h){
+    this.setMinutes(this.getMinutes()+h);
+    return this;
+}
 
 function convertHTML(str) {
   var returnVal = null;
