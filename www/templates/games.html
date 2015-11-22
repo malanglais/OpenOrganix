@@ -17,7 +17,7 @@
                         </ion-item>
                         <div class="item-accordion"  ng-repeat="event in date.Events" >
                             <ion-checkbox class="item-checkbox-right" ng-model="event.isSelected">
-                                {{event.time}} | {{event.adversary}} | {{event.Location.city}}-{{event.Location.arena}}
+                                {{event.time : date:'HH:mm'}} | {{event.adversary}} | {{event.Location.city}}-{{event.Location.arena}}
                             </ion-checkbox>
                         </div>
                     </div>

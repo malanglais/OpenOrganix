@@ -177,8 +177,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
                 notes: "Bonne partie! -" + event.id,
-                startDate: date.date,
-                endDate: getEndDate(date.date, 120)
+                startDate: date.date + event.time,
+                endDate: getEndDate(date.date+event.time, 120)
                 //calendarName:selectedCalendarName
               }).then (function(result){
                 event.onCalendar = true;
@@ -744,7 +744,6 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
   var gLocal = null;
   var dtNow = new Date();
   dtNow = Date.now();
-  var processed = false;
   
   var str = htmlstr.slice(htmlstr.indexOf("<section id=\"m_pc_sctCedule\""), htmlstr.length);
   str = str.slice(str.indexOf("<table"), str.lastIndexOf("</table>"));
@@ -755,7 +754,6 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
       tdCollection = trStr.split("<td");
       
       angular.forEach(tdCollection, function(lineStr){
-        processed = false;
         lineStr = lineStr.substring(lineStr.indexOf("<span"), lineStr.indexOf("</span>"));
         if(lineStr.length > 0) {
           ctrlId = lineStr.substring(lineStr.lastIndexOf("_") +1, lineStr.lastIndexOf("\""));
@@ -766,7 +764,6 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 tmpID = ctrlValue;
               break;
             case 'lblDate':
-                processed = true;
                 if(isNewDate(ctrlValue, returnCollectionDates)) {
                   // add date to collection
                   // convert string to Date
@@ -784,11 +781,11 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 }
               break;
             case 'lblTime': // assuming this is always going to be unique so save in date
-                processed = true;
+                var tmpTmStr = crtlValue.split(':');
+                var nTime = new Date(0,0,0,tmpTmStr[0],tmpTmStr[1])
                 tmpTime = ctrlValue
               break;  
             case 'lblVisitor': // assuming this is always going to be unique so save in date
-                processed = true;
                 if(convertHTML(ctrlValue) != hTeam) { // visitor team is adversary, so local game
                   tmpAdversary = convertHTML(ctrlValue);
                   tmpIsHomeGame = true;
@@ -802,7 +799,6 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 }
               break;
             case 'lblArena': // assuming this is always going to be unique so save in date
-                processed = true;
                 tmpCity = convertHTML(ctrlValue.substring(0, ctrlValue.indexOf(":")));
                 tmpArena = convertHTML(ctrlValue.substring(ctrlValue.indexOf(":")+2, ctrlValue.length));
               break;
