@@ -899,7 +899,7 @@ function getStartDate(date, time) {
 
 function getEndDate(date, minutes) {
   // date: Date - corresponds to the startdate of the event
-  return new Date(date.getTime() + minutes*60000);
+  return new Date(date + minutes*60000);
 }
 
 /* ==============================================
