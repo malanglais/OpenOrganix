@@ -159,24 +159,25 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
           if (event.isSelected) { // create event
             // verify if event exists
             $cordovaCalendar.findEvent({
-              title: "Hockey - " + event.adversary +" - " + event.ID,
+              title: "Hockey - " + event.adversary +" - " + event.id,
               location: event.Location.city + event.Location.arena
             }).then(function (result) {
               eventFound = true;
             }, function (err) {
+              alert(err);
               eventFound = false;
             });
             
             if (!eventFound) {
               $cordovaCalendar.createEvent({
-                title: "Hockey - " + event.adversary +" - " + event.ID,
+                title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
-                notes: "Bonne partie! -" + event.ID,
+                notes: "Bonne partie! -" + event.id,
                 startDate: date.date,
                 endDate: getEndDate(date.date, 120)
                 //calendarName:selectedCalendarName
               }).then (function(result){
-                alert("Event created on :");
+                alert("Event created (" + event.id + ")");
               }, function(err){
                 alert(err);
               });
@@ -187,7 +188,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         });
       });
     }
-  };
+  }; 
   
   
 }])
