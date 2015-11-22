@@ -98,6 +98,20 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
+        // find calendar entries
+        angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
+          angular.forEach(date.Events, function(event){
+            $cordovaCalendar.findEvent({
+                title: "Hockey - " + event.adversary +" - " + event.id,
+                location: event.Location.city + event.Location.arena
+              }).then(function (result) {
+                event.onCalendar = true;
+              }, function (err) {
+                alert(err);
+                event.onCalendar = false;
+              });
+          });
+        });
   });
   
   self.selectAllEvents = function() {
@@ -108,8 +122,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var calNameList = [];
   var selectedCalendarName = null;
   
-  
-  
+
   /*
   $cordovaCalendar.listCalendars().then(function (result) {
     calendarList = result;
@@ -156,19 +169,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     
       angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
         angular.forEach(date.Events, function(event){
-          if (event.isSelected) { // create event
-            // verify if event exists
-            $cordovaCalendar.findEvent({
-              title: "Hockey - " + event.adversary +" - " + event.id,
-              location: event.Location.city + event.Location.arena
-            }).then(function (result) {
-              eventFound = true;
-            }, function (err) {
-              alert(err);
-              eventFound = false;
-            });
-            
-            if (!eventFound) {
+          if (event.isSelected && !event.onCalendar) { // create event
               $cordovaCalendar.createEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
@@ -181,10 +182,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
               }, function(err){
                 alert(err);
               });
-            } else {
+            } else if(event.isSelected && event.onCalendar){
               alert("Event already exists");
             }
-          }
         });
       });
     }
@@ -427,6 +427,7 @@ function dmEvent(id, tm, time, pg, loc, hg, gf, ga) {
     this.isSelected = false;
     this.goalsFor = gf;
     this.goalsAgainst = ga;
+    this.onCalendar = false;
     this.victory = null;
     if (gf != null) {
       if(gf==ga) {
