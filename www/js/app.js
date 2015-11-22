@@ -108,6 +108,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var calNameList = [];
   var selectedCalendarName = null;
   
+  
+  
+  /*
   $cordovaCalendar.listCalendars().then(function (result) {
     calendarList = result;
     angular.forEach(result, function(calentry){
@@ -116,6 +119,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     }, function (err) {
       alert("No calendars available");
   }); 
+  */
   
   /*self.actionSheet = function() {
 
@@ -144,6 +148,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.createEvents = function() {
     var stDate = null; // start date in Date format
     var enDate = null; // end date in Date format
+    var eventFound = false;
     
     if(selectedCalendarName = null) {
       alert("Please select a calendar");
@@ -152,18 +157,32 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
         angular.forEach(date.Events, function(event){
           if (event.isSelected) { // create event
-            $cordovaCalendar.createEventInNamedCalendar({
-              title: "Hockey - " + event.Location.city + event.adversary,
-              location: event.Location.city + event.Location.arena,
-              notes: "Bonne partie!",
-              startDate: date.date,
-              endDate: getEndDate(date.date, 120),
-              calendarName:selectedCalendarName
-            }).then (function(result){
-              alert("event created");
-            }, function(err){
-              alert(err);
+            // verify if event exists
+            $cordovaCalendar.findEvent({
+              title: "Hockey - " + event.adversary +" - " + event.ID,
+              location: event.Location.city + event.Location.arena
+            }).then(function (result) {
+              eventFound = true;
+            }, function (err) {
+              eventFound = false;
             });
+            
+            if (!eventFound) {
+              $cordovaCalendar.createEvent({
+                title: "Hockey - " + event.adversary +" - " + event.ID,
+                location: event.Location.city + event.Location.arena,
+                notes: "Bonne partie! -" + event.ID,
+                startDate: date.date,
+                endDate: getEndDate(date.date, 120)
+                //calendarName:selectedCalendarName
+              }).then (function(result){
+                alert("Event created on :");
+              }, function(err){
+                alert(err);
+              });
+            } else {
+              alert("Event already exists");
+            }
           }
         });
       });
@@ -397,13 +416,26 @@ function dmDate (dt) {
   this.Events = [];
 }
 
-function dmEvent(tm, time, pg, loc, hg) {
+function dmEvent(id, tm, time, pg, loc, hg, gf, ga) {
+    this.id = id;
     this.isHomeGame = hg;
     this.adversary = tm;
     this.time = time;
     this.type = pg;
     this.Location = loc; 
     this.isSelected = false;
+    this.goalsFor = gf;
+    this.goalsAgainst = ga;
+    this.victory = null;
+    if (gf != null) {
+      if(gf==ga) {
+        this.victory = "N";
+      } else if (gf > ga) {
+        this.victory = "V";
+      } else {
+        this.victory = "D";
+      }
+    }
 }
 
 function dmLocation (ar, crd, cty, ph, web) {
@@ -700,7 +732,10 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
   var tmpIsHomeGame=null;
   var tmpEvent = null;
   var tmpLocation = null;
+  var tmpID = null;
   var foundLocation = false;
+  var gVisitor = null;
+  var gLocal = null;
   var dtNow = new Date();
   dtNow = Date.now();
   var processed = false;
@@ -721,6 +756,9 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
           ctrlValue = lineStr.substring(lineStr.indexOf("\">") +2, lineStr.length);
           
           switch (ctrlId) {
+            case 'lblID':
+                tmpID = ctrlValue;
+              break;
             case 'lblDate':
                 processed = true;
                 if(isNewDate(ctrlValue, returnCollectionDates)) {
@@ -747,14 +785,14 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 processed = true;
                 if(convertHTML(ctrlValue) != hTeam) { // visitor team is adversary, so local game
                   tmpAdversary = convertHTML(ctrlValue);
-                  tmpIsHomeGame = true;
+                  tmpIsHomeGame = false;
                 }
               break;
             case 'lblLocal': // assuming this is always going to be unique so save in date
                 processed = true;
                 if(convertHTML(ctrlValue) != hTeam) { // visitor team is local, so NOT local game
                   tmpAdversary = convertHTML(ctrlValue);
-                  tmpIsHomeGame = false;
+                  tmpIsHomeGame = true;
                 }
               break;
             case 'lblArena': // assuming this is always going to be unique so save in date
@@ -762,6 +800,11 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
                 tmpCity = convertHTML(ctrlValue.substring(0, ctrlValue.indexOf(":")));
                 tmpArena = convertHTML(ctrlValue.substring(ctrlValue.indexOf(":")+2, ctrlValue.length));
               break;
+            case 'lblButVisitor':
+                gVisitor = ctrlValue;
+              break;
+            case 'lblButLocal':
+                gLocal = ctrlValue;
             default:
               // code
             }
@@ -769,7 +812,13 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
         });
         if(returnCollectionDates.length == 0) {
           tmpLocation = new dmLocation(tmpArena, 0, tmpCity, null, null);
-          tmpEvent = new dmEvent(tmpAdversary, tmpTime, "Partie", tmpLocation, tmpIsHomeGame);
+          
+          if(tmpIsHomeGame) {
+            tmpEvent = new dmEvent(tmpID, tmpAdversary, tmpTime, "Partie", tmpLocation, tmpIsHomeGame, gLocal, gVisitor);
+          } else {
+            tmpEvent = new dmEvent(tmpID, tmpAdversary, tmpTime, "Partie", tmpLocation, tmpIsHomeGame, gVisitor, gLocal);
+          }
+          
           currentDate.Events.push(tmpEvent);
         } else {
           angular.forEach(returnCollectionDates, function(date){
@@ -783,7 +832,11 @@ function constructGameModel(htmlstr, hTeam) { // will fill in the model with the
           if(!foundLocation) {
             tmpLocation = new dmLocation(tmpArena, 0, tmpCity, null, null);
           }
-          tmpEvent = new dmEvent(tmpAdversary, tmpTime, "Partie", tmpLocation, tmpIsHomeGame);
+          if(tmpIsHomeGame) {
+            tmpEvent = new dmEvent(tmpID, tmpAdversary, tmpTime, "Partie", tmpLocation, tmpIsHomeGame, gLocal, gVisitor);
+          } else {
+            tmpEvent = new dmEvent(tmpID, tmpAdversary, tmpTime, "Partie", tmpLocation, tmpIsHomeGame, gVisitor, gLocal);
+          }
           currentDate.Events.push(tmpEvent);
         }
         returnCollectionDates.push(currentDate);

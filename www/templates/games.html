@@ -5,26 +5,39 @@
         </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
-        
-        <div class="hAlign">
-           <button class="button button-light text-right" ng-click="gCtrl.createEvents()">Create events</button>
-           <ion-checkbox class="item-checkbox-right" ng-model="gCtrl.huskyModel.selectedTeam.allEventsSelected" ng-change="gCtrl.selectAllEvents()">Select all events</ion-checkbox>
-        </div>
-        <ion-list>
-            <div ng-repeat="date in gCtrl.huskyModel.selectedTeam.Dates">
-                <ion-item class="item-stable">
-                    Date: {{date.date | date:'yyyy-MM-dd'}}
-                </ion-item>
-                <div class="item-accordion" ng-class="{hidden:date.isPassed}" ng-repeat="event in date.Events" ng-model="date.isPassed">
-                    <ion-checkbox class="item-checkbox-right" ng-model="event.isSelected">
-                        {{event.time}} | {{event.adversary}} | {{event.Location.city}}-{{event.Location.arena}}
-                    </ion-checkbox>
-                </div> 
+        <div>
+            <div>
+               <ion-checkbox class="item-checkbox-right" ng-model="gCtrl.huskyModel.selectedTeam.allEventsSelected" ng-change="gCtrl.selectAllEvents()">Select all events</ion-checkbox>
             </div>
-        </ion-list>
+            <ion-list>
+                <div ng-repeat="date in gCtrl.huskyModel.selectedTeam.Dates">
+                    <div ng-class="{hidden:date.isPassed}" ng-model="date.isPassed">
+                        <ion-item class="item-stable">
+                            Date: {{date.date | date:'dd-MMM-yy'}}
+                        </ion-item>
+                        <div class="item-accordion"  ng-repeat="event in date.Events" >
+                            <ion-checkbox class="item-checkbox-right" ng-model="event.isSelected">
+                                {{event.time}} | {{event.adversary}} | {{event.Location.city}}-{{event.Location.arena}}
+                            </ion-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </ion-list>
+            <div id="gamePassedWrapper">
+                <div class="tNail" ng-class="{hidden:!date.isPassed}" ng-repeat="date in gCtrl.huskyModel.selectedTeam.Dates">
+                    <div ng-repeat="event in date.Events" ng-model="date.isPassed">
+                        <div>{{date.date | date:'dd-MMM-yy'}} </div>
+                        <div>{{event.adversary}}</div>
+                        <div>{{event.victory}} : {{event.goalsFor}} - {{event.goalsAgainst}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
     </ion-content>
-    
+    <button class="button button-float">
+        <i class="icon ion-android-calendar"></i>
+      </button>
 </ion-view>
 
 
