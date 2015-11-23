@@ -132,15 +132,21 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   
 
   
-  $cordovaCalendar.listCalendars().then(function (result) {
+  /*$cordovaCalendar.listCalendars().then(function (result) {
     calendarList = result;
     angular.forEach(result, function(calentry){
       calNameList = calentry.name;
     });
     }, function (err) {
       alert("No calendars available");
-  }); 
+  }); */
   
+  $cordovaCalendar.findAllEventsInNamedCalendar('malanglais@epicoaching.net').then(function (result) {
+    var t = 1;
+    t++;
+  }, function (err) {
+    // error
+  });
   
   /*self.actionSheet = function() {
 
