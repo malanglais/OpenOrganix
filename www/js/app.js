@@ -180,14 +180,15 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
           if (event.isSelected && !event.onCalendar) { // create event
             // Format date
             var tmpTmStr = event.time.split(':');
-            date.date.addHours(parseInt(tmpTmStr[0]));
-            date.date.addMinutes(parseInt(tmpTmStr[1]));
+            stDate = date.date;
+            stDate.addHours(parseInt(tmpTmStr[0]));
+            stDate.addMinutes(parseInt(tmpTmStr[1]));
               $cordovaCalendar.createEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
                 notes: "Bonne partie! -" + event.id,
-                startDate: date.date,
-                endDate: date.date.addMinutes(120)
+                startDate: stDate,
+                endDate: stDate.addMinutes(120)
                 //calendarName:selectedCalendarName
               }).then (function(result){
                 event.onCalendar = true;
@@ -272,6 +273,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		
 		var deferred = $q.defer();
 		var foundEvents = [];
+		var stDate = null;
 		/*
 		Logic is:
 		For each, see if it exists an event.
@@ -279,10 +281,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		var promises = [];
 		self.selectedTeam.Dates.forEach(function(date) {
 			date.Events.forEach(function(event){
-  			  promises.push($cordovaCalendar.findEvent({
-    				title:"Hockey - " + event.adversary +" - " + event.id,
-    				startDate:date.date
-  			  }));
+			  var tmpTmStr = event.time.split(":");
+			  stDate = date.date;
+        stDate.addHours(parseInt(tmpTmStr[0]));
+        stDate.addMinutes(parseInt(tmpTmStr[1]));
+			  promises.push($cordovaCalendar.findEvent({
+  				title:"Hockey - " + event.adversary +" - " + event.id,
+  				startDate:date.date
+			  }));
 			});
 		});
 		
