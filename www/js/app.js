@@ -99,7 +99,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
-        self.huskyModel.findEvents();
+        var findResult = self.huskyModel.findEvents();
+        var s=1;
+        s++;
         // find calendar entries
         /*angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
@@ -298,10 +300,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         stDate.addMinutes(parseInt(tmpTmStr[1]));
 			  promises.push($cordovaCalendar.findEvent({
   				title: "Hockey - " + event.adversary +" - " + event.id,
-                location: event.Location.city + event.Location.arena,
-                notes: "Bonne partie! -" + event.id,
-                startDate: new Date(2015, 11, 10, 22, 0, 0, 0, 0),
-                endDate: new Date(2015, 11, 11, 0, 0, 0 ,0)
+          startDate: new Date(2015, 11, 10, 22, 0, 0, 0, 0)
 			  }));
 			});
 		});
