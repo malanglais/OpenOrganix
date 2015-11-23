@@ -131,7 +131,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var selectedCalendarName = null;
   
 
-  /*
+  
   $cordovaCalendar.listCalendars().then(function (result) {
     calendarList = result;
     angular.forEach(result, function(calentry){
@@ -140,7 +140,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     }, function (err) {
       alert("No calendars available");
   }); 
-  */
+  
   
   /*self.actionSheet = function() {
 
