@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('open_schedule', ['ionic', 'ngCordova']) 
 
 .controller('DashCtrl', function($scope) {})
 

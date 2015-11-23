@@ -99,8 +99,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
+        self.findEvents();
         // find calendar entries
-        angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
+        /*angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
             var tmpTmStr = event.time.split(':');
             date.date.addHours(parseInt(tmpTmStr[0]));
@@ -118,7 +119,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
                 event.onCalendar = false;
               });
           });
-        });
+        }); */
   });
   
   self.selectAllEvents = function() {
@@ -206,7 +207,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 }])
 
 
-.service('huskyModel', [function () {
+.service('huskyModel', ['$cordovaCalendar', '$q', function ($cordovaCalendar, $q) {
   var self = this;
   
   self.ViewState = null;
@@ -266,6 +267,36 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       });
     });
   }
+  
+  self.findEvents = function() {
+		
+		var deferred = $q.defer();
+		var foundEvents = [];
+		/*
+		Logic is:
+		For each, see if it exists an event.
+		*/
+		var promises = [];
+		self.selectedTeam.Dates.forEach(function(date) {
+			date.Events.forEach(function(event){
+			  promises.push($cordovaCalendar.findEvent({
+  				title:"Hockey - " + event.adversary +" - " + event.id,
+  				startDate:date.date
+			  }));
+			});
+		});
+		
+		$q.all(promises).then(function(results) {
+			console.log("in the all done");	
+			//should be the same len as events
+			var t=1;
+			deferred.resolve(results);
+			t++;
+		});
+		
+		return deferred.promise;
+  }
+  
   
 }])
 
