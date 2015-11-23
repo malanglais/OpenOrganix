@@ -300,8 +300,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   				title: "Hockey - " + event.adversary +" - " + event.id,
           location: event.Location.city + event.Location.arena,
           notes: "Bonne partie! -" + event.id,
-          startDate: subDate,
-          endDate: subDate.addMinutes(120)
+          startDate: stDate,
+          endDate: stDate.addMinutes(120)
 			  }));
 			});
 		});
