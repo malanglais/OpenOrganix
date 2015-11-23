@@ -293,15 +293,16 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		self.selectedTeam.Dates.forEach(function(date) {
 			date.Events.forEach(function(event){
 			  var tmpTmStr = event.time.split(":");
-			  stDate = parseInt(date.date);
+			  stDate = date.date;
         stDate.addHours(parseInt(tmpTmStr[0]));
         stDate.addMinutes(parseInt(tmpTmStr[1]));
+        var subDate = new Date(parseInt(stDate));
 			  promises.push($cordovaCalendar.findEvent({
   				title: "Hockey - " + event.adversary +" - " + event.id,
           location: event.Location.city + event.Location.arena,
           notes: "Bonne partie! -" + event.id,
-          startDate: stDate,
-          endDate: stDate.addMinutes(120)
+          startDate: subDate,
+          endDate: subDate.addMinutes(120)
 			  }));
 			});
 		});
