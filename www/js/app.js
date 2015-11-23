@@ -174,6 +174,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     }, 0);
 
     }; */
+    
   
   
   self.createEvents = function() {
@@ -296,7 +297,11 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         stDate.addHours(parseInt(tmpTmStr[0]));
         stDate.addMinutes(parseInt(tmpTmStr[1]));
 			  promises.push($cordovaCalendar.findEvent({
-  				title:"Hockey - " + event.adversary +" - " + event.id
+  				title: "Hockey - " + event.adversary +" - " + event.id,
+          location: event.Location.city + event.Location.arena,
+          notes: "Bonne partie! -" + event.id,
+          startDate: stDate,
+          endDate: stDate.addMinutes(120)
 			  }));
 			});
 		});
