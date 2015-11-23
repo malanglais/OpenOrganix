@@ -141,7 +141,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       alert("No calendars available");
   }); */
   
-  $cordovaCalendar.listEventsInRange(
+  /*$cordovaCalendar.listEventsInRange(
     new Date(2015, 11, 10, 0, 0, 0, 0, 0),
     new Date(2015, 11, 12, 0, 0, 0, 0, 0)
   ).then(function (result) {
@@ -150,7 +150,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   }, function (err) {
     var t = 1;
     t++;
-  });
+  });*/
   
   /*self.actionSheet = function() {
 
@@ -296,8 +296,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         stDate.addHours(parseInt(tmpTmStr[0]));
         stDate.addMinutes(parseInt(tmpTmStr[1]));
 			  promises.push($cordovaCalendar.findEvent({
-  				title:"Hockey - " + event.adversary +" - " + event.id,
-  				startDate:stDate
+  				title:"Hockey - " + event.adversary +" - " + event.id
 			  }));
 			});
 		});
