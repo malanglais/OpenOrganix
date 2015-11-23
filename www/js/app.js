@@ -99,21 +99,16 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
-        var findResult = self.huskyModel.findEvents();
-        var s=1;
-        s++;
+        
         // find calendar entries
-        /*angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
+        angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
             var tmpTmStr = event.time.split(':');
             date.date.addHours(parseInt(tmpTmStr[0]));
             date.date.addMinutes(parseInt(tmpTmStr[1]));
             $cordovaCalendar.findEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
-                location: event.Location.city + event.Location.arena,
-                notes: "Bonne partie! -" + event.id,
-                startDate: date.date,
-                endDate: date.date.addMinutes(120)
+                startDate: new Date(2015, 11, 10, 22, 0, 0, 0, 0)
               }).then(function (result) {
                 event.onCalendar = true;
               }, function (err) {
@@ -121,7 +116,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
                 event.onCalendar = false;
               });
           });
-        }); */
+        }); 
   });
   
   self.selectAllEvents = function() {
@@ -291,7 +286,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		Logic is:
 		For each, see if it exists an event.
 		*/
-		var promises = [];
+		/*var promises = [];
 		self.selectedTeam.Dates.forEach(function(date) {
 			date.Events.forEach(function(event){
 			  var tmpTmStr = event.time.split(":");
@@ -303,7 +298,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
           startDate: new Date(2015, 11, 10, 22, 0, 0, 0, 0)
 			  }));
 			});
-		});
+		});*/
 		
 		$q.all(promises).then(function(results) {
 			console.log("in the all done");	
