@@ -279,10 +279,12 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		var promises = [];
 		self.selectedTeam.Dates.forEach(function(date) {
 			date.Events.forEach(function(event){
-			  promises.push($cordovaCalendar.findEvent({
-  				title:"Hockey - " + event.adversary +" - " + event.id,
-  				startDate:date.date
-			  }));
+			  if (event.isSelected){
+  			  promises.push($cordovaCalendar.findEvent({
+    				title:"Hockey - " + event.adversary +" - " + event.id,
+    				startDate:date.date
+  			  }));
+			  }
 			});
 		});
 		
