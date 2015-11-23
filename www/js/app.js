@@ -141,11 +141,15 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       alert("No calendars available");
   }); */
   
-  $cordovaCalendar.findAllEventsInNamedCalendar('malanglais@epicoaching.net').then(function (result) {
+  $cordovaCalendar.listEventsInRange(
+    new Date(2015, 11, 10, 0, 0, 0, 0, 0),
+    new Date(2015, 11, 12, 0, 0, 0, 0, 0)
+  ).then(function (result) {
     var t = 1;
     t++;
   }, function (err) {
-    // error
+    var t = 1;
+    t++;
   });
   
   /*self.actionSheet = function() {
