@@ -286,19 +286,19 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		Logic is:
 		For each, see if it exists an event.
 		*/
-		/*var promises = [];
+		var promises = [];
 		self.selectedTeam.Dates.forEach(function(date) {
 			date.Events.forEach(function(event){
 			  var tmpTmStr = event.time.split(":");
-			  stDate = new Date(date.date.toString());
+			  stDate = date.date;
         stDate.addHours(parseInt(tmpTmStr[0]));
         stDate.addMinutes(parseInt(tmpTmStr[1]));
 			  promises.push($cordovaCalendar.findEvent({
-  				title: "Hockey - " + event.adversary +" - " + event.id,
-          startDate: new Date(2015, 11, 10, 22, 0, 0, 0, 0)
+  				title: event.id,
+          startDate: stDate
 			  }));
 			});
-		});*/
+		});
 		
 		$q.all(promises).then(function(results) {
 			console.log("in the all done");	
@@ -965,6 +965,16 @@ function sortIt(lvls, ord) {    // receiving a collection
   })
 }
 
+function addHour(dt, hour) {
+  var tmpdt = new Date(dt.getYear(), dt.getMonth(), dt.getDay(), hour, 0, 0, 0);
+  return tmpdt;
+}
+
+function addMinute(dt, min) {
+  var tmpdt = new Date(dt.getYear(), dt.getMonth(), dt.getDay(), dt.getHours(), min, 0, 0);
+  return tmpdt;
+}
+
 Array.prototype.move = function (old_index, new_index) {
     if (new_index >= this.length) {
         var k = new_index - this.length;
@@ -974,16 +984,6 @@ Array.prototype.move = function (old_index, new_index) {
     }
     this.slice(new_index, 0, this.slice(old_index, 1)[0]);
 };
-
-Date.prototype.addHours= function(h){
-    this.setHours(this.getHours()+h);
-    return this;
-}
-
-Date.prototype.addMinutes= function(h){
-    this.setMinutes(this.getMinutes()+h);
-    return this;
-}
 
 function convertHTML(str) {
   var returnVal = null;
