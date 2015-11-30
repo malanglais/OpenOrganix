@@ -304,11 +304,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		});
 		
 		$q.all(promises).then(function(results) {
-			console.log("in the all done");	
-			//should be the same len as events
-			var t=1;
-			deferred.resolve(results);
-			t++;
+			for(var i=0; i<results.length; i++) {
+			  self.selectedTeam.Dates[i].onCalendar = true;
+			}
+			deferred.resolve(self.selectedTeam.Dates);
 		});
 		
 		return deferred.promise;
