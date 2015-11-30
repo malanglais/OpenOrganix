@@ -99,9 +99,11 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
+        var foundDates = self.huskyModel.findEvents();
+        
         
         // find calendar entries
-        angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
+        /*angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
             var tmpTmStr = event.time.split(':');
             date.date.addHours(parseInt(tmpTmStr[0]));
@@ -116,7 +118,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
                 event.onCalendar = false;
               });
           });
-        }); 
+        }); */
   });
   
   self.selectAllEvents = function() {
