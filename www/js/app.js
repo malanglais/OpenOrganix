@@ -293,8 +293,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 			date.Events.forEach(function(event){
 			  var tmpTmStr = event.time.split(":");
 			  stDate = date.date;
-        stDate.addHours(parseInt(tmpTmStr[0]));
-        stDate.addMinutes(parseInt(tmpTmStr[1]));
+        stDate = addHours(stDate, parseInt(tmpTmStr[0]));
+        stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
 			  promises.push($cordovaCalendar.findEvent({
   				title: event.id,
           startDate: stDate
@@ -967,12 +967,12 @@ function sortIt(lvls, ord) {    // receiving a collection
   })
 }
 
-function addHour(dt, hour) {
+function addHours(dt, hour) {
   var tmpdt = new Date(dt.getYear(), dt.getMonth(), dt.getDay(), hour, 0, 0, 0);
   return tmpdt;
 }
 
-function addMinute(dt, min) {
+function addMinutes(dt, min) {
   var tmpdt = new Date(dt.getYear(), dt.getMonth(), dt.getDay(), dt.getHours(), min, 0, 0);
   return tmpdt;
 }
