@@ -283,7 +283,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.findEvents = function() {
 		
 		var deferred = $q.defer();
-		var foundEvents = [];
+		var foundDate = null;
 		var stDate = null;
 		/*
 		Logic is:
@@ -297,22 +297,28 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         stDate = addHours(stDate, parseInt(tmpTmStr[0]));
         stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
 			  promises.push($cordovaCalendar.findEvent({
-  				title: event.id,
+  				title: "Hockey - " + event.adversary +" - " + event.id,
           startDate: stDate
 			  }));
 			});
 		});
 		
+		
 		$q.all(promises).then(function(results) {
 			for(var i=0; i<results.length; i++) {
-			  self.selectedTeam.Dates[i].onCalendar = true;
+			  if(results[i].length == 1){
+			    self.changeOnCalendarFlag(self.selectedTeam.Dates, results[i]);
+			  }
 			}
 			deferred.resolve(self.selectedTeam.Dates);
 		});
-		
 		return deferred.promise;
   }
   
+  self.changeOnCalendarFlag = function(dtCol, result) {
+    var t=1;
+    
+  }
   
 }])
 
@@ -968,12 +974,12 @@ function sortIt(lvls, ord) {    // receiving a collection
 }
 
 function addHours(dt, hour) {
-  var tmpdt = new Date(dt.getYear(), dt.getMonth(), dt.getDay(), hour, 0, 0, 0);
+  var tmpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), hour, 0, 0, 0);
   return tmpdt;
 }
 
 function addMinutes(dt, min) {
-  var tmpdt = new Date(dt.getYear(), dt.getMonth(), dt.getDay(), dt.getHours(), min, 0, 0);
+  var tmpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), min, 0, 0);
   return tmpdt;
 }
 
