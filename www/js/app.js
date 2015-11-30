@@ -298,8 +298,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
 			  promises.push($cordovaCalendar.findEvent({
 			    title: "Hockey - " + event.adversary +" - " + event.id,
-  				startDate: stDate,
-  				endDate: addMinutes(stDate, 120)
+  				startDate: stDate
 			  }));
 			});
 		});
@@ -985,7 +984,7 @@ function addMinutes(dt, min) {
   // assuming it won<t add mor than 24 hours x 60 min
   var mn = min%60;
   var excMin = Math.floor(min/60);
-  var tmpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours() + excMin, mn, 0, 0);
+  var tmpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours() + excMin, dt.getMinutes()+mn, 0, 0);
   return tmpdt;
 }
 
