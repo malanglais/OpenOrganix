@@ -975,12 +975,17 @@ function sortIt(lvls, ord) {    // receiving a collection
 }
 
 function addHours(dt, hour) {
-  var tmpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), hour, 0, 0, 0);
+  var hr = hour()%24;
+  var excDays = Math.floor(hour()/24);
+  var tmpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()+excDays, hr, 0, 0, 0);
   return tmpdt;
 }
 
 function addMinutes(dt, min) {
-  var tmpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), min, 0, 0);
+  // assuming it won<t add mor than 24 hours x 60 min
+  var mn = min()%60;
+  var excMin = Math.floor(min()/60);
+  var tmpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours() + excMin, mn, 0, 0);
   return tmpdt;
 }
 
