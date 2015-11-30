@@ -198,7 +198,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
                 location: event.Location.city + event.Location.arena,
                 notes: "Bonne partie! -" + event.id,
                 startDate: stDate,
-                endDate: stDate.addMinutes(120)
+                endDate: addMinutes(stDate, 120)
                 //calendarName:selectedCalendarName
               }).then (function(result){
                 event.onCalendar = true;
