@@ -192,7 +192,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             var tmpTmStr = event.time.split(':');
             stDate = date.date;
             stDate = addHours(stDate, parseInt(tmpTmStr[0]));
-            stDate.addMinutes(stDate, parseInt(tmpTmStr[1]));
+            stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
               $cordovaCalendar.createEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 location: event.Location.city + event.Location.arena,
