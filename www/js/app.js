@@ -99,7 +99,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
-        var foundDates = self.huskyModel.findEvents();
+        self.huskyModel.foundDates = self.huskyModel.findEvents();
         
         
         // find calendar entries
@@ -228,6 +228,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.isLevelSelected = false;
   self.isCategorySelected = false;
   
+  self.foundDates = [];
  
   // this is the complete model
   self.clubList = [];
