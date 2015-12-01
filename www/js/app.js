@@ -311,7 +311,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
          stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
  			    promises.push($cordovaCalendar.findEvent({
  			    title: "Hockey - " + event.adversary +" - " + event.id,
-  				startDate: 1449365400000
+  				startDate: new Date(1449365400000)
  			  }));
  			});
  		});
