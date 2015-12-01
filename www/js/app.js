@@ -344,10 +344,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  		then(function(results) {
  			for(var i=0; i<results.length; i++) {
  			  if(results[i].length == 1){
- 			    retResult = results[i];
+ 			    self.selectedTeam.team = "cat";
  			  }
  			}
- 			deferred.resolve(retResult);
+ 			deferred.resolve(self.selectedTeam.team);
  		});
  		return deferred.promise;
    }
