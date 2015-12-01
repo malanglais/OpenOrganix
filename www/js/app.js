@@ -311,8 +311,12 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
           notes: nt,
   				startDate: stDate,
   				endDate: enDate
- 			  });
- 			  var f=1;
+        }).then(function (result) {
+          var t=1;
+          self.selectedTeam.team = "cat";
+        }, function (err) {
+          // error
+        });
        /* promises.push($cordovaCalendar.findEvent({
  			    title: tt,
           location: loc,
