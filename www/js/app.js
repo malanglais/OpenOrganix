@@ -218,7 +218,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 }])
 
 
-.service('huskyModel', ['$cordovaCalendar', '$q', function ($cordovaCalendar, $q) {
+.service('huskyModel', ['$cordovaCalendar', '$q', '$http', function ($cordovaCalendar, $q, $http) {
   var self = this;
   
   self.ViewState = null;
