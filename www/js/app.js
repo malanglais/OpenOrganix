@@ -305,14 +305,21 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         var enDate = addMinutes(stDate, 120);
         var stUTC = new Date(Number(stDate));
         var enUTC = new Date(Number(enDate));
-        $timeout(function() {
-   			  promises.push($cordovaCalendar.findEvent({
-   			    title: tt,
-            location: loc,
-            notes: nt,
-    				startDate: stDate,
-    				endDate: enDate
-   			  })); }, 200);
+        var temp = $cordovaCalendar.findEvent({
+ 			    title: tt,
+          location: loc,
+          notes: nt,
+  				startDate: stDate,
+  				endDate: enDate
+ 			  });
+ 			  var f=1;
+       /* promises.push($cordovaCalendar.findEvent({
+ 			    title: tt,
+          location: loc,
+          notes: nt,
+  				startDate: stDate,
+  				endDate: enDate
+ 			  }));
  			});
  		});
  		
@@ -325,7 +332,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  			}
  			deferred.resolve(self.selectedTeam);
  		});
- 		return deferred.promise;
+ 		return deferred.promise; */
   }
   
   self.changeOnCalendarFlag = function(dtCol, result) {
