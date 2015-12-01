@@ -302,15 +302,15 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     });
   }
   
-  /* self.findEvents = function() {
+  self.findEvents = function() {
  		
  		var deferred = $q.defer();
  		var foundDate = null;
  		var stDate = null;
  		
  		//Logic is:
--		//For each, see if it exists an event.
-+		//For each, see if there is existing event and change the onCalendar member
+  	//For each, see if it exists an event.
+		//For each, see if there is existing event and change the onCalendar member
  		
  		var promises = [];
  		self.selectedTeam.Dates.forEach(function(date) {
@@ -319,17 +319,18 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  			  var tt = "Hockey - " + event.adversary +" - " + event.id;
         var loc = event.Location.city + event.Location.arena;
         var nt = "Bonne partie! -" + event.id;
-        
- 			  stDate = date.date;
-         stDate = addHours(stDate, parseInt(tmpTmStr[0]));
-         stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
-         var enDate = addMinutes(stDate, 120);
- 			    promises.push($cordovaCalendar.findEvent({
+        var st = new Date(1449365400000);
+        var en = new Date(1449372600000);
+ 			  /*stDate = date.date;
+        stDate = addHours(stDate, parseInt(tmpTmStr[0]));
+        stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
+        var enDate = addMinutes(stDate, 120);*/
+ 			  promises.push($cordovaCalendar.findEvent({
  			    title: tt,
           location: loc,
           notes: nt,
-  				startDate: stDate,
-  				endDate: enDate
+  				startDate: st,
+  				endDate: en
  			  }));
  			});
  		});
@@ -344,11 +345,11 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  			deferred.resolve(self.selectedTeam.Dates);
  		});
  		return deferred.promise;
-   }*/
+   }
   
-  /*self.changeOnCalendarFlag = function(dtCol, result) {
+  self.changeOnCalendarFlag = function(dtCol, result) {
     var t=1;
-   }*/
+   }
   
 }])
 
