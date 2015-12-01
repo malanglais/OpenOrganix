@@ -325,12 +325,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         stDate = addHours(stDate, parseInt(tmpTmStr[0]));
         stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
         var enDate = addMinutes(stDate, 120);
+        var stUTC = Number(stDate);
+        var enUTC = Number(enDate);
  			  promises.push($cordovaCalendar.findEvent({
  			    title: tt,
           location: loc,
           notes: nt,
-  				startDate: stDate,
-  				endDate: enDate
+  				startDate: stUTC,
+  				endDate: enUTC
  			  }));
  			});
  		});
