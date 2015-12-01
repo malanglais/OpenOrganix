@@ -338,12 +338,12 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     fData.append("__EVENTTARGET", "m$pc$cbSemaine");
     fData.append("__EVENTARGUMENT", "");
     fData.append("__LASTFOCUS", "");
-    fData.append("__VIEWSTATE", self.huskyModel.ViewState);
+    fData.append("__VIEWSTATE", self.ViewState);
     fData.append("m$txtLogin", "");
     fData.append("m$txtPassword", "");
     fData.append("m$pc$cbYear", "2015");
     fData.append("m$pc$cbCategories", "-1");
-    fData.append("m$pc$cbEquipes", self.huskyModel.selectedTeam.id);
+    fData.append("m$pc$cbEquipes", self.selectedTeam.id);
     fData.append("m$pc$cbSemaine", "-1");
     fData.append("m$pc$cbArenaFilter", "-1");
     fData.append("m$hdnOnLoadMessage", "");
