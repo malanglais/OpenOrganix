@@ -118,8 +118,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
               }); 
               var x=1;
           });
-        }); */
-  });
+        }); 
+  }); */
   
   self.selectAllEvents = function() {
     self.huskyModel.selectAllEvents(self.huskyModel.selectedTeam.allEventsSelected);
