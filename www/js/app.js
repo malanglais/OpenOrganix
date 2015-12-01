@@ -317,6 +317,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         }, function (err) {
           // error
         });
+ 			});
+ 		});
        /* promises.push($cordovaCalendar.findEvent({
  			    title: tt,
           location: loc,
