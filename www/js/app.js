@@ -100,17 +100,13 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
         
-        self.huskyModel.foundDates = self.huskyModel.findEvents();
-        var t=1;
+        //self.huskyModel.foundDates = self.huskyModel.findEvents();
         
-        var dt;
         // find calendar entries
         angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
             var tmpTmStr = event.time.split(':');
-            dt = date.date;
-            dt = addHours(dt, parseInt(tmpTmStr[0]));
-            dt = addMinutes(dt, parseInt(tmpTmStr[1]));
+            
             /*$cordovaCalendar.listEventsInRange(
               new Date(2015, 11, 5, 0, 0, 0, 0, 0),
               new Date(2015, 11, 7, 0, 0, 0, 0, 0)
@@ -122,8 +118,6 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             var tt = "Hockey - " + event.adversary +" - " + event.id;
             var loc = event.Location.city + event.Location.arena;
             var nt = "Bonne partie! -" + event.id;
-            var st = new Date(1449365400000);
-            var en = new Date(1449372600000);
             var stDate = date.date;
             stDate = addHours(stDate, parseInt(tmpTmStr[0]));
             stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
@@ -136,9 +130,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         				startDate: stDate,
         				endDate: enDate
               }).then(function (result) {
-                event.onCalendar = true;
+                if (result.length == 1) {
+                  event.onCalendar = true;
+                }
               }, function (err) {
-                alert(err);
                 event.onCalendar = false;
               }); 
               var x=1;
@@ -305,16 +300,16 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     });
   }
   
-  self.findEvents = function() {
+  /* self.findEvents = function() {
  		
  		var deferred = $q.defer();
  		var foundDate = null;
  		var stDate = null;
- 		/*
- 		Logic is:
--		For each, see if it exists an event.
-+		For each, see if there is existing event and change the onCalendar member
- 		*/
+ 		
+ 		//Logic is:
+-		//For each, see if it exists an event.
++		//For each, see if there is existing event and change the onCalendar member
+ 		
  		var promises = [];
  		self.selectedTeam.Dates.forEach(function(date) {
  			date.Events.forEach(function(event){
@@ -347,12 +342,11 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  			deferred.resolve(self.selectedTeam.Dates);
  		});
  		return deferred.promise;
-   }
+   }*/
   
-  self.changeOnCalendarFlag = function(dtCol, result) {
+  /*self.changeOnCalendarFlag = function(dtCol, result) {
     var t=1;
-    
-  }
+   }*/
   
 }])
 
