@@ -111,7 +111,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             dt = date.date;
             dt = addHours(dt, parseInt(tmpTmStr[0]));
             dt = addMinutes(dt, parseInt(tmpTmStr[1]));
-            window.plugins.calendar.findEvent("Hockey - " + event.adversary +" - " + event.id, event.Location.city + event.Location.arena, "Bonne partie! -" + event.id, dt, addMinutes(dt, 120), alert(event.id), alert("Nope" + event.id));
+            $cordovaCalendar.listEventsInRange(
+              new Date(2015, 11, 5, 0, 0, 0, 0, 0),
+              new Date(2015, 11, 7, 0, 0, 0, 0, 0)
+            ).then(function (result) {
+              alert(event.id);
+            }, function (err) {
+              alert("nope");
+            });
             /*$cordovaCalendar.findEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 startDate: new Date(2015, 11, 10, 22, 0, 0, 0, 0)
