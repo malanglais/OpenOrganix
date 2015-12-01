@@ -100,6 +100,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
         self.huskyModel.foundDates = self.huskyModel.findEvents();
+        var t=1;
         
         
         // find calendar entries
@@ -287,7 +288,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		var stDate = null;
 		/*
 		Logic is:
-		For each, see if it exists an event.
+		For each, see if there is existing event and change the onCalendar member
 		*/
 		var promises = [];
 		self.selectedTeam.Dates.forEach(function(date) {
@@ -298,7 +299,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
 			  promises.push($cordovaCalendar.findEvent({
 			    title: "Hockey - " + event.adversary +" - " + event.id,
-  				startDate: new Date(2015, 11, 6, 9,30,0)
+  				startDate: stDate
 			  }));
 			});
 		});
