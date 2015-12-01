@@ -319,7 +319,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  		then(function(results) {
  			for(var i=0; i<results.length; i++) {
  			  if(results[i].length == 1){
- 			    self.selectedTeam.stats = "cat";
+ 			    self.selectedTeam.team = "cat";
  			  }
  			}
  			deferred.resolve(self.selectedTeam);
