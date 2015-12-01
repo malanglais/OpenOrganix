@@ -319,18 +319,18 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  			  var tt = "Hockey - " + event.adversary +" - " + event.id;
         var loc = event.Location.city + event.Location.arena;
         var nt = "Bonne partie! -" + event.id;
-        var st = new Date(1449365400000);
-        var en = new Date(1449372600000);
- 			  /*stDate = date.date;
+        //var st = new Date(1449365400000);
+        //var en = new Date(1449372600000);
+ 			  stDate = date.date;
         stDate = addHours(stDate, parseInt(tmpTmStr[0]));
         stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
-        var enDate = addMinutes(stDate, 120);*/
+        var enDate = addMinutes(stDate, 120);
  			  promises.push($cordovaCalendar.findEvent({
  			    title: tt,
           location: loc,
           notes: nt,
-  				startDate: st,
-  				endDate: en
+  				startDate: stDate,
+  				endDate: enDate
  			  }));
  			});
  		});
