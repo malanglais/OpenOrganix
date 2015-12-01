@@ -100,8 +100,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
         
-        self.huskyModel.foundDates = self.huskyModel.findEvents();
-        var t=1;
+        //self.huskyModel.foundDates = self.huskyModel.findEvents();
+        //var t=1;
         
         var dt;
         // find calendar entries
@@ -119,15 +119,18 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             }, function (err) {
               alert("nope");
             });*/
-            /*$cordovaCalendar.findEvent({
+            $cordovaCalendar.findEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
-                startDate: new Date(2015, 11, 10, 22, 0, 0, 0, 0)
+                location: event.Location.city + event.Location.arena,
+                notes: "Bonne partie! -" + event.id,
+        				startDate: new Date(1449365400000)
+        				//endDate: new Date(1449372600000)
               }).then(function (result) {
                 event.onCalendar = true;
               }, function (err) {
                 alert(err);
                 event.onCalendar = false;
-              });*/
+              });
               var x=1;
           });
         }); 
