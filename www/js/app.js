@@ -71,8 +71,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.huskyModel = huskyModel;
   
   self.huskyModel.loadGameAPI();
-  foundDate = self.huskyModel.findEvents();
-  var t = 1;
+  
+  self.createEvents = function() {
+    self.huskyModel.createEvents();
+  };
   
   
   
@@ -176,43 +178,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     
   
   
-  self.createEvents = function() {
-    var stDate = null; // start date in Date format
-    var enDate = null; // end date in Date format
-    var eventFound = false;
-    var foundEvent = self.huskyModel.findEvents();
-    if(selectedCalendarName = null) {
-      alert("Please select a calendar");
-    } else {
-    
-      angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
-        angular.forEach(date.Events, function(event){
-          if (event.isSelected && !event.onCalendar) { // create event
-            // Format date
-            var tmpTmStr = event.time.split(':');
-            stDate = date.date;
-            stDate = addHours(stDate, parseInt(tmpTmStr[0]));
-            stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
-              $cordovaCalendar.createEvent({
-                title: "Hockey - " + event.adversary +" - " + event.id,
-                location: event.Location.city + event.Location.arena,
-                notes: "Bonne partie! -" + event.id,
-                startDate: stDate,
-                endDate: addMinutes(stDate, 120)
-                //calendarName:selectedCalendarName
-              }).then (function(result){
-                event.onCalendar = true;
-                alert("Event created (" + event.id + ")");
-              }, function(err){
-                alert(err);
-              });
-            } else if(event.isSelected && event.onCalendar){
-              alert("Event already exists");
-            }
-        });
-      });
-    }
-  }; 
+  
   
   
 }])
@@ -280,6 +246,28 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     });
   }
   
+  self.findEvent = function(date, event) {
+    var tmpTmStr = event.time.split(":");
+ 	  var tt = "Hockey - " + event.adversary +" - " + event.id;
+    var loc = event.Location.city + event.Location.arena;
+    var nt = "Bonne partie! -" + event.id;
+    var stDate = date.date;
+    stDate = addHours(stDate, parseInt(tmpTmStr[0]));
+    stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
+    var enDate = addMinutes(stDate, 120);
+    $cordovaCalendar.findEvent({
+ 	    title: tt,
+      location: loc,
+      notes: nt,
+			startDate: stDate,
+			endDate: enDate
+    }).then(function (result) {
+      event.onCalendar = true;
+    }, function (err) {
+      // error
+    });
+  }
+  
   self.findEvents = function() {
  		
  		var deferred = $q.defer();
@@ -289,8 +277,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  		//Logic is:
   	//For each, see if it exists an event.
 		//For each, see if there is existing event and change the onCalendar member
- 		
- 		var promises = [];
+
  		self.selectedTeam.Dates.forEach(function(date) {
  			date.Events.forEach(function(event){
  			  var tmpTmStr = event.time.split(":");
@@ -303,17 +290,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         stDate = addHours(stDate, parseInt(tmpTmStr[0]));
         stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
         var enDate = addMinutes(stDate, 120);
-        var stUTC = new Date(Number(stDate));
-        var enUTC = new Date(Number(enDate));
-        var temp = $cordovaCalendar.findEvent({
+        $cordovaCalendar.findEvent({
  			    title: tt,
           location: loc,
           notes: nt,
   				startDate: stDate,
   				endDate: enDate
         }).then(function (result) {
-          var t=1;
-          self.selectedTeam.team = "cat";
+          event.onCalendar = true;
         }, function (err) {
           // error
         });
@@ -379,6 +363,37 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         self.selectedTeam.Dates = constructGameModel(response.data,self.selectedTeam.team);
       });
   }
+  
+  self.createEvents = function() {
+    var stDate = null; // start date in Date format
+    self.findEvents();
+    angular.forEach(self.selectedTeam.Dates, function (date){
+      angular.forEach(date.Events, function(event){
+        if (event.isSelected && !event.onCalendar) { // create event
+          // Format date
+          var tmpTmStr = event.time.split(':');
+          stDate = date.date;
+          stDate = addHours(stDate, parseInt(tmpTmStr[0]));
+          stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
+            $cordovaCalendar.createEvent({
+              title: "Hockey - " + event.adversary +" - " + event.id,
+              location: event.Location.city + event.Location.arena,
+              notes: "Bonne partie! -" + event.id,
+              startDate: stDate,
+              endDate: addMinutes(stDate, 120)
+              //calendarName:selectedCalendarName
+            }).then (function(result){
+              event.onCalendar = true;
+              alert("Event created (" + event.id + ")");
+            }, function(err){
+              alert(err);
+            });
+          } else if(event.isSelected && event.onCalendar){
+            alert("Event already exists");
+          }
+        });
+      });
+  }; 
   
 }])
 
