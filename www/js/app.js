@@ -121,6 +121,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
                 alert(err);
                 event.onCalendar = false;
               });*/
+              var x=1;
           });
         }); 
   });
