@@ -347,7 +347,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  			    self.selectedTeam.team = "cat";
  			  }
  			}
- 			deferred.resolve(self.selectedTeam.team);
+ 			deferred.resolve(self.selectedTeam);
  		});
  		return deferred.promise;
    }
