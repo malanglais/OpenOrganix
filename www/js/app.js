@@ -123,7 +123,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             //stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
             var st = new Date(1449365400000);
             var en = new Date(1449372600000);
-            var enDate = addMinutes(stDate, 120);
+            //var enDate = addMinutes(stDate, 120);
             
             $cordovaCalendar.findEvent({
                 title: tt,
