@@ -132,7 +132,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             $cordovaCalendar.findEvent({
                 title: tt,
                 location: loc,
-                notes: "Bonne partie! -" + event.id,
+                notes: nt,
         				startDate: stDate,
         				endDate: enDate
               }).then(function (result) {
@@ -140,7 +140,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
               }, function (err) {
                 alert(err);
                 event.onCalendar = false;
-              }); */
+              }); 
               var x=1;
           });
         }); 
