@@ -100,8 +100,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
         
-        //self.huskyModel.foundDates = self.huskyModel.findEvents();
-        //var t=1;
+        self.huskyModel.foundDates = self.huskyModel.findEvents();
+        var t=1;
         
         var dt;
         // find calendar entries
@@ -119,7 +119,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             }, function (err) {
               alert("nope");
             });*/
-            var tt = "Hockey - " + event.adversary +" - " + event.id;
+            /*var tt = "Hockey - " + event.adversary +" - " + event.id;
             var loc = event.Location.city + event.Location.arena;
             var nt = "Bonne partie! -" + event.id;
             var st = new Date(1449365400000);
@@ -136,7 +136,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
               }, function (err) {
                 alert(err);
                 event.onCalendar = false;
-              });
+              }); */
               var x=1;
           });
         }); 
@@ -315,15 +315,20 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  		self.selectedTeam.Dates.forEach(function(date) {
  			date.Events.forEach(function(event){
  			  var tmpTmStr = event.time.split(":");
+ 			  var tt = "Hockey - " + event.adversary +" - " + event.id;
+        var loc = event.Location.city + event.Location.arena;
+        var nt = "Bonne partie! -" + event.id;
+        
  			  stDate = date.date;
          stDate = addHours(stDate, parseInt(tmpTmStr[0]));
          stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
+         var enDate = addMinutes(stDate, 120);
  			    promises.push($cordovaCalendar.findEvent({
- 			    title: "Hockey - " + event.adversary +" - " + event.id,
-          location: event.Location.city + event.Location.arena,
-          notes: "Bonne partie! -" + event.id,
-  				startDate: new Date(1449365400000),
-  				endDate: new Date(1449372600000)
+ 			    title: tt,
+          location: loc,
+          notes: nt,
+  				startDate: stDate,
+  				endDate: enDate
  			  }));
  			});
  		});
