@@ -99,17 +99,20 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.huskyModel.ViewState = getViewState(response.data);
         self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
-        self.huskyModel.foundDates = self.huskyModel.findEvents();
-        var t=1;
         
+        //self.huskyModel.foundDates = self.huskyModel.findEvents();
+        //var t=1;
         
+        var dt;
         // find calendar entries
-        /*angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
+        angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
             var tmpTmStr = event.time.split(':');
-            date.date.addHours(parseInt(tmpTmStr[0]));
-            date.date.addMinutes(parseInt(tmpTmStr[1]));
-            $cordovaCalendar.findEvent({
+            dt = date.date;
+            dt = addHours(dt, parseInt(tmpTmStr[0]));
+            dt = addMinutes(dt, parseInt(tmpTmStr[1]));
+            window.plugins.calendar.findEvent("Hockey - " + event.adversary +" - " + event.id, event.Location.city + event.Location.arena, "Bonne partie! -" + event.id, dt, addMinutes(dt, 120), alert(event.id), alert("Nope" + event.id));
+            /*$cordovaCalendar.findEvent({
                 title: "Hockey - " + event.adversary +" - " + event.id,
                 startDate: new Date(2015, 11, 10, 22, 0, 0, 0, 0)
               }).then(function (result) {
@@ -117,9 +120,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
               }, function (err) {
                 alert(err);
                 event.onCalendar = false;
-              });
+              });*/
           });
-        }); */
+        }); 
   });
   
   self.selectAllEvents = function() {
@@ -281,40 +284,6 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     });
   }
   
-  self.findEvents = function() {
-		
-		var deferred = $q.defer();
-		var foundDate = null;
-		var stDate = null;
-		/*
-		Logic is:
-		For each, see if there is existing event and change the onCalendar member
-		*/
-		var promises = [];
-		self.selectedTeam.Dates.forEach(function(date) {
-			date.Events.forEach(function(event){
-			  var tmpTmStr = event.time.split(":");
-			  stDate = date.date;
-        stDate = addHours(stDate, parseInt(tmpTmStr[0]));
-        stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
-			  promises.push($cordovaCalendar.findEvent({
-			    title: "Hockey - " + event.adversary +" - " + event.id,
-  				startDate: stDate
-			  }));
-			});
-		});
-		
-		
-		$q.all(promises).then(function(results) {
-			for(var i=0; i<results.length; i++) {
-			  if(results[i].length == 1){
-			    self.changeOnCalendarFlag(self.selectedTeam.Dates, results[i]);
-			  }
-			}
-			deferred.resolve(self.selectedTeam.Dates);
-		});
-		return deferred.promise;
-  }
   
   self.changeOnCalendarFlag = function(dtCol, result) {
     var t=1;
