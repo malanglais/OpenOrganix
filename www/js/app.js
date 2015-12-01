@@ -67,55 +67,32 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 
 .controller('gameController', ['$http', '$cordovaCalendar','huskyModel', function($http, $cordovaCalendar, huskyModel) {
   var self = this;
+  var foundDate = null;
   self.huskyModel = huskyModel;
   
-  var fData = new FormData();
-  fData.append("__EVENTTARGET", "m$pc$cbSemaine");
-  fData.append("__EVENTARGUMENT", "");
-  fData.append("__LASTFOCUS", "");
-  fData.append("__VIEWSTATE", self.huskyModel.ViewState);
-  fData.append("m$txtLogin", "");
-  fData.append("m$txtPassword", "");
-  fData.append("m$pc$cbYear", "2015");
-  fData.append("m$pc$cbCategories", "-1");
-  fData.append("m$pc$cbEquipes", self.huskyModel.selectedTeam.id);
-  fData.append("m$pc$cbSemaine", "-1");
-  fData.append("m$pc$cbArenaFilter", "-1");
-  fData.append("m$hdnOnLoadMessage", "");
-  fData.append("m$hdnOnLoadMessageOptions", "");
+  self.loadGameAPI();
+  foundDate = self.findEvents();
+  var t = 1;
   
-  var aURL = "http://lcrse.qc.ca/cedules.saison.aspx";
-  var stDate = null;
   
-  $http({
-      url: aURL,
-      method: "POST",
-      data: fData,
-      headers: { 'Content-Type': undefined, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-      },      
-      transformResponse: function (data) { 
-        return data; 
-      }
-      }).then(function (response) {
-        self.huskyModel.ViewState = getViewState(response.data);
-        self.huskyModel.selectedTeam.Dates = constructGameModel(response.data,self.huskyModel.selectedTeam.team);
+  
         
         //self.huskyModel.foundDates = self.huskyModel.findEvents();
-        var foundEvent = self.huskyModel.findEvents();
+        
         
         // find calendar entries
-        angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
+        /*angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
           angular.forEach(date.Events, function(event){
             var tmpTmStr = event.time.split(':');
             
-            /*$cordovaCalendar.listEventsInRange(
+            $cordovaCalendar.listEventsInRange(
               new Date(2015, 11, 5, 0, 0, 0, 0, 0),
               new Date(2015, 11, 7, 0, 0, 0, 0, 0)
             ).then(function (result) {
               alert(event.id);
             }, function (err) {
               alert("nope");
-            });*/
+            });
             var tt = "Hockey - " + event.adversary +" - " + event.id;
             var loc = event.Location.city + event.Location.arena;
             var nt = "Bonne partie! -" + event.id;
@@ -126,7 +103,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             var en = new Date(1449372600000);
             //var enDate = addMinutes(stDate, 120);
             
-            /*$cordovaCalendar.findEvent({
+            $cordovaCalendar.findEvent({
                 title: tt,
                 location: loc,
                 notes: nt,
@@ -138,10 +115,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
                 }
               }, function (err) {
                 event.onCalendar = false;
-              }); */
+              }); 
               var x=1;
           });
-        }); 
+        }); */
   });
   
   self.selectAllEvents = function() {
@@ -203,7 +180,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     var stDate = null; // start date in Date format
     var enDate = null; // end date in Date format
     var eventFound = false;
-    
+    var foundEvent = self.huskyModel.findEvents();
     if(selectedCalendarName = null) {
       alert("Please select a calendar");
     } else {
@@ -332,29 +309,62 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  			    title: tt,
           location: loc,
           notes: nt,
-  				startDate: stUTC,
-  				endDate: enUTC
+  				startDate: stDate,
+  				endDate: enDate
  			  }));
  			});
  		});
- 		
- 		var retResult = null;
  		
  		$q.all(promises).
  		then(function(results) {
  			for(var i=0; i<results.length; i++) {
  			  if(results[i].length == 1){
- 			    self.selectedTeam.team = "cat";
+ 			    self.selectedTeam.stats = "cat";
  			  }
  			}
  			deferred.resolve(self.selectedTeam);
  		});
  		return deferred.promise;
-   }
+  }
   
   self.changeOnCalendarFlag = function(dtCol, result) {
     var t=1;
-   }
+  }
+
+  self.loadGameAPI = function() {
+    
+    // formdata for asp form * will be removed when API is used
+    var fData = new FormData();
+    fData.append("__EVENTTARGET", "m$pc$cbSemaine");
+    fData.append("__EVENTARGUMENT", "");
+    fData.append("__LASTFOCUS", "");
+    fData.append("__VIEWSTATE", self.huskyModel.ViewState);
+    fData.append("m$txtLogin", "");
+    fData.append("m$txtPassword", "");
+    fData.append("m$pc$cbYear", "2015");
+    fData.append("m$pc$cbCategories", "-1");
+    fData.append("m$pc$cbEquipes", self.huskyModel.selectedTeam.id);
+    fData.append("m$pc$cbSemaine", "-1");
+    fData.append("m$pc$cbArenaFilter", "-1");
+    fData.append("m$hdnOnLoadMessage", "");
+    fData.append("m$hdnOnLoadMessageOptions", "");
+    
+    var aURL = "http://lcrse.qc.ca/cedules.saison.aspx";
+    
+    $http({
+      url: aURL,
+      method: "POST",
+      data: fData,
+      headers: { 'Content-Type': undefined, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+      },      
+      transformResponse: function (data) { 
+        return data; 
+      }
+      }).then(function (response) {
+        self.ViewState = getViewState(response.data);
+        self.selectedTeam.Dates = constructGameModel(response.data,self.selectedTeam.team);
+      });
+  }
   
 }])
 
