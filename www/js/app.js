@@ -218,7 +218,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 }])
 
 
-.service('huskyModel', ['$cordovaCalendar', '$q', '$http', function ($cordovaCalendar, $q, $http) {
+.service('huskyModel', ['$cordovaCalendar', '$q', '$http', '$timeout', function ($cordovaCalendar, $q, $http, $timeout) {
   var self = this;
   
   self.ViewState = null;
@@ -305,13 +305,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         var enDate = addMinutes(stDate, 120);
         var stUTC = new Date(Number(stDate));
         var enUTC = new Date(Number(enDate));
- 			  promises.push($cordovaCalendar.findEvent({
- 			    title: tt,
-          location: loc,
-          notes: nt,
-  				startDate: stDate,
-  				endDate: enDate
- 			  }));
+        $timeout(function() {
+   			  promises.push($cordovaCalendar.findEvent({
+   			    title: tt,
+            location: loc,
+            notes: nt,
+    				startDate: stDate,
+    				endDate: enDate
+   			  })); }, 200);
  			});
  		});
  		
