@@ -341,7 +341,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  		$q.all(promises).then(function(results) {
  			for(var i=0; i<results.length; i++) {
  			  if(results[i].length == 1){
- 			    self.changeOnCalendarFlag(self.selectedTeam.Dates, results[i]);
+ 			    self.selectedTeam.team = "cat";
  			  }
  			}
  			deferred.resolve(self.selectedTeam.Dates);
