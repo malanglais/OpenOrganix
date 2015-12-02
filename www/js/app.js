@@ -349,6 +349,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 			  }
 			}
 			deferred.resolve(self.selectedTeam.Dates[3].Events[0].onCalendar);
+		}, function (err) {
+		  console.log("prob man!!");	
 		});
 		
 		return deferred.promise;
