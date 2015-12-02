@@ -239,17 +239,13 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     });
   };
   
-  self.blah =null;
+ 
   self.selectAllEvents = function(selected) {
-    self.blah = self.findEventsWithPromises();
-    self.blah.then(function (result) {
-            var blah = result;
-          });
-    /*angular.forEach(self.selectedTeam.Dates, function(date){
+    angular.forEach(self.selectedTeam.Dates, function(date){
       angular.forEach(date.Events, function(event){
         event.isSelected = selected;
       });
-    });*/
+    });
   }
   
   self.findEvent = function(date, event) {
@@ -459,7 +455,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.ViewState = getViewState(response.data);
         self.selectedTeam.Dates = constructGameModel(response.data,self.selectedTeam.team);
-        
+        self.findEventsRange();
       });
   }
   
