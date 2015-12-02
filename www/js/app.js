@@ -290,7 +290,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 			endDate: enDate
     }).then(function (result) {
       if(ctr < date.Events.length) {
-        self.findEventRecurse(date, ctr+1);
+        ctr++;
+        self.findEventRecurse(date, ctr);
       }
       if(result.length >=1){
         date.Events[ctr].onCalendar = true;
