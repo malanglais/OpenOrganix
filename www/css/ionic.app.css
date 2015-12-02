@@ -9198,6 +9198,38 @@ a.button {
   -moz-border-radius: 7;
   border-radius: 7px;
   font-family: Arial;
+  color: #ffffff;
   font-size: 11px;
   padding: 8px 8px 8px 8px;
+  text-decoration: none; }
+
+.inner-events {
+  height: 65px;
+  margin: 1px;
+  background: #ffffff;
+  background-image: -webkit-linear-gradient(top, #ffffff, #dedede);
+  background-image: -moz-linear-gradient(top, #ffffff, #dedede);
+  background-image: -ms-linear-gradient(top, #ffffff, #dedede);
+  background-image: -o-linear-gradient(top, #ffffff, #dedede);
+  background-image: linear-gradient(to bottom, #ffffff, #dedede);
+  -webkit-border-radius: 7;
+  -moz-border-radius: 7;
+  border-radius: 7px;
+  font-family: Arial;
+  color: #000000;
+  font-size: 14px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none; }
+
+.inner-dates {
+  height: 65px;
+  margin: 1px;
+  background: #065e99;
+  -webkit-border-radius: 7;
+  -moz-border-radius: 7;
+  border-radius: 7px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px 20px 10px 20px;
   text-decoration: none; }
