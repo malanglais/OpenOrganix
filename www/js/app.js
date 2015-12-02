@@ -193,6 +193,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.isTeamSelected = false;
   self.isLevelSelected = false;
   self.isCategorySelected = false;
+  self.calEventCollection = [];
   
   self.foundDates = [];
  
@@ -303,24 +304,20 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         results.forEach( function(ev) {
           if(ev.title != null) {
             if(ev.title.indexOf("Hockey") != -1) {
-              eventCollection.push(ev);
+              self.calEventCollection.push(ev);
+              self.selectedTeam.Dates.forEach(function (date){
+                date.Events.forEach(function (event){
+                  if(ev.title.indexOf(event.id)) {
+                    event.onCalendar = true;
+                  }
+                });
+              });
             }
           }
         });
       }, function (err) {
       // error
     });
-    if (eventCollection.length != 0) {
-      self.selectedTeam.Dates.forEach(function (date){
-        date.Events.forEach(function (event){
-          eventCollection.forEach(function(ecItem){
-            if(ecItem.title.indexOf(event.id)) {
-              event.onCalendar = true;
-            }
-          });
-        });
-      });
-    }
   }
   
   self.changeOnCalendarFlag = function(dtCol, result) {
