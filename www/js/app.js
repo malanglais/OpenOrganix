@@ -342,6 +342,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		  }
 		}
 		
+		console.log(promises.length);
+		if(promises.length >0) {
+		  console.log(promises[0].status);
+		}
 		$q.all(promises).then(function(results) {
 			console.log("in the all done");	
 			//should be the same len as events
