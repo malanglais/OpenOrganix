@@ -31,20 +31,22 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   fData.append("m$hdnOnLoadMessage", "");
   fData.append("m$hdnOnLoadMessageOptions", "");
   
-  var aURL = "http://lcrse.qc.ca/cedules.saison.aspx";
+  var aURL = "http://lcrse.qc.ca/api/getLevels";
 
-  $http({
+ $http({
+      
       url: aURL,
-      method: "POST",
-      data: fData,
-      headers: { 'Content-Type': undefined, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-      },      
-      transformResponse: function (data) { 
-        return data; 
-      }
+      method: "GET",
+      //data: fData,
+      //headers: { 'Content-Type': undefined, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+      //},      
+      //transformResponse: function (data) { 
+        //return data; 
+      //}
       }).then(function (response) {
-        self.huskyModel.ViewState = getViewState(response.data);
-        self.huskyModel.clubList= getTeamModel(response.data);
+        var t = response;
+        //self.huskyModel.ViewState = getViewState(response.data);
+        //self.huskyModel.clubList= getTeamModel(response.data);
   }); 
   
   self.selectClub = function(club) {

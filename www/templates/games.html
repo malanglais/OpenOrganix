@@ -6,9 +6,6 @@
     </ion-nav-bar>
     <ion-content>
         <div>
-            <div>
-               <ion-checkbox class="item-checkbox-right" ng-model="gCtrl.huskyModel.selectedTeam.allEventsSelected" ng-change="gCtrl.selectAllEvents()">Select all events</ion-checkbox>
-            </div>
             <ion-list>
                 <div ng-repeat="date in gCtrl.huskyModel.selectedTeam.Dates">
                     <div ng-class="{hidden:date.isPassed}" class="round-corners" ng-model="date.isPassed">
@@ -36,9 +33,6 @@
         </div>
         
     </ion-content>
-    <!--<button class="button button-float" ng-click="gCtrl.createEvents()">
-        <i class="icon ion-android-calendar"></i>
-      </button> -->
 </ion-view>
 
 
