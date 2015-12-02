@@ -239,8 +239,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     });
   };
   
+  self.blah =null;
   self.selectAllEvents = function(selected) {
-    self.findEventsWithPromises().then(function (result) {
+    self.blah = self.findEventsWithPromises();
+    self.blah.then(function (result) {
             var blah = result;
           });
     /*angular.forEach(self.selectedTeam.Dates, function(date){
