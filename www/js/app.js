@@ -71,7 +71,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.huskyModel = huskyModel;
   
   self.huskyModel.loadGameAPI();
-  
+  self.huskyModel.findEvents();
   self.createEvents = function() {
     self.huskyModel.createEvents();
   };
@@ -366,7 +366,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   
   self.createEvents = function() {
     var stDate = null; // start date in Date format
-    self.findEvents();
+    
     angular.forEach(self.selectedTeam.Dates, function (date){
       angular.forEach(date.Events, function(event){
         if (event.isSelected && !event.onCalendar) { // create event
