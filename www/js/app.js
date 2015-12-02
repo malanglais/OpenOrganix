@@ -311,6 +311,49 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  		});
  	}
   
+  self.findEventsWithPromises = function() {
+		var deferred = $q.defer();
+
+		/*
+		Logic is:
+		For each, see if it exists an event.
+		*/
+		var promises = [];
+		self.selectedTeam.Dates.forEach(function(date){
+		  date.Events.forEach(function (event){
+		    var tmpTmStr = event.time.split(":");
+     	  var tt = "Hockey - " + event.adversary +" - " + event.id;
+        var loc = event.Location.city + event.Location.arena;
+        var nt = "Bonne partie! -" + event.id;
+        var stDate = date.date;
+        stDate = addHours(stDate, parseInt(tmpTmStr[0]));
+        stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
+        var enDate = addMinutes(stDate, 120);
+			  console.log('try to find '+ event.id);
+			  promises.push($cordovaCalendar.findEvent({
+				  title: tt,
+          location: loc,
+          notes: nt,
+  			  startDate: stDate,
+  			  endDate: enDate
+			  }));
+		  });
+		});
+		
+		$q.all(promises).then(function(results) {
+			console.log("in the all done");	
+			//should be the same len as events
+			for(var i=0;i<results.length;i++) {
+			  if(results[i].length >= 1){
+				  self.selectedTeam.Dates[3].Events[0].onCalendar = true;
+			  }
+			}
+			deferred.resolve(self.selectedTeam.Dates[3].Events[0].onCalendar);
+		});
+		
+		return deferred.promise;
+  }
+  
   self.findEventsRange = function() {
  		
  		var stDate = null;
@@ -393,7 +436,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.ViewState = getViewState(response.data);
         self.selectedTeam.Dates = constructGameModel(response.data,self.selectedTeam.team);
-        self.findEvents();
+        self.findEventsWithPromises().then(function (result) {
+            var blah = result;
+          });
       });
   }
   
