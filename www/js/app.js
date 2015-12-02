@@ -319,8 +319,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		For each, see if it exists an event.
 		*/
 		var promises = [];
-		self.selectedTeam.Dates.forEach(function(date){
-		  date.Events.forEach(function (event){
+		for(var i=0; i<self.selectedTeam.Dates.length; i++){
+		  var date = self.selectedTeam.Dates[i];
+		  for(var j=0; j<date.Events.length; j++){
+  		  var event = date.Events[j];
 		    var tmpTmStr = event.time.split(":");
      	  var tt = "Hockey - " + event.adversary +" - " + event.id;
         var loc = event.Location.city + event.Location.arena;
@@ -337,8 +339,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   			  startDate: stDate,
   			  endDate: enDate
 			  }));
-		  });
-		});
+		  }
+		}
 		
 		$q.all(promises).then(function(results) {
 			console.log("in the all done");	
