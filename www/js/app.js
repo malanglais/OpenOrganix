@@ -273,10 +273,11 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   
   self.findEventRecurse = function(date, ctr) {
     // this function is recursive through the events
-    var tmpTmStr = date.Events[ctr].time.split(":");
- 	  var tt = "Hockey - " + date.Events[ctr].adversary +" - " + date.Events[ctr].id;
-    var loc = date.Events[ctr].Location.city + date.Events[ctr].Location.arena;
-    var nt = "Bonne partie! -" + date.Events[ctr].id;
+    var event = date.Events[ctr];
+    var tmpTmStr = event.time.split(":");
+ 	  var tt = "Hockey - " + event.adversary +" - " + event.id;
+    var loc = event.Location.city + event.Location.arena;
+    var nt = "Bonne partie! -" + event.id;
     var stDate = date.date;
     stDate = addHours(stDate, parseInt(tmpTmStr[0]));
     stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
@@ -289,9 +290,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 			endDate: enDate
     }).then(function (result) {
       if(ctr < date.Events.length) {
-        self.findEventRecurse(date, date.Events[ctr+1], ctr+1);
+        self.findEventRecurse(date, ctr+1);
       }
-      if(result >=1){
+      if(result.length >=1){
         date.Events[ctr].onCalendar = true;
       }
     }, function (err) {
