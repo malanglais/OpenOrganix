@@ -342,10 +342,17 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		  }
 		}
 		
+		for (var promiseIndex = 0; promiseIndex < promises.length; promiseIndex++) {
+		  promises[promiseIndex].then(function (result) {
+		    console.log(result);
+		  })
+		}
+		
 		console.log(promises.length);
 		if(promises.length >0) {
 		  console.log(promises[0].status);
 		}
+		/*
 		$q.all(promises).then(function(results) {
 			console.log("in the all done");	
 			//should be the same len as events
@@ -358,6 +365,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		}, function (err) {
 		  console.log("prob man!!");	
 		});
+		*/
 		
 		return deferred.promise;
   }
