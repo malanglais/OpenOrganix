@@ -344,7 +344,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		
 		for (var promiseIndex = 0; promiseIndex < promises.length; promiseIndex++) {
 		  promises[promiseIndex].then(function (result) {
-		    console.log(result);
+		    console.log("I have successfully ended");
+		  }, function (result) {
+		    console.log("I have failed");
 		  })
 		}
 		
