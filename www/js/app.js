@@ -273,32 +273,35 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   
   self.findEventRecurse = function(date, ctr) {
     // this function is recursive through the events
+    
     var event = date.Events[ctr];
-    var tmpTmStr = event.time.split(":");
- 	  var tt = "Hockey - " + event.adversary +" - " + event.id;
-    var loc = event.Location.city + event.Location.arena;
-    var nt = "Bonne partie! -" + event.id;
-    var stDate = date.date;
-    stDate = addHours(stDate, parseInt(tmpTmStr[0]));
-    stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
-    var enDate = addMinutes(stDate, 120);
-    ctr++;
-    $cordovaCalendar.findEvent({
- 	    title: tt,
-      location: loc,
-      notes: nt,
-			startDate: stDate,
-			endDate: enDate
-    }).then(function (result) {
-      if(ctr < date.Events.length) {
-        self.findEventRecurse(date, ctr);
-      }
-      if(result.length >=1){
-        date.Events[ctr].onCalendar = true;
-      }
-    }, function (err) {
-      // error
-    });
+    if(event != null) {
+      var tmpTmStr = event.time.split(":");
+   	  var tt = "Hockey - " + event.adversary +" - " + event.id;
+      var loc = event.Location.city + event.Location.arena;
+      var nt = "Bonne partie! -" + event.id;
+      var stDate = date.date;
+      stDate = addHours(stDate, parseInt(tmpTmStr[0]));
+      stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
+      var enDate = addMinutes(stDate, 120);
+      ctr++;
+      $cordovaCalendar.findEvent({
+   	    title: tt,
+        location: loc,
+        notes: nt,
+  			startDate: stDate,
+  			endDate: enDate
+      }).then(function (result) {
+        if(ctr < date.Events.length) {
+          self.findEventRecurse(date, ctr);
+        }
+        if(result.length >=1){
+          date.Events[ctr].onCalendar = true;
+        }
+      }, function (err) {
+        // error
+      });
+    }
   }
   
   self.findEvents = function(){
