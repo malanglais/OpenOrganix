@@ -61,7 +61,6 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   
   self.selectTeam = function(team) {
     self.huskyModel.setSelectedTeam(team);
-    self.huskyModel.loadGameAPI();
   };
   
 }])
@@ -70,7 +69,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var self = this;
   var foundDate = null;
   self.huskyModel = huskyModel;
-  self.huskyModel.findEvents();
+  self.huskyModel.loadGameAPI();
   
   self.createEvents = function() {
     self.huskyModel.createEvents();
@@ -357,6 +356,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.ViewState = getViewState(response.data);
         self.selectedTeam.Dates = constructGameModel(response.data,self.selectedTeam.team);
+        self.findEvents();
       });
   }
   
