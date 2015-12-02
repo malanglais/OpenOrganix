@@ -75,111 +75,19 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     self.huskyModel.createEvents();
   };
   
-  
-  
-        
-        //self.huskyModel.foundDates = self.huskyModel.findEvents();
-        
-        
-        // find calendar entries
-        /*angular.forEach(self.huskyModel.selectedTeam.Dates, function (date){
-          angular.forEach(date.Events, function(event){
-            var tmpTmStr = event.time.split(':');
-            
-            $cordovaCalendar.listEventsInRange(
-              new Date(2015, 11, 5, 0, 0, 0, 0, 0),
-              new Date(2015, 11, 7, 0, 0, 0, 0, 0)
-            ).then(function (result) {
-              alert(event.id);
-            }, function (err) {
-              alert("nope");
-            });
-            var tt = "Hockey - " + event.adversary +" - " + event.id;
-            var loc = event.Location.city + event.Location.arena;
-            var nt = "Bonne partie! -" + event.id;
-            //var stDate = date.date;
-            //stDate = addHours(stDate, parseInt(tmpTmStr[0]));
-            //stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
-            var st = new Date(1449365400000);
-            var en = new Date(1449372600000);
-            //var enDate = addMinutes(stDate, 120);
-            
-            $cordovaCalendar.findEvent({
-                title: tt,
-                location: loc,
-                notes: nt,
-        				startDate: st,
-        				endDate: en
-              }).then(function (result) {
-                if (result.length == 1) {
-                  event.onCalendar = true;
-                }
-              }, function (err) {
-                event.onCalendar = false;
-              }); 
-              var x=1;
-          });
-        }); 
-  }); */
+  self.createEvent = function(date, event) {
+    self.huskyModel.createEvent(date, event);
+  }
+
   
   self.selectAllEvents = function() {
-    //self.huskyModel.findEvents();
     self.huskyModel.selectAllEvents(self.huskyModel.selectedTeam.allEventsSelected);
   };
   
   var calendarList = [];
   var calNameList = [];
   var selectedCalendarName = null;
-  
-
-  
-  /*$cordovaCalendar.listCalendars().then(function (result) {
-    calendarList = result;
-    angular.forEach(result, function(calentry){
-      calNameList = calentry.name;
-    });
-    }, function (err) {
-      alert("No calendars available");
-  }); */
-  
-  /*$cordovaCalendar.listEventsInRange(
-    new Date(2015, 11, 10, 0, 0, 0, 0, 0),
-    new Date(2015, 11, 12, 0, 0, 0, 0, 0)
-  ).then(function (result) {
-    var t = 1;
-    t++;
-  }, function (err) {
-    var t = 1;
-    t++;
-  });*/
-  
-  /*self.actionSheet = function() {
-
-    // Show the action sheet
-    var hideSheet = $ionicActionSheet.show({
-        buttons: calNameList,
-        titleText: 'Choose Calendar',
-        cancelText: 'Cancel',
-        cancel: function() {
-            // add cancel code..
-        },
-        buttonClicked: function(index) {
-          selectedCalendarName = calendarList[index];
-            return true;
-        }
-    });
-
-    // For example's sake, hide the sheet after two seconds
-    $timeout(function() {
-        hideSheet();
-    }, 0);
-
-    }; */
-    
-  
-  
-  
-  
+ 
   
 }])
 
@@ -418,10 +326,6 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       // error
     });
   }
-  
-  self.changeOnCalendarFlag = function(dtCol, result) {
-    var t=1;
-  }
 
   self.loadGameAPI = function() {
     
@@ -470,25 +374,63 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
           stDate = date.date;
           stDate = addHours(stDate, parseInt(tmpTmStr[0]));
           stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
-            $cordovaCalendar.createEvent({
-              title: "Hockey - " + event.adversary +" - " + event.id,
-              location: event.Location.city + event.Location.arena,
-              notes: "Bonne partie! -" + event.id,
-              startDate: stDate,
-              endDate: addMinutes(stDate, 120)
-              //calendarName:selectedCalendarName
-            }).then (function(result){
-              event.onCalendar = true;
-              alert("Event created (" + event.id + ")");
-            }, function(err){
-              alert(err);
-            });
-          } else if(event.isSelected && event.onCalendar){
-            alert("Event already exists");
-          }
-        });
+          $cordovaCalendar.createEvent({
+            title: "Hockey - " + event.adversary +" - " + event.id,
+            location: event.Location.city + event.Location.arena,
+            notes: "Bonne partie! -" + event.id,
+            startDate: stDate,
+            endDate: addMinutes(stDate, 120)
+            //calendarName:selectedCalendarName
+          }).then (function(result){
+            event.onCalendar = true;
+            alert("Event created (" + event.id + ")");
+          }, function(err){
+            alert(err);
+          });
+        } else if(event.isSelected && event.onCalendar){
+          alert("Event already exists");
+        }
       });
-  }; 
+    });
+  }
+  
+  self.createEvent = function(date, event) {
+    
+    var tmpTmStr = event.time.split(':');
+    var stDate = date.date;
+    stDate = addHours(stDate, parseInt(tmpTmStr[0]));
+    stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
+      //remove
+    if(event.onCalendar) {
+      $cordovaCalendar.deleteEvent({
+        title: "Hockey - " + event.adversary +" - " + event.id,
+        location: event.Location.city + event.Location.arena,
+        notes: "Bonne partie! -" + event.id,
+        startDate: stDate,
+        endDate: addMinutes(stDate, 120)
+      }).then(function (result) {
+        event.onCalendar = false;
+        alert("Event removed (" + event.id + ")");
+        // success
+      }, function (err) {
+        // error
+      });
+    } else {
+     //add
+      $cordovaCalendar.createEvent({
+        title: "Hockey - " + event.adversary +" - " + event.id,
+        location: event.Location.city + event.Location.arena,
+        notes: "Bonne partie! -" + event.id,
+        startDate: stDate,
+        endDate: addMinutes(stDate, 120)
+      }).then (function(result){
+        event.onCalendar = true;
+        alert("Event created (" + event.id + ")");
+      }, function(err){
+        alert(err);
+      });
+    }
+  }
   
 }])
 
