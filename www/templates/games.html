@@ -17,8 +17,8 @@
                         </ion-item>
                         <div class="item-accordion"  ng-repeat="event in date.Events" >
                             {{event.time | date:'HH:mm'}} | {{event.adversary}} | {{event.Location.city}}-{{event.Location.arena}}
-                            <button ng-class="{'icon ion-android-remove': event.onCalendar, 'icon ion-android-add': !event.onCalendar}" class="button button-event" ng-click="gCtrl.createEvent(date, event)" ng-model="event.onCalendar">
-                                <i class="icon ion-android-calendar"></i>
+                            <button ng-class="{'button button-event-remove': event.onCalendar, 'button button-event-add': !event.onCalendar}" ng-click="gCtrl.createEvent(date, event)" ng-model="event.onCalendar">
+                                <i ng-class="{'icon ion-android-remove': event.onCalendar, 'icon ion-android-add': !event.onCalendar}" ng-model="event.onCalendar"></i>
                             </button>
                         </div>
                     </div>
