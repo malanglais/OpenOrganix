@@ -297,8 +297,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
           startDate: stDate,
           endDate: enDate
         }).then(function (result) {
-          if (result.length >= 1)
-          event.onCalendar = true;
+          if (result.length >= 1) {
+            event.onCalendar = true;
+          }
         }, function (err) {
           // error
         });
