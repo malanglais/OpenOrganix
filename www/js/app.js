@@ -61,6 +61,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   
   self.selectTeam = function(team) {
     self.huskyModel.setSelectedTeam(team);
+    self.huskyModel.findEvents();
   };
   
 }])
@@ -70,7 +71,6 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var foundDate = null;
   self.huskyModel = huskyModel;
   self.huskyModel.loadGameAPI();
-  self.huskyModel.findEvents();
   self.createEvents = function() {
     self.huskyModel.createEvents();
   };
