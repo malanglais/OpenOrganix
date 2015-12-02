@@ -283,11 +283,17 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		//For each, see if there is existing event and change the onCalendar member and tag the event onCalendar member
 		// trying  listEventsInRange
 
- 		stDate = self.selectedTeam.Dates[0].date;
- 		enDate = addHours(self.selectedTeam.Dates[self.selectedTeam.Dates.length -1].date, 22); 
- 		var tt = "Hockey - " + event.adversary +" - " + event.id;
-    var loc = event.Location.city + event.Location.arena;
-        var nt = "Bonne partie! -" + event.id;
+ 		self.selectedTeam.Dates.forEach(function (date){
+ 		  if (stDate == null && enDate == null) {
+ 		    stDate = enDate = date.date;
+ 		  } else if (date.date < stDate) {
+ 		    stDate = date.date;
+ 		  } else if (date.date > enDate) {
+ 		    enDate = date.date;
+ 		  }
+ 		});
+ 		
+ 		enDate = addHours(enDate, 23); // till end of day
     //var st = new Date(1449365400000);
     //var en = new Date(1449372600000);
      $cordovaCalendar.listEventsInRange(
