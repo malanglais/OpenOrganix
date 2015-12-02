@@ -275,7 +275,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  		var deferred = $q.defer();
  		var foundDate = null;
  		var stDate = null;
- 		var enDate = null
+ 		var enDate = null;
+ 		var eventCollection = [];
  		
  		//Logic is:
   	//For each, see if it exists an event.
@@ -298,13 +299,28 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
      $cordovaCalendar.listEventsInRange(
       stDate,
       enDate
-    ).then(function (results) {
-      results.forEach( function(ev) {
-        var t = 1;
+      ).then(function (results) {
+        results.forEach( function(ev) {
+          if(ev.note != null) {
+            if(ev.title.indexOf("Hockey") != -1) {
+              eventCollection.push(ev);
+            }
+          }
+        });
+      }, function (err) {
+      // error
+    });
+    if (eventCollection.length != 0) {
+      self.selectedTeam.Dates.forEach(function (date){
+        date.Events.forEach(function (event){
+          eventCollection.forEach(function(ecItem){
+            if(ecItem.title.indexOf(event.id)) {
+              event.onCalendar = true;
+            }
+          });
+        });
       });
-    }, function (err) {
-    // error
-  });
+    }
   }
   
   self.changeOnCalendarFlag = function(dtCol, result) {
