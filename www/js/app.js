@@ -301,7 +301,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       enDate
       ).then(function (results) {
         results.forEach( function(ev) {
-          if(ev.note != null) {
+          if(ev.title != null) {
             if(ev.title.indexOf("Hockey") != -1) {
               eventCollection.push(ev);
             }
