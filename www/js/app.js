@@ -240,11 +240,14 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   };
   
   self.selectAllEvents = function(selected) {
-    angular.forEach(self.selectedTeam.Dates, function(date){
+    self.findEventsWithPromises().then(function (result) {
+            var blah = result;
+          });
+    /*angular.forEach(self.selectedTeam.Dates, function(date){
       angular.forEach(date.Events, function(event){
         event.isSelected = selected;
       });
-    });
+    });*/
   }
   
   self.findEvent = function(date, event) {
@@ -342,7 +345,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		  }
 		}
 		
-		for (var promiseIndex = 0; promiseIndex < promises.length; promiseIndex++) {
+		/*for (var promiseIndex = 0; promiseIndex < promises.length; promiseIndex++) {
 		  promises[promiseIndex].then(function (result) {
 		    console.log("I have successfully ended");
 		  }, function (result) {
@@ -353,8 +356,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		console.log(promises.length);
 		if(promises.length >0) {
 		  console.log(promises[0].status);
-		}
-		/*
+		}*/
+		
 		$q.all(promises).then(function(results) {
 			console.log("in the all done");	
 			//should be the same len as events
@@ -367,7 +370,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		}, function (err) {
 		  console.log("prob man!!");	
 		});
-		*/
+		
 		
 		return deferred.promise;
   }
@@ -454,9 +457,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       }).then(function (response) {
         self.ViewState = getViewState(response.data);
         self.selectedTeam.Dates = constructGameModel(response.data,self.selectedTeam.team);
-        self.findEventsWithPromises().then(function (result) {
-            var blah = result;
-          });
+        
       });
   }
   
