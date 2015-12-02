@@ -286,17 +286,18 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         var nt = "Bonne partie! -" + event.id;
         //var st = new Date(1449365400000);
         //var en = new Date(1449372600000);
- 			  stDate = date.date;
+        stDate = date.date;
         stDate = addHours(stDate, parseInt(tmpTmStr[0]));
         stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
         var enDate = addMinutes(stDate, 120);
         $cordovaCalendar.findEvent({
- 			    title: tt,
+          title: tt,
           location: loc,
           notes: nt,
-  				startDate: stDate,
-  				endDate: enDate
+          startDate: stDate,
+          endDate: enDate
         }).then(function (result) {
+          if (result.length >= 1)
           event.onCalendar = true;
         }, function (err) {
           // error
