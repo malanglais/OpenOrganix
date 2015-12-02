@@ -284,7 +284,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       stDate = addHours(stDate, parseInt(tmpTmStr[0]));
       stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
       var enDate = addMinutes(stDate, 120);
-      ctr++;
+      
       $cordovaCalendar.findEvent({
    	    title: tt,
         location: loc,
@@ -293,7 +293,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   			endDate: enDate
       }).then(function (result) {
         if(ctr < date.Events.length) {
-          self.findEventRecurse(date, ctr);
+          self.findEventRecurse(date, ctr+1);
         }
         if(result.length >=1){
           date.Events[ctr].onCalendar = true;
