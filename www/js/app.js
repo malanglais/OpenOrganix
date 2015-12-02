@@ -69,9 +69,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var self = this;
   var foundDate = null;
   self.huskyModel = huskyModel;
-  window.setTimeout(self.huskyModel.loadGameAPI(),2000);
-  //self.huskyModel.loadGameAPI();
-  window.setTimeout(self.huskyModel.findEvents(),2000);
+  self.huskyModel.loadGameAPI();
+  //self.huskyModel.findEvents();
+  self.huskyModel.findEvents();
+  
   self.createEvents = function() {
     self.huskyModel.createEvents();
   };
@@ -275,58 +276,30 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
  		var deferred = $q.defer();
  		var foundDate = null;
  		var stDate = null;
+ 		var enDate = null
  		
  		//Logic is:
   	//For each, see if it exists an event.
-		//For each, see if there is existing event and change the onCalendar member
+		//For each, see if there is existing event and change the onCalendar member and tag the event onCalendar member
+		// trying  listEventsInRange
 
- 		self.selectedTeam.Dates.forEach(function(date) {
- 			date.Events.forEach(function(event){
- 			  var tmpTmStr = event.time.split(":");
- 			  var tt = "Hockey - " + event.adversary +" - " + event.id;
-        var loc = event.Location.city + event.Location.arena;
+ 		stDate = self.selectedTeam.Dates[0].date;
+ 		enDate = addHours(self.selectedTeam.Dates[self.selectedTeam.Dates.length -1].date, 22); 
+ 		var tt = "Hockey - " + event.adversary +" - " + event.id;
+    var loc = event.Location.city + event.Location.arena;
         var nt = "Bonne partie! -" + event.id;
-        //var st = new Date(1449365400000);
-        //var en = new Date(1449372600000);
-        stDate = date.date;
-        stDate = addHours(stDate, parseInt(tmpTmStr[0]));
-        stDate = addMinutes(stDate, parseInt(tmpTmStr[1]));
-        var enDate = addMinutes(stDate, 120);
-        $cordovaCalendar.findEvent({
-          title: tt,
-          location: loc,
-          notes: nt,
-          startDate: stDate,
-          endDate: enDate
-        }).then(function (result) {
-          if (result.length >= 1) {
-            event.onCalendar = true;
-          }
-        }, function (err) {
-          // error
-        });
- 			});
- 		});
-       /* promises.push($cordovaCalendar.findEvent({
- 			    title: tt,
-          location: loc,
-          notes: nt,
-  				startDate: stDate,
-  				endDate: enDate
- 			  }));
- 			});
- 		});
- 		
- 		$q.all(promises).
- 		then(function(results) {
- 			for(var i=0; i<results.length; i++) {
- 			  if(results[i].length == 1){
- 			    self.selectedTeam.team = "cat";
- 			  }
- 			}
- 			deferred.resolve(self.selectedTeam);
- 		});
- 		return deferred.promise; */
+    //var st = new Date(1449365400000);
+    //var en = new Date(1449372600000);
+     $cordovaCalendar.listEventsInRange(
+      stDate,
+      enDate
+    ).then(function (results) {
+      results.forEach( function(ev) {
+        var t = 1;
+      });
+    }, function (err) {
+    // error
+  });
   }
   
   self.changeOnCalendarFlag = function(dtCol, result) {
