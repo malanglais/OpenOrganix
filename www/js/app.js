@@ -71,7 +71,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.huskyModel = huskyModel;
   
   self.huskyModel.loadGameAPI();
-  self.huskyModel.findEvents();
+  self.huskyModel.findEvent(self.huskyModel.selectedTeam.Dates[3], self.huskyModel.selectedTeam.Dates[3].Events[0]);
   self.createEvents = function() {
     self.huskyModel.createEvents();
   };
@@ -262,7 +262,9 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 			startDate: stDate,
 			endDate: enDate
     }).then(function (result) {
-      event.onCalendar = true;
+      if(result >=1){
+        event.onCalendar = true;
+      }
     }, function (err) {
       // error
     });
