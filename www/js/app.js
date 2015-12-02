@@ -61,7 +61,6 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   
   self.selectTeam = function(team) {
     self.huskyModel.setSelectedTeam(team);
-    self.huskyModel.findEvents();
   };
   
 }])
