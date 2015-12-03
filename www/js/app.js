@@ -43,6 +43,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.huskyModel = huskyModel;
   self.huskyModel.findEvents().then(function(events){
     console.log("events", events);
+    self.huskyModel.selectedTeam.Events = events;
   });
   
   self.huskyModel.loadGameAPI();
