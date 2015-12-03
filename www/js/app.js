@@ -210,7 +210,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		var promises = [];
 		self.selectedTeam.Events.forEach(function(event) {
 			var tt = "Hockey - " + event.adversary +" - " + event.id;
-      var loc = event.Location.city + event.Location.arena;
+      var loc = event.arenaCity + event.arenaName;
       var nt = "Bonne partie! -" + event.id;
       var stDate = event.dateTime;
       var enDate = addMinutes(stDate, 120);
