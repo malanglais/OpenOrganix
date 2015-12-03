@@ -326,12 +326,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
           if(ev.title != null) {
             if(ev.title.indexOf("Hockey") != -1) {
               self.calEventCollection.push(ev);
-              self.selectedTeam.Dates.forEach(function (date){
-                date.Events.forEach(function (event){
-                  if(ev.title.indexOf(event.id)!= -1) {
-                    event.onCalendar = true;
-                  }
-                });
+              self.selectedTeam.Events.forEach(function(event){
+                if(ev.title.indexOf(event.id)!= -1) {
+                  event.onCalendar = true;
+                }
               });
             }
           }
