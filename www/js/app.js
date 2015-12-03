@@ -41,12 +41,13 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var self = this;
   var foundDate = null;
   self.huskyModel = huskyModel;
+  
+  self.huskyModel.loadGameAPI();
   self.huskyModel.findEvents().then(function(events){
     console.log("events", events);
     self.huskyModel.selectedTeam.Events = events;
   });
   
-  self.huskyModel.loadGameAPI();
   
   self.createEvents = function() {
     self.huskyModel.createEvents();
