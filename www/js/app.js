@@ -409,7 +409,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         startDate: event.dateTime,
         endDate: addMinutes(event.dateTime, 120)
       }).then (function(result){
-        event.onCalendar = true;
+        event.onCalendar = false;
         alert("Event removed (" + event.id + ")");
         // success
       }, function (err) {
