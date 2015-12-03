@@ -1,12 +1,12 @@
 <ion-view ng-controller="mainController as mCtrl">
     <ion-nav-bar>
         <ion-nav-back-button class="button-clear">
-		    <i class="ion-chevron-left"></i> {{mCtrl.huskyModel.selectedClub.name}} - {{mCtrl.huskyModel.selectedCategory.category}}
+		    <i class="ion-chevron-left"></i> {{mCtrl.huskyModel.selectedClub.name}}
         </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="level in mCtrl.huskyModel.selectedCategory.Levels" ng-click="mCtrl.selectLevel(level)" ui-sref="teams">
+            <ion-item ng-repeat="level in mCtrl.huskyModel.selectedClub.Levels" ng-click="mCtrl.selectLevel(level)" ui-sref="teams">
                 {{level.level}}
             </ion-item>
         </ion-list>
