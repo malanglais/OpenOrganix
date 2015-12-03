@@ -211,7 +211,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		self.selectedTeam.Events.forEach(function(event) {
 			
 			console.log('try to find '+event.id);
-			promises.push($cordovaCalendar.createEvent({
+			promises.push($cordovaCalendar.findEvent({
           title: "Hockey - " + event.adversary +" - " + event.id,
           location: event.arenaCity + event.arenaName,
           notes: "Bonne partie! -" + event.id,
