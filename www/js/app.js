@@ -209,18 +209,13 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		*/
 		var promises = [];
 		self.selectedTeam.Events.forEach(function(event) {
-			var tt = "Hockey - " + event.adversary +" - " + event.id;
-      var loc = event.arenaCity + event.arenaName;
-      var nt = "Bonne partie! -" + event.id;
-      var stDate = event.dateTime;
-      var enDate = addMinutes(stDate, 120);
 			console.log('try to find '+event.id);
 			promises.push($cordovaCalendar.findEvent({
-          title: tt,
-          location: loc,
-          notes: nt,
-          startDate: stDate,
-          endDate: enDate
+          title: "Hockey - " + event.adversary +" - " + event.id,
+          location: event.arenaCity + event.arenaName,
+          notes: "Bonne partie! -" + event.id,
+          startDate: event.dateTime,
+          endDate: addMinutes(event.dateTime, 120)
       }));
 		});
 		
