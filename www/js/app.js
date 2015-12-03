@@ -43,10 +43,11 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.huskyModel = huskyModel;
   
   self.huskyModel.loadGameAPI();
-  self.huskyModel.findEvents().then(function(events){
+  self.huskyModel.findEventsRange();
+  /*self.huskyModel.findEvents().then(function(events){
     console.log("events", events);
     self.huskyModel.selectedTeam.Events = events;
-  });
+  });*/
   
   
   self.createEvents = function() {
@@ -304,13 +305,13 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
 		//For each, see if there is existing event and change the onCalendar member and tag the event onCalendar member
 		// trying  listEventsInRange
 
- 		self.selectedTeam.Dates.forEach(function (date){
+ 		self.selectedTeam.Events.forEach(function (event){
  		  if (stDate == null && enDate == null) {
- 		    stDate = enDate = date.date;
- 		  } else if (date.date < stDate) {
- 		    stDate = date.date;
- 		  } else if (date.date > enDate) {
- 		    enDate = date.date;
+ 		    stDate = enDate = event.dateTime;
+ 		  } else if (event.dateTime < stDate) {
+ 		    stDate = event.dateTime;
+ 		  } else if (event.dateTime > enDate) {
+ 		    enDate = event.dateTime;
  		  }
  		});
  		
