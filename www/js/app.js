@@ -550,7 +550,7 @@ function dmEvent(ev) {
     this.isHomeGame = null;
     this.adversary = null;
     this.adversaryId = null;
-    this.dateTime = new Date(Date.parse(ev.dateTime));
+    this.dateTime = new Date(ev.dateTime.replace(' ', 'T'));
     this.type = "Partie";
     this.arenaId = ev.arenaId;
     this.arenaName = ev.arenaName;
