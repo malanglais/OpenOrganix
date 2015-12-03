@@ -321,7 +321,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         method: "GET",
       }).then(function (response) {
         response.data.data.forEach(function(ev){
-          var newEvent = dmEvent(ev);
+          var newEvent = new dmEvent(ev);
           if (self.selectedTeam.team == ev.localTeamName) {
             newEvent.isHomeGame = true;
             newEvent.adversary = ev.visitorTeamName;

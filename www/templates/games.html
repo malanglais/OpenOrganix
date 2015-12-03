@@ -11,7 +11,7 @@
                     <div ng-class="{hidden:event.isPassed}" class="round-corners" ng-model="event.isPassed">
                         
                         <div class="inner-events"  ng-repeat="event in date.Events" >
-                            {{event.dateTime | dateTime:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.arenaCity}}-{{event.arenaName}}
+                            {{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.arenaCity}}-{{event.arenaName}}
                             <button ng-class="{'button button-event-remove': event.onCalendar, 'button button-event-add': !event.onCalendar}" ng-click="gCtrl.createEvent(event)" ng-model="event.onCalendar">
                                 <i ng-class="{'icon ion-android-remove': event.onCalendar, 'icon ion-android-add': !event.onCalendar}" ng-model="event.onCalendar"></i>
                             </button>
@@ -21,7 +21,7 @@
             </ion-list>
             <div id="gamePassedWrapper">
                 <div class="tNail" ng-class="{hidden:!event.isPassed}" ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events" ng-model="event.isPassed">
-                    <div>{{event.dateTime | dateTime:'HH:mm dd-MMM-yy'}}</div>
+                    <div>{{event.dateTime | date:'HH:mm dd-MMM-yy'}}</div>
                     <div>{{event.adversary}}</div>
                     <div>{{event.victory}} : {{event.goalsFor}} - {{event.goalsAgainst}}</div>
                 </div>
