@@ -329,6 +329,8 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
               self.selectedTeam.Events.forEach(function(event){
                 if(ev.title.indexOf(event.id)!= -1) {
                   event.onCalendar = true;
+                } else {
+                  event.onCalendar = false;
                 }
               });
             }
