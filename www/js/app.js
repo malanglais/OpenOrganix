@@ -41,6 +41,10 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var self = this;
   var foundDate = null;
   self.huskyModel = huskyModel;
+  self.huskyModel.findEvents().then(function(events){
+    console.log("events", events);
+  });
+  
   self.huskyModel.loadGameAPI();
   
   self.createEvents = function() {
@@ -197,10 +201,35 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   }
   
   self.findEvents = function(){
-    // this function is recursive through the dates
- 		self.selectedTeam.Dates.forEach(function(date) {
- 		  self.findEventRecurse(date, 0);
- 		});
+    var deferred = $q.defer();
+
+		/*
+		Logic is:
+		For each, see if it exists an event.
+		*/
+		var promises = [];
+		self.selectedTeam.Events.forEach(function(event) {
+			
+			console.log('try to find '+event.id);
+			promises.push($cordovaCalendar.createEvent({
+          title: "Hockey - " + event.adversary +" - " + event.id,
+          location: event.arenaCity + event.arenaName,
+          notes: "Bonne partie! -" + event.id,
+          startDate: event.dateTime,
+          endDate: addMinutes(event.dateTime, 120)
+      }));
+		});
+		
+		$q.all(promises).then(function(results) {
+			console.log("in the all done");	
+			//should be the same len as events
+			for(var i=0;i<results.length;i++) {
+				self.selectedTeam.Events[i].onCalendar = results[i].length === 1;
+			}
+			deferred.resolve(self.selectedTeam.Events);
+		});
+		
+		return deferred.promise;
  	}
   
   self.findEventsWithPromises = function() {
@@ -561,6 +590,10 @@ function dmEvent(ev) {
     this.goalsAgainst = null;
     this.onCalendar = false;
     this.victory = null;
+    
+    if(this.dateTime < Date.now()) {
+      this.isPassed = true;
+    }
     /*if (gf != null) {
       if(gf==ga) {
         this.victory = "N";
