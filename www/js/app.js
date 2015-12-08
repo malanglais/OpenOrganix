@@ -117,25 +117,28 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   };
   
   self.buildModel = function() {
-    var aURL = "http://lcrse.qc.ca/api/getTeams";
+    if (clubList.length == 0) {
     
-    $http({
-      url: aURL,
-      method: "GET"
-    }).then(function (response) {
-      response.data.data.forEach(function(club){
-        var newClub = new dmClub(club);
-        club.levels.forEach(function(level){
-          var newLevel = new dmLevel(level);
-          level.teams.forEach(function(team){
-            var newTeam = new dmTeam(team);
-            newLevel.Teams.push(newTeam); 
+      var aURL = "http://lcrse.qc.ca/api/getTeams";
+      
+      $http({
+        url: aURL,
+        method: "GET"
+      }).then(function (response) {
+        response.data.data.forEach(function(club){
+          var newClub = new dmClub(club);
+          club.levels.forEach(function(level){
+            var newLevel = new dmLevel(level);
+            level.teams.forEach(function(team){
+              var newTeam = new dmTeam(team);
+              newLevel.Teams.push(newTeam); 
+            });
+            newClub.Levels.push(newLevel);
           });
-          newClub.Levels.push(newLevel);
+          self.clubList.push(newClub);
         });
-        self.clubList.push(newClub);
-      });
-    }); 
+      }); 
+    }
   } 
  
   self.selectAllEvents = function(selected) {
