@@ -411,8 +411,12 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         startDate: event.dateTime,
         endDate: addMinutes(event.dateTime, 120)
       }).then (function(result){
-        event.onCalendar = false;
-        alert("Event removed (" + event.id + ")");
+        if (result){
+          event.onCalendar = false;
+          alert("Event removed (" + event.id + ")");
+        } else {
+          alert("Event not found/removed");
+        }
         // success
       }, function (err) {
         // error
@@ -426,8 +430,12 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
         startDate: event.dateTime,
         endDate: addMinutes(event.dateTime, 120)
       }).then (function(result){
-        event.onCalendar = true;
-        alert("Event created (" + event.id + ")");
+        if(result) {
+          event.onCalendar = true;
+          alert("Event created (" + event.id + ")");
+        } else {
+          alert("Event not created");
+        }
       }, function(err){
         alert(err);
       });
