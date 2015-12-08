@@ -7,6 +7,7 @@
   <author email="hi@ionicframework" href="http://ionicframework.com/">
       Ionic Framework Team
     </author>
+  <preference name="android-build-tool" value="gradle" />
   <gap:plugin name="cordova-plugin-calendar" source="npm" />  
   <content src="index.html"/>
   <access origin="http://lcrse.qc.ca/cedules.saison.aspx"/>
