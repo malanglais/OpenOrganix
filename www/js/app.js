@@ -349,7 +349,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     
     if(self.selectedTeam.Events.length == 0) {  // veirfy if model is loaded to avoid calling http 
     
-      var aURL = "http://lcrse.qc.ca/api/getSchedules?teamId="+self.selectedTeam.id+"?includeStats=1";
+      var aURL = "http://lcrse.qc.ca/api/getSchedules?teamId="+self.selectedTeam.id+"&includeStats=1";
       
       $http({
         url: aURL,
