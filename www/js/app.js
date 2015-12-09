@@ -117,7 +117,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   };
   
   self.buildModel = function() {
-    if (clubList.length == 0) {
+    if (self.clubList.length == 0) {
     
       var aURL = "http://lcrse.qc.ca/api/getTeams";
       
