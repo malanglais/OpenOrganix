@@ -349,7 +349,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
     
     if(self.selectedTeam.Events.length == 0) {  // veirfy if model is loaded to avoid calling http 
     
-      var aURL = "http://lcrse.qc.ca/api/getSchedules?teamId="+self.selectedTeam.id;
+      var aURL = "http://lcrse.qc.ca/api/getSchedules?teamId="+self.selectedTeam.id+"?includeStats=1";
       
       $http({
         url: aURL,
@@ -361,10 +361,28 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
             newEvent.isHomeGame = true;
             newEvent.adversary = ev.visitorTeamName;
             newEvent.adversaryId = ev.visitorTeamId;
+            newEvent.goalsFor = ev.localGoal;
+            newEvent.goalsAgainst = ev.visitorGoal;
+            if(newEvent.goalsFor > newEvent.goalsAgainst) {
+              newEvent.victory = 1;
+            } else if (newEvent.goalsFor < newEvent.goalsAgainst) {
+              newEvent.victory = 0;
+            } else {
+              newEvent.victory = 2; // tied game
+            }
           } else {
             newEvent.isHomeGame = false;
             newEvent.adversary = ev.localTeamName;
             newEvent.adversaryId = ev.localTeamId;
+            newEvent.goalsAgainst = ev.localGoal;
+            newEvent.goalsFor = ev.visitorGoal;
+            if(newEvent.goalsFor < newEvent.goalsAgainst) {
+              newEvent.victory = 1;
+            } else if (newEvent.goalsFor > newEvent.goalsAgainst) {
+              newEvent.victory = 0;
+            } else {
+              newEvent.victory = 2; // tied game
+            }
           }
           // will have to add calcs for victory
           self.selectedTeam.Events.push(newEvent);
@@ -605,6 +623,7 @@ function dmEvent(ev) {
     this.goalsAgainst = null;
     this.onCalendar = false;
     this.victory = null;
+    this.eventStatus = ev.status;
     
     if(this.dateTime < Date.now()) {
       this.isPassed = true;
@@ -635,7 +654,7 @@ Model fuctions
 
 ================================================*/
 
-function getTeamModel(htmlStr) {
+/*function getTeamModel(htmlStr) {
 
   var foundClub = false;
   var clubList = [];
@@ -1049,8 +1068,8 @@ function findDate(date, col) {
      });
    }
   return retDate;
-}
-
+} */
+ 
 /* ==============================================
 
 Calendar fuctions
