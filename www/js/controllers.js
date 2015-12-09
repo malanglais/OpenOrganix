@@ -1,4 +1,4 @@
-angular.module('open_schedule', ['ionic', 'ngCordova']) 
+angular.module('open_schedule') 
 
 // home page controller that loads the page... may be this can be put in as a service later on
 /* TODO : put in service */

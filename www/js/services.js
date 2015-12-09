@@ -1,4 +1,4 @@
-angular.module('open_schedule', ['ionic', 'ngCordova']) 
+angular.module('open_schedule') 
 
 
 .service('huskyModel', ['$cordovaCalendar', '$q', '$http', '$timeout', function ($cordovaCalendar, $q, $http, $timeout) {
