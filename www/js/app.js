@@ -16,7 +16,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var self = this;
   self.huskyModel = huskyModel;
   
-//  self.huskyModel.buildModel();
+  self.huskyModel.buildModel();
   var t=1;
   
   self.selectClub = function(club) {
