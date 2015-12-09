@@ -1,8 +1,8 @@
-<ion-view title="Clubs" ng-controller="mainController as mCtrl">
+<ion-view title="Clubs" ng-controller="clubController as cCtrl">
     <!-- -->
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="club in mCtrl.huskyModel.clubList" ng-click="mCtrl.selectClub(club)" ui-sref="levels">
+            <ion-item ng-repeat="club in cCtrl.huskyModel.clubList" ng-click="cCtrl.selectClub(club)" ui-sref="levels">
                 {{club.name}}
             </ion-item>
         </ion-list>

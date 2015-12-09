@@ -1,28 +1,60 @@
 angular.module('open_schedule', ['ionic', 'ngCordova']) 
 
-.controller('DashCtrl', function($scope) {})
+// home page controller that loads the page... may be this can be put in as a service later on
+/* TODO : put in service */
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+.controller('clubController', ['$http', 'huskyModel', function($http, huskyModel) {
+  var self = this;
+  self.huskyModel = huskyModel;
+  
+  self.huskyModel.buildModel();
+  
+  self.selectClub = function(club) {
+    self.huskyModel.setSelectedClub(club);
   };
-})
+}])
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+.controller('levelController', ['$http', 'huskyModel', function($http, huskyModel) {
+  var self = this;
+  self.huskyModel = huskyModel;
+  
+  self.selectLevel = function(level) {
+    self.huskyModel.setSelectedLevel(level);
   };
-});
+}]
+
+.controller('teamController', ['$http', 'huskyModel', function($http, huskyModel) {
+  var self = this;
+  self.huskyModel = huskyModel;
+  
+  self.selectTeam = function(team) {
+    self.huskyModel.setSelectedTeam(team);
+  };
+}]
+
+.controller('gameController', ['$http', '$cordovaCalendar','huskyModel', function($http, $cordovaCalendar, huskyModel) {
+  var self = this;
+  var foundDate = null;
+  self.huskyModel = huskyModel;
+  
+  self.huskyModel.loadGameAPI();
+  
+  self.createEvents = function() {
+    self.huskyModel.createEvents();
+  };
+  
+  self.createEvent = function(date, event) {
+    self.huskyModel.createEvent(date, event);
+  }
+
+  
+  self.selectAllEvents = function() {
+    self.huskyModel.selectAllEvents(self.huskyModel.selectedTeam.allEventsSelected);
+  };
+  
+  var calendarList = [];
+  var calNameList = [];
+  var selectedCalendarName = null;
+ 
+  
+}])
