@@ -21,7 +21,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.selectLevel = function(level) {
     self.huskyModel.setSelectedLevel(level);
   };
-}]
+}])
 
 .controller('teamController', ['$http', 'huskyModel', function($http, huskyModel) {
   var self = this;
@@ -30,7 +30,7 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   self.selectTeam = function(team) {
     self.huskyModel.setSelectedTeam(team);
   };
-}]
+}])
 
 .controller('gameController', ['$http', '$cordovaCalendar','huskyModel', function($http, $cordovaCalendar, huskyModel) {
   var self = this;
@@ -57,4 +57,4 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
   var selectedCalendarName = null;
  
   
-}])
+}]);
