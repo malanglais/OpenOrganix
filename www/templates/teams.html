@@ -6,9 +6,38 @@
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="team in tCtrl.huskyModel.selectedLevel.Teams" ng-click="tCtrl.selectTeam(team)" ui-sref="games">
-                {{team.team}}
-            </ion-item>
+            <ion-card ng-repeat="team in tCtrl.huskyModel.selectedLevel.Teams" ui-sref="games">
+              <ion-card-header ng-click="tCtrl.selectTeam(team)" >
+                {{team.team}} - Select >>
+              </ion-card-header>
+              <ion-card-content>
+                <div>
+                    Points: {{team.pointTotal}}<br>
+                    Nb parties: {{team.gameCount}}<br>
+                    Victoires: {{team.gameVictory}}<br>
+                    Défaites:  {{team.gameLost}}<br>
+                    
+                </div>
+                <div>
+                    Paties nul: {{team.gameDrawn}}<br>
+                    Buts pour: {{team.goalFor}}<br>
+                    Buts contre: {{team.goalAgainst}}<br>
+                    Buts Diff.: {{team.goalDiff}}<br>
+                </div>
+                
+                this.gameCount = tm.gameCount;
+  this.gameVictory = tm.gameVictory;
+  this.gameLost = tm.gameLost;
+  this.gameDrawn = tm.gameDrawn;
+  this.goalFor = tm.goalFor;
+  this.goalAgainst = tm.goalAgainst;
+  this.goalDiff = tm.goalDiff;
+  this.point = tm.point;
+  this.pointBehavior = tm.pointBehavior;
+  this.pointTotal = tm.pointTotal;
+  this.allEventsSelected;
+              </ion-card-content>
+            </ion-card>
         </ion-list>
     </ion-content>
 </ion-view>

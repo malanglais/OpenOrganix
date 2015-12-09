@@ -70,8 +70,8 @@ angular.module('open_schedule')
         });
       }
     }); 
-  } 
- 
+  }
+  
   self.selectAllEvents = function(selected) {
     angular.forEach(self.selectedTeam.Dates, function(date){
       angular.forEach(date.Events, function(event){

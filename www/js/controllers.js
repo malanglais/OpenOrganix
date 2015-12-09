@@ -47,14 +47,9 @@ angular.module('open_schedule')
     self.huskyModel.createEvent(date, event);
   }
 
-  
   self.selectAllEvents = function() {
     self.huskyModel.selectAllEvents(self.huskyModel.selectedTeam.allEventsSelected);
   };
-  
-  var calendarList = [];
-  var calNameList = [];
-  var selectedCalendarName = null;
  
   
 }]);

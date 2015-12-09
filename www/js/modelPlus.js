@@ -52,6 +52,7 @@ function dmTeam(tm) {
   this.pointBehavior = tm.pointBehavior;
   this.pointTotal = tm.pointTotal;
   this.allEventsSelected;
+  this.ranking=null;
   this.Events = [];
 }
 
@@ -175,3 +176,4 @@ function convertHTML(str) {
   }
   return returnVal;
 }
+
