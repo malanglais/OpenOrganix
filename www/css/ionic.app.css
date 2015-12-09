@@ -9233,3 +9233,6 @@ a.button {
   font-size: 14px;
   padding: 10px 20px 10px 20px;
   text-decoration: none; }
+
+.columnsTeam {
+  display: inline; }

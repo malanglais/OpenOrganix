@@ -10,7 +10,7 @@
               <ion-card-header ng-click="tCtrl.selectTeam(team)" >
                 {{team.team}} - Select >>
               </ion-card-header>
-              <ion-card-content>
+              <ion-card-content class='columnsTeam'>
                 <div>
                     Points: {{team.pointTotal}}<br>
                     Nb parties: {{team.gameCount}}<br>
@@ -24,18 +24,6 @@
                     Buts contre: {{team.goalAgainst}}<br>
                     Buts Diff.: {{team.goalDiff}}<br>
                 </div>
-                
-                this.gameCount = tm.gameCount;
-  this.gameVictory = tm.gameVictory;
-  this.gameLost = tm.gameLost;
-  this.gameDrawn = tm.gameDrawn;
-  this.goalFor = tm.goalFor;
-  this.goalAgainst = tm.goalAgainst;
-  this.goalDiff = tm.goalDiff;
-  this.point = tm.point;
-  this.pointBehavior = tm.pointBehavior;
-  this.pointTotal = tm.pointTotal;
-  this.allEventsSelected;
               </ion-card-content>
             </ion-card>
         </ion-list>
