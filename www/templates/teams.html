@@ -6,54 +6,26 @@
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="team in tCtrl.huskyModel.selectedLevel.Teams">
-                <div class="round-corners--25 item item-divider item--remove--padding item-divider--remove--padding"  >
-                    <div class="ion--item--equ--div--3 h--align-center">
-                        <button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="tCtrl.toggleDiv(team)" >
-                            <i ng-class="{'icon ion-chevron-down': !tCtrl.isDivExpanded(team), 'icon ion-chevron-up': tCtrl.isDivExpanded(team)}"></i>
-                        </button>
-                    </div>
-                    <div class="ion--item--box--50 v--center ion--item--equ--div--3">
-                        <p>{{team.team}}</p>
-                    </div>
-                    <div class="ion--item--equ--div--3 h--align-center">
-                        <button class='button button--sacnite button--round-l button--size-s button--50 button--right' ng-click="tCtrl.selectTeam(team)" ui-sref="games">
-                            <i class="icon ion-calendar"></i>
-                        </button>
-                    </div>
+            <div class="card" ng-repeat="team in tCtrl.huskyModel.selectedLevel.Teams">
+              <div class="item item-divider" ng-click="tCtrl.selectTeam(team)" ui-sref="games">
+                {{team.team}} - Select >>
+              </div>
+              <div class="item item-text-wrap">
+                <div class="columnsTeam">
+                    Points: {{team.pointTotal}}<br>
+                    Nb parties: {{team.gameCount}}<br>
+                    Victoires: {{team.gameVictory}}<br>
+                    Défaites:  {{team.gameLost}}<br>
+                    
                 </div>
-                <div class="item item-text-wrap round-corners--7 item--remove--padding item--remove--border-width">
-                    <div ng-show="tCtrl.isDivExpanded(team)">
-                        <div class="team--columns">
-                            
-                        </div>
-                        <div class="team--columns">
-                            Points: <br>
-                            Nb parties: <br>
-                            Victoires: <br>
-                            Défaites:  <br>
-                        </div>
-                        <div class="team--columns">
-                            {{team.pointTotal}}<br>
-                            {{team.gameCount}}<br>
-                            {{team.gameVictory}}<br>
-                            {{team.gameLost}}<br>
-                        </div>
-                        <div class="team--columns">
-                            Paties nul: <br>
-                            Buts pour: <br>
-                            Buts contre: <br>
-                            Buts Diff.: <br>
-                        </div>
-                        <div class="team--columns">
-                            {{team.gameDrawn}}<br>
-                            {{team.goalFor}}<br>
-                            {{team.goalAgainst}}<br>
-                            {{team.goalDiff}}<br>
-                        </div>
-                    </div>
+                <div class="columnsTeam">
+                    Paties nul: {{team.gameDrawn}}<br>
+                    Buts pour: {{team.goalFor}}<br>
+                    Buts contre: {{team.goalAgainst}}<br>
+                    Buts Diff.: {{team.goalDiff}}<br>
                 </div>
-            </ion-item>
+              </div>
+            </div>
         </ion-list>
     </ion-content>
 </ion-view>

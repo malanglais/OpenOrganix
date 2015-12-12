@@ -6,8 +6,8 @@
     </ion-nav-bar>
     <ion-content>
         <div>
-            <ion-list class="card card--remove--padding" ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
-                <!--<div >
+            <ion-list>
+                <div ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
                     <div class="round-corners">
                         <div class="inner-events" ng-class="{hidden:event.isPassed}" ng-model="event.isPassed">
                             {{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.arenaCity}}-{{event.arenaName}}
@@ -19,7 +19,6 @@
                             {{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.victory}} {{event.goalsFor}}-{{event.goalsAgainst}}
                         </div>
                     </div>
-                    
                 </div>-->
                 <div class="round-corners--25 item item-divider item-divider--remove--padding item--remove--padding" ng-class="{hidden:event.isPassed}" ng-model="event.isPassed">
                     <div class="ion--item--equ--div--3 h--align-center">
@@ -79,7 +78,6 @@
                 </div>
             </ion-list>
         </div>
-        
     </ion-content>
 </ion-view>
 

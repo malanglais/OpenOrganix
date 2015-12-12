@@ -27,18 +27,6 @@ angular.module('open_schedule')
   var self = this;
   self.huskyModel = huskyModel;
   
-  self.toggleDiv = function(team) {
-    if(team.expandDiv) {
-      team.expandDiv = false;
-    } else {
-      team.expandDiv = true;
-    }
-  };
-  
-  self.isDivExpanded = function(team) {
-    return team.expandDiv;
-  };
-  
   self.selectTeam = function(team) {
     self.huskyModel.setSelectedTeam(team);
   };
@@ -50,18 +38,6 @@ angular.module('open_schedule')
   self.huskyModel = huskyModel;
   
   self.huskyModel.loadGameAPI();
-  
-   self.toggleDiv = function(event) {
-    if(event.expandDiv) {
-      event.expandDiv = false;
-    } else {
-      event.expandDiv = true;
-    }
-  };
-  
-  self.isDivExpanded = function(event) {
-    return event.expandDiv;
-  };
   
   self.createEvents = function() {
     self.huskyModel.createEvents();

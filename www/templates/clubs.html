@@ -2,15 +2,8 @@
     <!-- -->
     <ion-content>
         <ion-list>
-            <ion-item class="round-corners--25  item--remove--padding" ng-repeat="club in cCtrl.huskyModel.clubList">
-                <div class="ion--item--box--50 ion--item--equ--div--2">
-                    <p>{{club.name}}</p>
-                </div>
-                <div class="ion--item--equ--div--2 h--align-center">
-                    <button class='button button--sacnite button--round-l button--size-s button--50 button--right' ng-click="cCtrl.selectClub(club)" ui-sref="levels">
-                        <i class="icon ion-chevron-right"></i>
-                    </button>
-                </div>
+            <ion-item ng-repeat="club in cCtrl.huskyModel.clubList" ng-click="cCtrl.selectClub(club)" ui-sref="levels">
+                {{club.name}}
             </ion-item>
         </ion-list>
     </ion-content>
