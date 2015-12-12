@@ -6,8 +6,8 @@
     </ion-nav-bar>
     <ion-content>
         <div>
-            <ion-list>
-                <div ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
+            <ion-list class="card card--remove--padding" ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
+                <!--<div ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
                     <div class="round-corners">
                         <div class="inner-events" ng-class="{hidden:event.isPassed}" ng-model="event.isPassed">
                             {{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.arenaCity}}-{{event.arenaName}}
