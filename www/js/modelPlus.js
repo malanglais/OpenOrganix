@@ -53,6 +53,7 @@ function dmTeam(tm) {
   this.pointTotal = tm.pointTotal;
   this.allEventsSelected;
   this.ranking=null;
+  this.expandDiv = false;
   this.Events = [];
 }
 
@@ -73,6 +74,7 @@ function dmEvent(ev) {
     this.goalsAgainst = null;
     this.onCalendar = false;
     this.victory = null;
+    this.expandDiv = false;
     this.eventStatus = ev.status;
     
     if(this.dateTime < Date.now()) {
@@ -177,3 +179,13 @@ function convertHTML(str) {
   return returnVal;
 }
 
+function growDiv() {
+    var growDiv = document.getElementById('grow');
+    if (growDiv.clientHeight) {
+      growDiv.style.height = 0;
+    } else {
+      var wrapper = document.querySelector('.measuringWrapper');
+      growDiv.style.height = wrapper.clientHeight + "px";
+    }
+    
+}

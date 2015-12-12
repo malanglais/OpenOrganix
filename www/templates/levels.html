@@ -6,8 +6,15 @@
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="level in lCtrl.huskyModel.selectedClub.Levels" ng-click="lCtrl.selectLevel(level)" ui-sref="teams">
-                {{level.level}}
+            <ion-item class="round-corners--25  item--remove--padding" ng-repeat="level in lCtrl.huskyModel.selectedClub.Levels">
+                <div class="ion--item--box--50 ion--item--equ--div--2">
+                    <p>{{level.level}}</p>
+                </div>
+                <div class="ion--item--equ--div--2 h--align-center">
+                    <button class='button button--sacnite button--round-l button--size-s button--50 button--right' ng-click="lCtrl.selectLevel(level)" ui-sref="teams">
+                        <i class="icon ion-chevron-right"></i>
+                    </button>
+                </div>
             </ion-item>
         </ion-list>
     </ion-content>

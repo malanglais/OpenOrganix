@@ -6,8 +6,8 @@
     </ion-nav-bar>
     <ion-content>
         <div>
-            <ion-list>
-                <div ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
+            <ion-list class="card card--remove--padding" ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
+                <!--<div >
                     <div class="round-corners">
                         <div class="inner-events" ng-class="{hidden:event.isPassed}" ng-model="event.isPassed">
                             {{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.arenaCity}}-{{event.arenaName}}
@@ -17,6 +17,63 @@
                         </div>
                         <div class="inner-events" ng-class="{hidden:!event.isPassed}" ng-model="event.isPassed">
                             {{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.victory}} {{event.goalsFor}}-{{event.goalsAgainst}}
+                        </div>
+                    </div>
+                    
+                </div>-->
+                <div class="round-corners--25 item item-divider item-divider--remove--padding item--remove--padding" ng-class="{hidden:event.isPassed}" ng-model="event.isPassed">
+                    <div class="ion--item--equ--div--3 h--align-center">
+                        <button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="gCtrl.toggleDiv(event)" >
+                            <i ng-class="{'icon ion-chevron-down': !gCtrl.isDivExpanded(event), 'icon ion-chevron-up': gCtrl.isDivExpanded(event)}"></i>
+                        </button>
+                    </div>
+                    <div class="ion--item--box--50 v--center ion--item--equ--div--3">
+                        <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.victory}} | {{event.goalsFor}} - {{event.goalsAgainst}}</p>
+                    </div>
+                    <div class="ion--item--equ--div--3 h--align-center">
+                        <button class='button button--sacnite button--round-l button--size-s button--50 button--right' ng-class="{'button--event--remove': event.onCalendar, 'button--event--add': !event.onCalendar}" ng-click="gCtrl.createEvent(event)">
+                            <i class="icon ion-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="round-corners--25 item item-divider item--remove--padding item-divider--remove--padding" ng-class="{hidden:!event.isPassed}" ng-model="event.isPassed">
+                    <div class="ion--item--equ--div--3 h--align-center">
+                        <button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="gCtrl.toggleDiv(event)" >
+                            <i ng-class="{'icon ion-chevron-down': !gCtrl.isDivExpanded(event), 'icon ion-chevron-up': gCtrl.isDivExpanded(event)}"></i>
+                        </button>
+                    </div>
+                    <div class="ion--item--box--50 v--center ion--item--equ--div--3">
+                        <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}}</p>
+                    </div>
+                </div>
+                <div class="item item-text-wrap round-corners--7 item--remove--padding">
+                    <div ng-show="gCtrl.isDivExpanded(event)">
+                        <div class="team--columns">
+                            
+                        </div>
+                        <div class="team--columns">
+                            Points: <br>
+                            Nb parties: <br>
+                            Victoires: <br>
+                            Défaites:  <br>
+                        </div>
+                        <div class="team--columns">
+                            {{team.pointTotal}}<br>
+                            {{team.gameCount}}<br>
+                            {{team.gameVictory}}<br>
+                            {{team.gameLost}}<br>
+                        </div>
+                        <div class="team--columns">
+                            Paties nul: <br>
+                            Buts pour: <br>
+                            Buts contre: <br>
+                            Buts Diff.: <br>
+                        </div>
+                        <div class="team--columns">
+                            {{team.gameDrawn}}<br>
+                            {{team.goalFor}}<br>
+                            {{team.goalAgainst}}<br>
+                            {{team.goalDiff}}<br>
                         </div>
                     </div>
                 </div>
