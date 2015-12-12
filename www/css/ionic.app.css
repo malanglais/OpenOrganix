@@ -9186,22 +9186,11 @@ a.button {
   padding: 8px 8px 8px 8px;
   text-decoration: none; }
 
-.round-corners {
-  margin: 2px;
-  background: #8ac1e6;
-  background-image: -webkit-linear-gradient(top, #8ac1e6, #06639c);
-  background-image: -moz-linear-gradient(top, #8ac1e6, #06639c);
-  background-image: -ms-linear-gradient(top, #8ac1e6, #06639c);
-  background-image: -o-linear-gradient(top, #8ac1e6, #06639c);
-  background-image: linear-gradient(to bottom, #8ac1e6, #06639c);
-  -webkit-border-radius: 7;
-  -moz-border-radius: 7;
-  border-radius: 7px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 11px;
-  padding: 8px 8px 8px 8px;
-  text-decoration: none; }
+.round-corners--7 {
+  border-radius: 7px; }
+
+.round-corners--25 {
+  border-radius: 25px !important; }
 
 .inner-events {
   height: 65px;
@@ -9233,6 +9222,10 @@ a.button {
   font-size: 14px;
   padding: 10px 20px 10px 20px;
   text-decoration: none; }
+
+.ion--item--box--50 {
+  height: 50px;
+  padding: 14px 0; }
 
 .columnsTeam {
   display: flex;
