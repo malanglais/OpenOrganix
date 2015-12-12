@@ -9491,3 +9491,6 @@ a.button {
 
 .card.card--remove--padding {
   padding: 0 !important; }
+
+.button--sacnite.remove--box-shadow {
+  box-shadow: inset 0 0 0 0 #37474f !important; }
