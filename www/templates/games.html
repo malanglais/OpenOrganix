@@ -7,45 +7,42 @@
     <ion-content>
         <div>
             <ion-list class="card card--remove--padding" ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
-                <!--<div ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
-                    <div class="round-corners">
-                        <div class="inner-events" ng-class="{hidden:event.isPassed}" ng-model="event.isPassed">
-                            {{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.arenaCity}}-{{event.arenaName}}
-                            <button ng-class="{'button button-event-remove': event.onCalendar, 'button button-event-add': !event.onCalendar}" ng-click="gCtrl.createEvent(event)" ng-model="event.onCalendar">
-                                <i ng-class="{'icon ion-android-remove': event.onCalendar, 'icon ion-android-add': !event.onCalendar}" ng-model="event.onCalendar"></i>
-                            </button>
-                        </div>
-                        <div class="inner-events" ng-class="{hidden:!event.isPassed}" ng-model="event.isPassed">
-                            {{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.victory}} {{event.goalsFor}}-{{event.goalsAgainst}}
-                        </div>
-                    </div>
-                </div>-->
-                <div class="round-corners--25 item item-divider item-divider--remove--padding item--remove--padding" ng-class="{hidden:event.isPassed}" ng-model="event.isPassed">
-                    <div class="ion--item--equ--div--3 h--align-center">
+                <div class="round-corners--25 item item--remove--padding correct--borders" ng-class="{hidden:event.isPassed}">
+                    <div class="ion--item--wRatio--25 h--align-center">
                         <button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="gCtrl.toggleDiv(event)" >
                             <i ng-class="{'icon ion-chevron-down': !gCtrl.isDivExpanded(event), 'icon ion-chevron-up': gCtrl.isDivExpanded(event)}"></i>
                         </button>
                     </div>
-                    <div class="ion--item--box--50 v--center ion--item--equ--div--3">
-                        <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}} | {{event.victory}} | {{event.goalsFor}} - {{event.goalsAgainst}}</p>
+                    <div class="ion--item--box--50 v--center ion--item--wRatio--50">
+                        <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}}<br>{{event.adversary}}</p>
                     </div>
-                    <div class="ion--item--equ--div--3 h--align-center">
+                    <div class="ion--item--wRatio--25 h--align-center">
                         <button class='button button--sacnite button--round-l button--size-s button--50 button--right remove--box-shadow' ng-class="{'button--event--remove': event.onCalendar, 'button--event--add': !event.onCalendar}" ng-click="gCtrl.createEvent(event)">
                             <i class="icon ion-calendar"></i>
                         </button>
                     </div>
                 </div>
-                <div class="round-corners--25 item item-divider item--remove--padding item--remove--padding" ng-class="{hidden:!event.isPassed}" ng-model="event.isPassed">
-                    <div class="ion--item--equ--div--3 h--align-center">
-                        <button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="gCtrl.toggleDiv(event)" >
+                <div class="round-corners--25 item item--remove--padding correct--borders" ng-class="{hidden:!event.isPassed}">
+                    <div class="ion--item--wRatio--15 h--align-center">
+                        <!--<button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="gCtrl.toggleDiv(event)" >
                             <i ng-class="{'icon ion-chevron-down': !gCtrl.isDivExpanded(event), 'icon ion-chevron-up': gCtrl.isDivExpanded(event)}"></i>
-                        </button>
+                        </button>-->
                     </div>
-                    <div class="ion--item--box--50 v--center ion--item--equ--div--3">
-                        <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}} | {{event.adversary}}</p>
+                    <div class="ion--item--wRatio--15" ng-show="event.victory == 1">
+                        <img src="img/trophy_checkmark.png" alt="victoire" height="50" />
+                    </div>
+                    <div class="ion--item--wRatio--15" ng-show="event.victory == 0">
+                        <img src="img/trophy_close.png" alt="défaite" height="50" />
+                    </div>
+                    <div class="ion--item--wRatio--15" ng-show="event.victory == 2">
+                        <img src="img/trophy_cancel.png" alt="défaite" height="50" />
+                    </div>
+                    <div class="ion--item--box--50 v--center ion--item--wRatio--50">
+                        
+                        <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}}<br>{{event.adversary}} |{{event.goalsFor}} - {{event.goalsAgainst}}</p>
                     </div>
                 </div>
-                <div class="item item-text-wrap round-corners--7 item--remove--padding">
+                <div class="item item-text-wrap round-corners--7 item--remove--padding remove--borders" ng-class="{hidden:event.isPassed}">
                     <div ng-show="gCtrl.isDivExpanded(event)">
                         <div class="team--columns">
                             
@@ -57,10 +54,10 @@
                             Défaites:  <br>
                         </div>
                         <div class="team--columns">
-                            {{team.pointTotal}}<br>
-                            {{team.gameCount}}<br>
-                            {{team.gameVictory}}<br>
-                            {{team.gameLost}}<br>
+                            {{gCtrl.huskyModel.selectedTeam.pointTotal}}<br>
+                            {{gCtrl.huskyModel.selectedTeam.gameCount}}<br>
+                            {{gCtrl.huskyModel.selectedTeam.gameVictory}}<br>
+                            {{gCtrl.huskyModel.selectedTeam.gameLost}}<br>
                         </div>
                         <div class="team--columns">
                             Paties nul: <br>
@@ -69,10 +66,10 @@
                             Buts Diff.: <br>
                         </div>
                         <div class="team--columns">
-                            {{team.gameDrawn}}<br>
-                            {{team.goalFor}}<br>
-                            {{team.goalAgainst}}<br>
-                            {{team.goalDiff}}<br>
+                            {{gCtrl.huskyModel.selectedTeam.gameDrawn}}<br>
+                            {{gCtrl.huskyModel.selectedTeam.goalFor}}<br>
+                            {{gCtrl.huskyModel.selectedTeam.goalAgainst}}<br>
+                            {{gCtrl.huskyModel.selectedTeam.goalDiff}}<br>
                         </div>
                     </div>
                 </div>

@@ -184,7 +184,6 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .ion--item--box--50 {
   height: 50px;
-  padding: 14px 0;
 }
 
 .columnsTeam{
@@ -202,6 +201,23 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .ion--item--equ--div--3 {
 	width: 33.3%;
+	float: left;
+}
+
+.ion--item--wRatio--15 {
+	width: 15%;
+	float: left;
+}
+
+
+.ion--item--wRatio--25 {
+	width: 25%;
+	float: left;
+}
+
+
+.ion--item--wRatio--50 {
+	width: 50%;
 	float: left;
 }
 
@@ -498,8 +514,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 //// corrections
 .item.item--remove--padding
 {
-  padding: 0 0 0 16px !important;
+  padding: 0 0 0 0px !important;
 }
+
+.item.item--padding--16l
+{
+  padding: 0 0 0 0px !important;
+}
+
 
 .item.item--remove--border-width
 {
@@ -519,4 +541,19 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .button--sacnite.remove--box-shadow
 {
   box-shadow: inset 0 0 0 0 #37474f !important;
+}
+
+.card .item:first-child {
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+.card .item.correct--borders {
+  border-left: 1px !important; 
+  border-right: 1px !important;
+  border-top: 1px !important;
+}
+
+.card .item.remove--borders {
+  border-width: 0 !important;
 }
