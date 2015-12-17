@@ -263,7 +263,7 @@ angular.module('open_schedule')
               self.selectedTeam.Events.forEach(function(event){
                 if(ev.title.indexOf(event.id)!= -1) {
                   event.onCalendar = true;
-                } else {
+                } else if(!event.onCalendar) {
                   event.onCalendar = false;
                 }
               });
