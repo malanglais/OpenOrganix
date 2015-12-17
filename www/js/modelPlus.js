@@ -63,6 +63,14 @@ function dmEvent(ev) {
     this.isHomeGame = null;
     this.adversary = null;
     this.adversaryId = null;
+    this.advPoints = null;
+    this.advGP = null;
+    this.advVictories = null;
+    this.advLosses = null;
+    this.advTies = null
+    this.advGF = null;
+    this.advGA = null;
+    this.advDiff = null;
     this.dateTime = new Date(ev.dateTime.replace(' ', 'T'));
     this.type = "Partie";
     this.arenaId = ev.arenaId;

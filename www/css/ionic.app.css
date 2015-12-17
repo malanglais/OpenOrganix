@@ -9252,6 +9252,10 @@ a.button {
   width: 50%;
   float: left; }
 
+.ion--item--wRatio--35 {
+  width: 35%;
+  float: left; }
+
 .ion--item--equ--div--2 {
   width: 50%;
   float: left; }
@@ -9492,6 +9496,9 @@ a.button {
     transform: perspective(400px); } }
 
 .item.item--remove--padding {
+  padding: 0 0 0 0px !important; }
+
+.item-complex a {
   padding: 0 0 0 0px !important; }
 
 .item.item--padding--16l {

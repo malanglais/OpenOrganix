@@ -276,7 +276,7 @@ angular.module('open_schedule')
   }
 
   self.loadGameAPI = function() {
-    
+    var foundTeam = false;
     if(self.selectedTeam.Events.length == 0) {  // veirfy if model is loaded to avoid calling http 
     
       var aURL = "http://lcrse.qc.ca/api/getSchedules?teamId="+self.selectedTeam.id+"&includeStats=1";
@@ -301,6 +301,7 @@ angular.module('open_schedule')
               newEvent.victory = 2; // tied game
             }
           } else {
+           
             newEvent.isHomeGame = false;
             newEvent.adversary = ev.localTeamName;
             newEvent.adversaryId = ev.localTeamId;
@@ -314,7 +315,31 @@ angular.module('open_schedule')
               newEvent.victory = 2; // tied game
             }
           }
-          // will have to add calcs for victory
+           // get adversary team's stats
+           foundTeam = false;
+            for (var i=0; i<self.clubList.length; i++) {
+              if(!foundTeam) {
+                for(var j=0; j<self.clubList[i].Levels.length; j++) {
+                  if(!foundTeam) {
+                    for(var k=0; k<self.clubList[i].Levels[j].Teams.length; k++) {
+                      if(!foundTeam){
+                        if (newEvent.adversaryId == self.clubList[i].Levels[j].Teams[k].id) {
+                          foundTeam = true;
+                          newEvent.advPoints = self.clubList[i].Levels[j].Teams[k].point;
+                          newEvent.advGP = self.clubList[i].Levels[j].Teams[k].gameCount;
+                          newEvent.advVictories = self.clubList[i].Levels[j].Teams[k].gameVictory;
+                          newEvent.advLosses = self.clubList[i].Levels[j].Teams[k].gameLost;
+                          newEvent.advTies = self.clubList[i].Levels[j].Teams[k].gameDrawn;
+                          newEvent.advGF = self.clubList[i].Levels[j].Teams[k].goalFor;
+                          newEvent.advGA = self.clubList[i].Levels[j].Teams[k].goalAgainst;
+                          newEvent.advDiff = self.clubList[i].Levels[j].Teams[k].goalDiff;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           self.selectedTeam.Events.push(newEvent);
         });
         self.findEventsRange();

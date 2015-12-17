@@ -221,6 +221,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	float: left;
 }
 
+.ion--item--wRatio--35 {
+	width: 35%;
+	float: left;
+}
+
 .ion--item--equ--div--2 {
 	width: 50%;
 	float: left;
@@ -514,6 +519,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 //// corrections
 .item.item--remove--padding
 {
+  padding: 0 0 0 0px !important;
+}
+
+.item-complex a{
   padding: 0 0 0 0px !important;
 }
 

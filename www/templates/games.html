@@ -13,13 +13,16 @@
                             <i ng-class="{'icon ion-chevron-down': !gCtrl.isDivExpanded(event), 'icon ion-chevron-up': gCtrl.isDivExpanded(event)}"></i>
                         </button>
                     </div>
-                    <div class="ion--item--box--50 v--center ion--item--wRatio--50">
+                    <div class="ion--item--box--50 v--center ion--item--wRatio--35">
                         <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}}<br>{{event.adversary}}</p>
                     </div>
-                    <div class="ion--item--wRatio--25 h--align-center">
-                        <button class='button button--sacnite button--round-l button--size-s button--50 button--right remove--box-shadow' ng-class="{'button--event--remove': event.onCalendar, 'button--event--add': !event.onCalendar}" ng-click="gCtrl.createEvent(event)">
-                            <i class="icon ion-calendar"></i>
-                        </button>
+                    <div class="ion--item--wRatio--35 h--align-center ion--item--box--50 v--center">
+                        <!--<div>
+                            <p>Calendrier</p>
+                        </div> -->
+                        
+                          <ion-toggle class="remove--borders ion--item--box--50" ng-model="event.onCalendar" ng-click="gCtrl.createEvent(event)"></ion-toggle>  
+                        
                     </div>
                 </div>
                 <div class="round-corners--25 item item--remove--padding correct--borders" ng-class="{hidden:!event.isPassed}">
@@ -54,10 +57,10 @@
                             Défaites:  <br>
                         </div>
                         <div class="team--columns">
-                            {{gCtrl.huskyModel.selectedTeam.pointTotal}}<br>
-                            {{gCtrl.huskyModel.selectedTeam.gameCount}}<br>
-                            {{gCtrl.huskyModel.selectedTeam.gameVictory}}<br>
-                            {{gCtrl.huskyModel.selectedTeam.gameLost}}<br>
+                            {{event.advPoints}}<br>
+                            {{event.advGP}}<br>
+                            {{event.advVictories}}<br>
+                            {{event.advLosses}}<br>
                         </div>
                         <div class="team--columns">
                             Paties nul: <br>
@@ -66,10 +69,10 @@
                             Buts Diff.: <br>
                         </div>
                         <div class="team--columns">
-                            {{gCtrl.huskyModel.selectedTeam.gameDrawn}}<br>
-                            {{gCtrl.huskyModel.selectedTeam.goalFor}}<br>
-                            {{gCtrl.huskyModel.selectedTeam.goalAgainst}}<br>
-                            {{gCtrl.huskyModel.selectedTeam.goalDiff}}<br>
+                            {{event.advTies}}<br>
+                            {{event.advGF}}<br>
+                            {{event.advGA}}<br>
+                            {{event.advDiff}}<br>
                         </div>
                     </div>
                 </div>
