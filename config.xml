@@ -7,13 +7,7 @@
   <author email="malanglais@pyxis-tech.com" href="http://ionicframework.com/">
       Marc-André Langlais
     </author>
-  <preference name="android-build-tool" value="gradle" />
-  <gap:plugin name="cordova-plugin-calendar" source="npm" />  
-  <content src="index.html"/>
-  <access origin="http://lcrse.qc.ca/cedules.saison.aspx"/>
-  <allow-navigation href="http://*/*" />
-  <allow-intent href="http://*/*"/>
-  <gap:plugin name="cordova-plugin-whitelist" source="npm" />
+  <preference name="android-build-tool" value="gradle"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -21,18 +15,23 @@
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
+  <gap:plugin name="cordova-plugin-calendar" source="npm"/>
+  <gap:plugin name="cordova-plugin-whitelist" source="npm"/>
+  <content src="index.html"/>
+  <access origin="http://lcrse.qc.ca/cedules.saison.aspx"/>
+  <allow-navigation href="http://*/*"/>
+  <allow-intent href="http://*/*"/>
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
-  <!-- for Android -->
   <feature name="Calendar">
-    <param name="android-package" value="nl.xservices.plugins.Calendar" />
+    <param name="android-package" value="nl.xservices.plugins.Calendar"/>
   </feature>
   <platform name="android">
-    <icon src="resources/android/icon/OOSV.png" density="ldpi"/>
-    <icon src="resources/android/icon/OOSV.png" density="mdpi"/>
-    <icon src="resources/android/icon/OOSV.png" density="hdpi"/>
-    <!--<icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi"/>
+    <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
+    <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
+    <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
+    <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi"/>
     <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi"/>
     <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
     <splash src="resources/android/splash/drawable-land-ldpi-screen.png" density="land-ldpi"/>
@@ -46,6 +45,7 @@
     <splash src="resources/android/splash/drawable-port-hdpi-screen.png" density="port-hdpi"/>
     <splash src="resources/android/splash/drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
     <splash src="resources/android/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
-    <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/> -->
+    <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
+  <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
 </widget>
