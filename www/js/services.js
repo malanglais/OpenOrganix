@@ -380,7 +380,7 @@ angular.module('open_schedule')
   
   self.createEvent = function(event) {
       //remove
-    if(event.onCalendar) {
+    if(!event.onCalendar) {
       $cordovaCalendar.deleteEvent({
         title: "Hockey - " + event.adversary +" - " + event.id,
         location: event.arenaCity + event.arenaName,
