@@ -389,7 +389,7 @@ angular.module('open_schedule')
         endDate: addMinutes(event.dateTime, 120)
       }).then (function(result){
         if (result){
-          event.onCalendar = false;
+          //event.onCalendar = false;
           alert("Event removed (" + event.id + ")");
         } else {
           alert("Event not found/removed");
@@ -408,7 +408,7 @@ angular.module('open_schedule')
         endDate: addMinutes(event.dateTime, 120)
       }).then (function(result){
         if(result) {
-          event.onCalendar = true;
+          //event.onCalendar = true;
           alert("Event created (" + event.id + ")");
         } else {
           alert("Event not created");
