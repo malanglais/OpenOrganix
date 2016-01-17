@@ -47,6 +47,24 @@ angular.module('open_schedule', ['ionic', 'ngCordova'])
       url: '/home',
       views: {
         'home': {
+          templateUrl: 'templates/sports.html'
+        }
+      }
+    })
+    
+    .state('leagues', {
+      url: '/leagues',
+      views: {
+        'home': {
+          templateUrl: 'templates/leagues.html'
+        }
+      }
+    })
+    
+    .state('clubs', {
+      url: '/clubs',
+      views: {
+        'home': {
           templateUrl: 'templates/clubs.html'
         }
       }

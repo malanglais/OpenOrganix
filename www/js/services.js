@@ -12,15 +12,40 @@ angular.module('open_schedule')
   self.isCategorySelected = false;
   self.calEventCollection = [];
   
+  
   self.foundDates = [];
  
-  // this is the complete model
-  self.clubList = [];
+ // the sports and leagues are going to be hardcoded for now
+  self.SportList = [new dmSport("H"), new dmSport("S"), new dmSport("B"), new dmSport("VB"), new dmSport("F"), new dmSport("T")];
+  
+  self.SportList[0].Leagues.push(new dmLeague("LCRSE", "http://lcrse.qc.ca/api/getTeams?includeStats=1"));
+
+  // this is the collection of teams per level
+  // *** for view only **
+  self.viewLevels = [];
   
  // this has to return the array... not the name
+  self.selectedSport = null;
+  self.setSelectedSport = function(sport) {
+    self.SportList.forEach(function(sp) {
+        if (sp.name == sport.name) {
+          self.selectedSport = sp;
+        }
+    });
+  };
+  
+  self.selectedLeague = null;
+  self.setSelectedLeague = function(league) {
+    self.selectedSport.Leagues.forEach(function(lg) {
+        if (lg.name == league.name) {
+          self.selectedLeague = lg;
+        }
+    });
+  };
+  
   self.selectedClub = null;
   self.setSelectedClub = function(club) {
-    self.clubList.forEach(function(clb) {
+    self.selectedLeague.Clubs.forEach(function(clb) {
         if (clb.name == club.name) {
           self.selectedClub = clb;
         }
@@ -46,30 +71,49 @@ angular.module('open_schedule')
     });
   };
   
-  self.buildModel = function() {
+  self.buildModel = function(aUrl) {
     
-    
-    var aURL = "http://lcrse.qc.ca/api/getTeams?includeStats=1";
+    var newViewLevel = null;
     
     $http({
-      url: aURL,
+      url: aUrl,
       method: "GET"
     }).then(function (response) {
-      if (self.clubList.length == 0) {
+      if (self.selectedLeague.Clubs.length == 0) {
         response.data.data.forEach(function(club){
           var newClub = new dmClub(club);
           club.levels.forEach(function(level){
             var newLevel = new dmLevel(level);
+            // insert levels in level collection if new
+            if(self.viewLevels.length == 0) {
+              newViewLevel = new dmLevelView(newLevel);
+              self.viewLevels.push(newViewLevel);
+            } else {
+              // find newViewLevel
+              var foundLvl = false;
+              self.viewLevels.forEach(function(vLevel){
+                if(vLevel.level == newLevel.level) {
+                  newViewLevel = vLevel;
+                  foundLvl = true;
+                }
+              });
+              if(!foundLvl) {
+                newViewLevel = new dmLevelView(newLevel);
+                self.viewLevels.push(newViewLevel);
+              }
+            }
             level.teams.forEach(function(team){
               var newTeam = new dmTeam(team);
               newLevel.Teams.push(newTeam); 
+              newViewLevel.Teams.push(newTeam); // adding teams to viewLevel
             });
             newClub.Levels.push(newLevel);
+            
           });
-          self.clubList.push(newClub);
+          self.selectedLeague.Clubs.push(newClub);
         });
       }
-    }); 
+    });
   }
   
   self.selectAllEvents = function(selected) {
@@ -317,22 +361,22 @@ angular.module('open_schedule')
           }
            // get adversary team's stats
            foundTeam = false;
-            for (var i=0; i<self.clubList.length; i++) {
+            for (var i=0; i<self.selectedLeague.Clubs.length; i++) {
               if(!foundTeam) {
-                for(var j=0; j<self.clubList[i].Levels.length; j++) {
+                for(var j=0; j<self.selectedLeague.Clubs[i].Levels.length; j++) {
                   if(!foundTeam) {
-                    for(var k=0; k<self.clubList[i].Levels[j].Teams.length; k++) {
+                    for(var k=0; k<self.selectedLeague.Clubs[i].Levels[j].Teams.length; k++) {
                       if(!foundTeam){
-                        if (newEvent.adversaryId == self.clubList[i].Levels[j].Teams[k].id) {
+                        if (newEvent.adversaryId == self.selectedLeague.Clubs[i].Levels[j].Teams[k].id) {
                           foundTeam = true;
-                          newEvent.advPoints = self.clubList[i].Levels[j].Teams[k].point;
-                          newEvent.advGP = self.clubList[i].Levels[j].Teams[k].gameCount;
-                          newEvent.advVictories = self.clubList[i].Levels[j].Teams[k].gameVictory;
-                          newEvent.advLosses = self.clubList[i].Levels[j].Teams[k].gameLost;
-                          newEvent.advTies = self.clubList[i].Levels[j].Teams[k].gameDrawn;
-                          newEvent.advGF = self.clubList[i].Levels[j].Teams[k].goalFor;
-                          newEvent.advGA = self.clubList[i].Levels[j].Teams[k].goalAgainst;
-                          newEvent.advDiff = self.clubList[i].Levels[j].Teams[k].goalDiff;
+                          newEvent.advPoints = self.selectedLeague.Clubs[i].Levels[j].Teams[k].point;
+                          newEvent.advGP = self.selectedLeague.Clubs[i].Levels[j].Teams[k].gameCount;
+                          newEvent.advVictories = self.selectedLeague.Clubs[i].Levels[j].Teams[k].gameVictory;
+                          newEvent.advLosses = self.selectedLeague.Clubs[i].Levels[j].Teams[k].gameLost;
+                          newEvent.advTies = self.selectedLeague.Clubs[i].Levels[j].Teams[k].gameDrawn;
+                          newEvent.advGF = self.selectedLeague.Clubs[i].Levels[j].Teams[k].goalFor;
+                          newEvent.advGA = self.selectedLeague.Clubs[i].Levels[j].Teams[k].goalAgainst;
+                          newEvent.advDiff = self.selectedLeague.Clubs[i].Levels[j].Teams[k].goalDiff;
                         }
                       }
                     }
@@ -419,4 +463,42 @@ angular.module('open_schedule')
     }
   }
   
+  self.quickSort = function(arr) {
+    // if array is empty
+    if(arr.length === 0) {
+      return [];
+    }
+    var left = [];
+    var right = [];
+    var pivot = arr[0];
+    
+    // go through every element of the array
+    for (var i = 1; i < arr.length; i++) {
+      if (arr[i].pointTotal > pivot.pointTotal) {
+        left.push(arr[i]);
+      } else {
+        right.push(arr[i]);
+      }
+    }
+    return self.quickSort(left).concat(pivot, self.quickSort(right));
+  }
+  
+  self.createRankings = function() {
+    self.viewLevels.forEach(function(level){
+      level.Teams = self.quickSort(level.Teams);
+      for(var i=0; i<level.Teams.length; i++){
+        level.Teams[i].ranking = i;
+      }
+    });
+    
+    self.selectedLeague.Clubs.forEach(function(club){
+      club.Levels.forEach(function(level){
+        self.viewLevels.forEach(function(vl){
+          if(vl.level == level.level){
+            level.viewLevel = vl;
+          }
+        });
+      });
+    });
+  }
 }])

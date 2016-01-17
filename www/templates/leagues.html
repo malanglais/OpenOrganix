@@ -1,19 +1,16 @@
-<ion-view ng-controller="clubController as cCtrl">
+<ion-view ng-controller="leagueController as lgCtrl">
      <ion-nav-bar>
         <ion-nav-back-button class="button-clear">
-		    <i class="ion-chevron-left"></i> {{cCtrl.huskyModel.selectedSport.name}} - {{cCtrl.huskyModel.selectedLeague.name}}
+		    <i class="ion-chevron-left"></i> {{lCtrl.huskyModel.selectedSport.name}}
         </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
-        <ion-list>
-            <!-- <ion-list>
-                <ion-item *ngFor="#item of items" (click)="itemSelected(item)">
-                    {{item.title}}
-                </ion-item>
-            </ion-list> -->
-            <!--ion<ion-item class="round-corners--25  item--remove--padding" ng-repeat="club in cCtrl.huskyModel.selectedLegue.Clubs" ng-click="cCtrl.selectClub(club)" ui-sref="levels">
+        <!--<ion-item *ngFor="#item of items" (click)="itemSelected(item)">
+                {{item.title}}
+            </ion-item> -->
+         <!--<ion-item class="round-corners--25  item--remove--padding" ng-repeat="league in lgCtrl.huskyModel.selectedSport.Leagues" ng-click="lgCtrl.selectLeague(league)" ui-sref="clubs">
                 <div class="ion--item--box--50 v--center ion--item--equ--div--2 item--padding--16l">
-                    <p>{{club.name}}</p>
+                    <p>{{league.name}}</p>
                 </div>
                 <div class="ion--item--equ--div--2 h--align-center">
                     <button class='button button--sacnite button--round-l button--size-s button--50 button--right'>
@@ -21,9 +18,10 @@
                     </button>
                 </div>
             </ion-item> -->
-            <ion-item ng-repeat="club in cCtrl.huskyModel.selectedLeague.Clubs" ng-click="cCtrl.selectClub(club)" ui-sref="levels">
+        <ion-list>
+            <ion-item ng-repeat="league in lgCtrl.huskyModel.selectedSport.Leagues" ng-click="lgCtrl.selectLeague(league)" ui-sref="clubs">
                 <div>
-                    <p>{{club.name}}</p>
+                    <p>{{league.name}}</p>
                 </div>
                 <!--<div class="ion--item--equ--div--2 h--align-center">
                     <button class='button button--sacnite button--round-l button--size-s button--50 button--right'>

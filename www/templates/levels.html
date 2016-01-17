@@ -6,14 +6,28 @@
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <ion-item class="round-corners--25  item--remove--padding" ng-repeat="level in lCtrl.huskyModel.selectedClub.Levels" ng-click="lCtrl.selectLevel(level)" ui-sref="teams">
-                <div class="ion--item--box--50 v--center ion--item--equ--div--2 item--padding--16l">
-                    <p>{{level.level}}</p>
+            <ion-item ng-repeat="level in lCtrl.huskyModel.selectedClub.Levels">
+                <div class="round-corners--25 item item-divider item--remove--padding item-divider--remove--padding"  >
+                    <div class="ion--item--wRatio--25 h--align-center">
+                            <button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="lCtrl.toggleDiv(level)" >
+                                <i ng-class="{'icon ion-chevron-down': !lCtrl.isDivExpanded(level), 'icon ion-chevron-up': lCtrl.isDivExpanded(level)}"></i>
+                            </button>
+                        </div>
+                    <div class="v--center ion--item--equ--div--3" ng-click="lCtrl.selectLevel(level)" ui-sref="teams">
+                        <p>{{level.level}}</p>
+                    </div>
+                    <!--<div class="ion--item--equ--div--3 h--align-center">
+                        <button class='button button--sacnite button--round-l button--size-s button--50 button--right'  ng-click="lCtrl.selectLevel(level)" ui-sref="teams" >
+                            <i class="icon ion-chevron-right"></i>
+                        </button>
+                    </div>-->
                 </div>
-                <div class="ion--item--equ--div--2 h--align-center">
-                    <button class='button button--sacnite button--round-l button--size-s button--50 button--right'>
-                        <i class="icon ion-chevron-right"></i>
-                    </button>
+                <div class="item item-text-wrap round-corners--7 item--remove--padding item--remove--border-width">
+                    <div ng-show="lCtrl.isDivExpanded(level)" ng-repeat="team in level.viewLevel.Teams">
+                        <div>
+                            {{team.ranking}} - {{team.team}}
+                        </div>
+                    </div>
                 </div>
             </ion-item>
         </ion-list>

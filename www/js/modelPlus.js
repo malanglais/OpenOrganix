@@ -4,6 +4,43 @@ Data model
 
 ================================================*/
 
+function dmSport(name) {
+  this.name = name;
+  this.currentLeague = null;
+  this.Leagues = [];
+  
+  this.setCurrentLeague = function(lg) {
+    if (this.Leagues.length == 0) {
+      this.currentLeague = lg;
+    } else {
+      this.Leagues.forEach(function(league){
+        if(league.league == lg.league) {
+          this.currentLeague = league;
+        }
+      });
+    }
+  }
+}
+
+function dmLeague(name, url) {
+  this.name = name;
+  this.url = url;
+  this.currentClub = null;
+  this.Clubs = [];
+  
+  this.setCurrentClub = function(cl) {
+    if (this.Clubs.length == 0) {
+      this.currentClub = cl;
+    } else {
+      this.Clubs.forEach(function(club){
+        if(cl.name == club.name) {
+          this.currentClub = club;
+        }
+      });
+    }
+  }
+}
+
 function dmClub(cl) {
   this.id = cl.franchiseId;
   this.name = cl.franchiseName;
@@ -27,6 +64,8 @@ function dmLevel(lvl) {
   this.id = lvl.levelId;
   this.level = lvl.levelName;
   this.currentTeam = null;
+  this.expandDiv = false;
+  this.viewLevel = null;
   this.Teams = [];
   
   this.setCurrentTeam = function(tm) {
@@ -55,6 +94,7 @@ function dmTeam(tm) {
   this.expandDiv = false;
   this.ranking=null;
   this.Events = [];
+  this.ranking = null;
 }
 
 function dmEvent(ev) {
@@ -106,6 +146,12 @@ function dmLocation (ar, crd, cty, ph, web) {
   this.phone = ph;
   this.web = web;
 }
+ 
+function dmLevelView (lvl) {
+  this.level = lvl.level;
+  this.Teams = [];
+  this.currentTeam = null;
+} 
  
 /* ==============================================
 

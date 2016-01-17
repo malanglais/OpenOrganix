@@ -1,13 +1,27 @@
 angular.module('open_schedule') 
 
-// home page controller that loads the page... may be this can be put in as a service later on
-/* TODO : put in service */
+.controller('sportController', ['huskyModel', function(huskyModel) {
+  var self = this;
+  self.huskyModel = huskyModel;
+  
+  self.selectSport = function(sport) {
+    self.huskyModel.setSelectedSport(sport);
+  };
+}])
+
+.controller('leagueController', ['huskyModel', function(huskyModel) {
+  var self = this;
+  self.huskyModel = huskyModel;
+  
+  self.selectLeague = function(league) {
+    self.huskyModel.setSelectedLeague(league);
+    self.huskyModel.buildModel(self.huskyModel.selectedLeague.url);
+  };
+}])
 
 .controller('clubController', ['$http', 'huskyModel', function($http, huskyModel) {
   var self = this;
   self.huskyModel = huskyModel;
-  
-  self.huskyModel.buildModel();
   
   self.selectClub = function(club) {
     self.huskyModel.setSelectedClub(club);
@@ -18,14 +32,31 @@ angular.module('open_schedule')
   var self = this;
   self.huskyModel = huskyModel;
   
+  self.huskyModel.createRankings();
+  
   self.selectLevel = function(level) {
     self.huskyModel.setSelectedLevel(level);
   };
+  
+  self.toggleDiv = function(level) {
+    if(level.expandDiv) {
+      level.expandDiv = false;
+    } else {
+      level.expandDiv = true;
+    }
+  };
+
+  self.isDivExpanded = function(event) {
+    return event.expandDiv;
+  };
+  
 }])
 
 .controller('teamController', ['$http', 'huskyModel', function($http, huskyModel) {
   var self = this;
   self.huskyModel = huskyModel;
+  
+  //self.huskyModel.createRankings();
   
   self.toggleDiv = function(team) {
   if(team.expandDiv) {

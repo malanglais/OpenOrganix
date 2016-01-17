@@ -1,0 +1,13 @@
+<ion-view hide-nav-bar="true" ng-controller="sportController as spCtrl">
+    <div class="simple-circle-container" ng-repeat="sport in spCtrl.huskyModel.SportList" ng-click="spCtrl.selectSport(sport)" ui-sref="leagues">
+        <div class="simple-circle-button">
+            <a>{{sport.name}}</a>
+        </div>
+    </div>
+    <div>
+        <img 
+        src="img/OOfront.svg"
+        height="150px"
+        width="300px" />
+    </div>
+</ion-view>

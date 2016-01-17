@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.openorganix521109" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.ionicframework.openorganix521109" 
+  version="0.0.1" xmlns="http://www.w3.org/ns/widgets" 
+  xmlns:cdv="http://cordova.apache.org/ns/1.0" 
+  xmlns:gap="http://phonegap.com/ns/1.0">
   <name>OpenOrganix</name>
   <description>
         OpenOrganix - Schedule Viewer for Android
@@ -17,6 +20,7 @@
   <preference name="SplashScreenDelay" value="3000"/>
   <gap:plugin name="cordova-plugin-calendar" source="npm"/>
   <gap:plugin name="cordova-plugin-whitelist" source="npm"/>
+  <preference name="LoadingDialog" value="My Title,My Message"/>
   <content src="index.html"/>
   <access origin="http://lcrse.qc.ca/cedules.saison.aspx"/>
   <allow-navigation href="http://*/*"/>
