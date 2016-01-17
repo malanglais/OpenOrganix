@@ -6,30 +6,9 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var cats;
 
-angular.module('open_schedule', ['ionic']) 
+angular.module('open_schedule', ['ionic', 'ngCordova']) 
 
-/*app.controller('TodoCtrl', function($scope) {
-  $scope.tasks = [
-    { title: 'Collect coins' },
-    { title: 'Eat mushrooms' },
-    { title: 'Get high enough to grab the flag' },
-    { title: 'Find the Princess' }
-  ];
-});*/
-
-
-.controller('teamCtrl', function($scope, $http, $window) {
-  $http.get("//lcrse.qc.ca/cedules.saison.aspx")
-    .success(function(response) {
-      $scope.categories = getArray(response);
-      var b =1;
-    })
-    .error(function(response) {
-      $window.alert("shit!"); 
-    });
-})
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -45,79 +24,71 @@ angular.module('open_schedule', ['ionic'])
       StatusBar.styleLightContent();
     }
   });
-  
-  
 })
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
+  
+  $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
+  $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
+  
   // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
+  // Learn more here: https:/
   // Each state's controller can be found in controllers.js
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
-
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-
-  .state('tab.chats', {
-      url: '/chats',
+    /*.state('app', {
+      abstract: true,
+      templateUrl: 'templates/main.html'
+    }) */
+    
+    .state('home', {
+      url: '/home',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
+        'home': {
+          templateUrl: 'templates/clubs.html'
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+    
+    .state('levels', {
+      url: '/levels',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        'home': {
+          templateUrl: 'templates/levels.html'
         }
       }
     })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+    
+    .state('teams', {
+      url: '/teams',
+      views: {
+        'home': {
+          templateUrl: 'templates/teams.html'
+        }
       }
-    }
-  });
-
+    })
+    
+    .state('games', {
+      url: '/games',
+      views: {
+        'home': {
+          templateUrl: 'templates/games.html'
+        }
+      }
+    })
+    
+    .state('help', {
+      url: '/help',
+      views: {
+        'help': {
+          templateUrl: 'templates/help.html'
+        }
+      }
+    })
+  
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/home');
 }); 
 
-function getArray(htmlStr) {
-  var index;
-  var wholeList = htmlStr.split("<select");
-  var cleanList = wholeList[2].slice(wholeList[2].indexOf("<option value"),wholeList[2].lastIndexOf("<option value")).split("<option value");
-  for (index = 1; index < cleanList.length; index++)
-  {
-    cleanList[index] = cleanList[index].slice(cleanList[index].indexOf('>')+1, cleanList[index].indexOf('<'))
-  }
-  cleanList.splice(0, 1);
-  return cleanList;
-  
-};

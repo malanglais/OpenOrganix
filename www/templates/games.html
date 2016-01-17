@@ -1,0 +1,85 @@
+<ion-view ng-controller="gameController as gCtrl">
+    <ion-nav-bar>
+        <ion-nav-back-button class="button-clear">
+		    <i class="ion-chevron-left"></i> {{gCtrl.huskyModel.selectedCategory.category}} - {{gCtrl.huskyModel.selectedLevel.level}} - {{gCtrl.huskyModel.selectedTeam.team}}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content>
+        <div>
+            <ion-list class="card card--remove--padding" ng-repeat="event in gCtrl.huskyModel.selectedTeam.Events">
+                <div class="round-corners--25 item item--remove--padding correct--borders" ng-class="{hidden:event.isPassed}">
+                    <div class="ion--item--wRatio--25 h--align-center">
+                        <button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="gCtrl.toggleDiv(event)" >
+                            <i ng-class="{'icon ion-chevron-down': !gCtrl.isDivExpanded(event), 'icon ion-chevron-up': gCtrl.isDivExpanded(event)}"></i>
+                        </button>
+                    </div>
+                    <div class="ion--item--box--50 v--center ion--item--wRatio--35">
+                        <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}}<br>{{event.adversary}}</p>
+                    </div>
+                    <div class="ion--item--wRatio--35 h--align-center ion--item--box--50 v--center">
+                        <!--<div>
+                            <p>Calendrier</p>
+                        </div> -->
+                        
+                          <ion-toggle class="remove--borders ion--item--box--50" ng-model="event.onCalendar" ng-click="gCtrl.createEvent(event)"></ion-toggle>  
+                        
+                    </div>
+                </div>
+                <div class="round-corners--25 item item--remove--padding correct--borders" ng-class="{hidden:!event.isPassed}">
+                    <div class="ion--item--wRatio--15 h--align-center">
+                        <!--<button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="gCtrl.toggleDiv(event)" >
+                            <i ng-class="{'icon ion-chevron-down': !gCtrl.isDivExpanded(event), 'icon ion-chevron-up': gCtrl.isDivExpanded(event)}"></i>
+                        </button>-->
+                    </div>
+                    <div class="ion--item--wRatio--15" ng-show="event.victory == 1">
+                        <img src="img/trophy_checkmark.png" alt="victoire" height="50" />
+                    </div>
+                    <div class="ion--item--wRatio--15" ng-show="event.victory == 0">
+                        <img src="img/trophy_close.png" alt="défaite" height="50" />
+                    </div>
+                    <div class="ion--item--wRatio--15" ng-show="event.victory == 2">
+                        <img src="img/trophy_cancel.png" alt="défaite" height="50" />
+                    </div>
+                    <div class="ion--item--box--50 v--center ion--item--wRatio--50">
+                        
+                        <p>{{event.dateTime | date:'HH:mm dd-MMM-yy'}}<br>{{event.adversary}} |{{event.goalsFor}} - {{event.goalsAgainst}}</p>
+                    </div>
+                </div>
+                <div class="item item-text-wrap round-corners--7 item--remove--padding remove--borders" ng-class="{hidden:event.isPassed}">
+                    <div ng-show="gCtrl.isDivExpanded(event)">
+                        <div class="team--columns">
+                            
+                        </div>
+                        <div class="team--columns">
+                            Points: <br>
+                            Nb parties: <br>
+                            Victoires: <br>
+                            Défaites:  <br>
+                        </div>
+                        <div class="team--columns">
+                            {{event.advPoints}}<br>
+                            {{event.advGP}}<br>
+                            {{event.advVictories}}<br>
+                            {{event.advLosses}}<br>
+                        </div>
+                        <div class="team--columns">
+                            Paties nul: <br>
+                            Buts pour: <br>
+                            Buts contre: <br>
+                            Buts Diff.: <br>
+                        </div>
+                        <div class="team--columns">
+                            {{event.advTies}}<br>
+                            {{event.advGF}}<br>
+                            {{event.advGA}}<br>
+                            {{event.advDiff}}<br>
+                        </div>
+                    </div>
+                </div>
+            </ion-list>
+        </div>
+    </ion-content>
+</ion-view>
+
+
+    
