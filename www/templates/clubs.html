@@ -6,30 +6,8 @@
     </ion-nav-bar>
     <ion-content>
         <ion-list>
-            <!-- <ion-list>
-                <ion-item *ngFor="#item of items" (click)="itemSelected(item)">
-                    {{item.title}}
-                </ion-item>
-            </ion-list> -->
-            <!--ion<ion-item class="round-corners--25  item--remove--padding" ng-repeat="club in cCtrl.huskyModel.selectedLegue.Clubs" ng-click="cCtrl.selectClub(club)" ui-sref="levels">
-                <div class="ion--item--box--50 v--center ion--item--equ--div--2 item--padding--16l">
-                    <p>{{club.name}}</p>
-                </div>
-                <div class="ion--item--equ--div--2 h--align-center">
-                    <button class='button button--sacnite button--round-l button--size-s button--50 button--right'>
-                        <i class="icon ion-chevron-right"></i>
-                    </button>
-                </div>
-            </ion-item> -->
-            <ion-item ng-repeat="club in cCtrl.huskyModel.selectedLeague.Clubs" ng-click="cCtrl.selectClub(club)" ui-sref="levels">
-                <div>
-                    <p>{{club.name}}</p>
-                </div>
-                <!--<div class="ion--item--equ--div--2 h--align-center">
-                    <button class='button button--sacnite button--round-l button--size-s button--50 button--right'>
-                        <i class="icon ion-chevron-right"></i>
-                    </button>
-                </div> -->
+            <ion-item class="add16padding" ng-repeat="club in cCtrl.huskyModel.selectedLeague.Clubs" ng-click="cCtrl.selectClub(club)" ui-sref="levels">
+                {{club.name}}
             </ion-item>
         </ion-list>
     </ion-content>

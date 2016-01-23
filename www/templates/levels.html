@@ -7,26 +7,13 @@
     <ion-content>
         <ion-list>
             <ion-item ng-repeat="level in lCtrl.huskyModel.selectedClub.Levels">
-                <div class="round-corners--25 item item-divider item--remove--padding item-divider--remove--padding"  >
-                    <div class="ion--item--wRatio--25 h--align-center">
-                            <button class='button button--sacnite button--round-l button--size-s button--50 button--center' ng-click="lCtrl.toggleDiv(level)" >
-                                <i ng-class="{'icon ion-chevron-down': !lCtrl.isDivExpanded(level), 'icon ion-chevron-up': lCtrl.isDivExpanded(level)}"></i>
-                            </button>
-                        </div>
-                    <div class="v--center ion--item--equ--div--3" ng-click="lCtrl.selectLevel(level)" ui-sref="teams">
-                        <p>{{level.level}}</p>
-                    </div>
-                    <!--<div class="ion--item--equ--div--3 h--align-center">
-                        <button class='button button--sacnite button--round-l button--size-s button--50 button--right'  ng-click="lCtrl.selectLevel(level)" ui-sref="teams" >
-                            <i class="icon ion-chevron-right"></i>
-                        </button>
-                    </div>-->
+                <div style="max-height: 25px">
+                    <div class="button icon-left button-clear button-dark" ng-class="{'icon ion-chevron-down': !lCtrl.isDivExpanded(level), 'icon ion-chevron-up': lCtrl.isDivExpanded(level)}" ng-click="lCtrl.toggleDiv(level)"></div>
+                    <div ng-click="lCtrl.selectLevel(level)" ui-sref="teams">{{level.level}}</div>
                 </div>
-                <div class="item item-text-wrap round-corners--7 item--remove--padding item--remove--border-width">
+                <div ng-class="{'': !lCtrl.isDivExpanded(level), 'topPad30 dynColumnsx2': lCtrl.isDivExpanded(level)}">
                     <div ng-show="lCtrl.isDivExpanded(level)" ng-repeat="team in level.viewLevel.Teams">
-                        <div>
-                            {{team.ranking}} - {{team.team}}
-                        </div>
+                        {{team.ranking}} - {{team.team}}
                     </div>
                 </div>
             </ion-item>
